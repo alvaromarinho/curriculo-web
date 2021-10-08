@@ -9,7 +9,7 @@ export interface Curriculo {
     name?: string;
     phones?: Phone[];
     portfolios?: Portfolio[];
-    socialNetworks: SocialNetwork[];
+    socialNetworks?: SocialNetwork[];
 }
 
 export interface Information {
