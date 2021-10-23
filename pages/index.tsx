@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react'
-import { Curriculo, Information, Portfolio } from '../models/User'
+import { Curriculo, Information } from '../models/User'
 import { getAllUserData } from '../services/UserService'
-import styled from 'styled-components'
+import { Menu } from '../styles/menu';
+import Start from '../components/Start';
+import About from '../components/About';
+import Portfolio from '../components/Portfolio';
+import Contact from '../components/Contact';
 import _ from "lodash";
-import { Tab } from 'bootstrap';
 
 interface IndexProps { user: Curriculo }
 
 export default function Home({ user }: IndexProps) {
 
-    const [currentPortfolio, setCurrentPortfolio] = useState<number>();
     const [menu, setMenu] = useState<Array<string>>();
     const [info, setInfo] = useState<Array<Array<Information>>>();
+
+    const iconDictionary: any = {
+        EDUCATION: 'fa-book',
+        SKILLS: 'fa-check-square-o',
+    }
 
     useEffect(() => {
         setMenu(_.chain(user.informations).groupBy('type').map((value, key) => key).value())
@@ -21,102 +28,58 @@ export default function Home({ user }: IndexProps) {
     return (
         <>
             <Menu id="menu">
-                <a href="#start">Start</a>
-                <a href="#about">About</a>
-                {menu && menu.map((m) => (
-                    <a href={`#${m}`}>{m}</a>
+                <a href="#start">
+                    <i className="fa fa-home"></i>
+                    <span>Start</span>
+                </a>
+                <a href="#about">
+                    <i className="fa fa-user"></i>
+                    <span>About</span>
+                </a>
+                {menu && menu.map((m, index) => (
+                    <a href={`#${m}`} key={index}>
+                        <i className={`fa ${iconDictionary[m]}`}></i>
+                        <span>{m}</span>
+                    </a>
                 ))}
-                <a href="#portfolio">Portfolio</a>
-                <a href="#contact">Contact</a>
+                <a href="#portfolio">
+                    <i className="fa fa-th-large"></i>
+                    <span>Portfolio</span>
+                </a>
+                <a href="#contact">
+                    <i className="fa fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
             </Menu>
             <main>
-                <section className="vh-100 bg-light" id="start">
-                    <div className="container">
-                        <img src={user.image} alt="Perfil" />
-                        <div>{user.name}</div>
-                        {user.socialNetworks && user.socialNetworks.map((social, index) => (
-                            <div key={index}>
-                                <i className={`fa ${social.icon}`}></i> {social.name}
-                            </div>
-                        ))}
-                    </div>
+                <section className="vh-100 d-flex align-items-center bg-light" id="start">
+                    <Start user={user} />
                 </section>
-                <section className="vh-100 bg-primary" id="about">
-                    <div className="container">
-                        <div>
-                            {user.city} - {user.uf}
-                        </div>
-                        <div>
-                            {user.email}
-                        </div>
-                        <div>
-                            {user.description}
-                        </div>
-                        {user.phones && user.phones.map((phone, index) => (
-                            <div key={index}>{phone.number}</div>
-                        ))}
-                    </div>
+                <section className="vh-100 d-flex align-items-center bg-success" id="about">
+                    <About user={user} />
                 </section>
                 {info && info.map((value) =>
                     value.map((i, index) => (
-                        <section className="vh-100 border" id={i.type} key={index}>
-                            <div className="container">
+                        <section className="vh-100 d-flex align-items-center border" id={i.type} key={index}>
+                            <div className="container px-6">
                                 {i.title}
                                 {i.description && <div dangerouslySetInnerHTML={{ __html: i.description }} />}
                             </div>
                         </section>
                     ))
                 )}
-                <section className="vh-100 bg-danger" id="portfolio">
-                    <div className="container">
-                        <ul className="nav nav-tabs" role="tablist">
-                            {user.portfolios && user.portfolios.map((portfolio, index) => (
-                                <li className="nav-item" role="presentation" key={index}>
-                                    <button type="button" role="tab" onClick={() => setCurrentPortfolio(portfolio.id)}
-                                        className={`nav-link ${((currentPortfolio == undefined && index == 1) || currentPortfolio == portfolio.id) && 'active'}`}>
-                                        {portfolio.name}
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                        <div className="tab-content">
-                            {user.portfolios && user.portfolios.map((portfolio, index) => (
-                                <div className={`tab-pane fade ${((currentPortfolio == undefined && index == 1) || currentPortfolio == portfolio.id) && 'show active'}`}>
-                                    {portfolio.projects && portfolio.projects.map((project) => (
-                                        <b>{project.title}</b>
-                                    ))}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                <section className="vh-100 d-flex bg-danger" id="portfolio">
+                    <Portfolio user={user} />
                 </section>
-                <section className="vh-100 bg-info" id="contact">
-                    <div className="container">
-                        Contato
-                    </div>
+                <section className="vh-100 d-flex align-items-center bg-info" id="contact">
+                    <Contact />
                 </section>
             </main>
         </>
     )
 }
 
-const Menu = styled.div` 
-    position: fixed;
-    top: 50%;
-    left: 1rem;
-    transform: translateY(-50%);
 
-    a {
-        display: block;
-        padding: .5rem;
-        text-decoration: none;
-        color: var(--bs-grey);
-        box-shadow: 0 1px 1px 0 rgb(66 66 66 / 8%), 0 1px 3px 1px rgb(66 66 66 / 16%);
-    }
-    a:hover {
-        text-decoration: underline
-    } 
-`;
 
 export async function getStaticProps(ctx: any) {
     const user = await getAllUserData(ctx, 1);
