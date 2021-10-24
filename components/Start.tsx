@@ -7,7 +7,6 @@ export default function Start({ user }: StartProps) {
 
     return (
         <div className="container px-6">
-            {/* <img src={user.image} alt="Perfil" /> */}
             <h1 className="display-3 text-capitalize">{user.name}</h1>
 
             <div className="d-flex display-6 mb-3">

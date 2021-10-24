@@ -55,7 +55,7 @@ export default function Home({ user }: IndexProps) {
                 <section className="vh-100 d-flex align-items-center bg-light" id="start">
                     <Start user={user} />
                 </section>
-                <section className="vh-100 d-flex align-items-center bg-success" id="about">
+                <section className="vh-100 d-flex align-items-center" id="about">
                     <About user={user} />
                 </section>
                 {info && info.map((value) =>
