@@ -35,7 +35,7 @@ export const Menu = styled.div`
     a span {
         background-color: var(--bs-primary);
         color: var(--bs-primary);
-        padding: .8rem 1rem .8rem 2rem;
+        padding: .7rem 1rem .8rem 2rem;
         border-top-right-radius: 50rem;
         border-bottom-right-radius: 50rem;
         margin-left: -2rem;

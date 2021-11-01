@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Curriculo } from '../models/User'
+import styled from "styled-components";
 
 interface PortfolioProps { user: Curriculo }
 
@@ -8,8 +9,9 @@ export default function Portfolio({ user }: PortfolioProps) {
     const [currentPortfolio, setCurrentPortfolio] = useState<number>();
 
     return (
-        <div className="container px-6">
-            <ul className="nav nav-tabs" role="tablist">
+        <div className="container px-6 pt-5">
+            <h2 className="text-center mb-5">Portfolio</h2>
+            <Nav className="nav nav-tabs justify-content-center" role="tablist">
                 {user.portfolios && user.portfolios.map((portfolio, index) => (
                     <li className="nav-item" role="presentation" key={index}>
                         <button type="button" role="tab" onClick={() => setCurrentPortfolio(portfolio.id)}
@@ -18,8 +20,8 @@ export default function Portfolio({ user }: PortfolioProps) {
                         </button>
                     </li>
                 ))}
-            </ul>
-            <div className="tab-content">
+            </Nav>
+            <div className="tab-content mt-3">
                 {user.portfolios && user.portfolios.map((portfolio, index) => (
                     <div className={`tab-pane fade ${((currentPortfolio == undefined && index == 1) || currentPortfolio == portfolio.id) && 'show active'}`} key={index}>
                         {portfolio.projects && portfolio.projects.map((project) => (
@@ -31,3 +33,15 @@ export default function Portfolio({ user }: PortfolioProps) {
         </div>
     )
 }
+
+export const Nav = styled.ul`
+
+    &, .nav-link, .nav-link:hover, .nav-link:focus {
+        border: none;
+    }
+
+    .nav-link.active {
+        text-shadow: 1px 0 0 currentColor;
+    }
+
+`;

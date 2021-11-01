@@ -13,16 +13,17 @@ interface IndexProps { user: Curriculo }
 export default function Home({ user }: IndexProps) {
 
     const [menu, setMenu] = useState<Array<string>>();
-    const [info, setInfo] = useState<Array<Array<Information>>>();
+    const [info, setInfo] = useState<any>();
 
     const iconDictionary: any = {
-        EDUCATION: 'fa-book',
         SKILLS: 'fa-check-square-o',
+        EDUCATION: 'fa-book',
+        EXPERIENCE: 'fa-briefcase'
     }
 
     useEffect(() => {
-        setMenu(_.chain(user.informations).groupBy('type').map((value, key) => key).value())
-        setInfo(_.chain(user.informations).groupBy('type').map((value, key) => value).value())
+        setMenu(_.chain(user.informations).groupBy('type').map((value, key) => key).sort((a, b) => Object.keys(iconDictionary).indexOf(a) - Object.keys(iconDictionary).indexOf(b)).value())
+        setInfo(_.chain(user.informations).groupBy('type').value())
     }, [])
 
     return (
@@ -58,17 +59,20 @@ export default function Home({ user }: IndexProps) {
                 <section className="vh-100 d-flex align-items-center" id="about">
                     <About user={user} />
                 </section>
-                {info && info.map((value) =>
-                    value.map((i, index) => (
-                        <section className="vh-100 d-flex align-items-center border" id={i.type} key={index}>
-                            <div className="container px-6">
-                                {i.title}
-                                {i.description && <div dangerouslySetInnerHTML={{ __html: i.description }} />}
-                            </div>
-                        </section>
-                    ))
-                )}
-                <section className="vh-100 d-flex bg-danger" id="portfolio">
+                {menu && menu.map((m, index) => (
+                    <section className="vh-100 d-flex align-items-center border" id={m} key={index}>
+                        <div className="container px-6">
+                            <h2 className="text-center mb-5">{m}</h2>
+                            {info && info[m].map((i: Information) => 
+                                <div className="mb-3" key={i.id}>
+                                    <b>{i.title}</b>
+                                    {i.description && <div dangerouslySetInnerHTML={{ __html: i.description }} />}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                ))}
+                <section className="vh-100 d-flex" id="portfolio">
                     <Portfolio user={user} />
                 </section>
                 <section className="vh-100 d-flex align-items-center bg-info" id="contact">
