@@ -6,7 +6,7 @@ interface EducationProps { informations: Information[] }
 
 export default function Education({ informations }: EducationProps) {
     return (
-        <section className="mb-7" id="education">
+        <section className="p-6" id="education">
             <div className="container px-6">
                 <h2 className="text-center mb-5">Education</h2>
                 {informations.map((information: Information) =>

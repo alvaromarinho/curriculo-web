@@ -25,9 +25,18 @@ export default function Portfolio({ user }: PortfolioProps) {
                 <div className="tab-content mt-3">
                     {user.portfolios && user.portfolios.map((portfolio, index) => (
                         <div className={`tab-pane fade ${((currentPortfolio == undefined && index == 0) || currentPortfolio == portfolio.id) && 'show active'}`} key={index}>
-                            {portfolio.projects && portfolio.projects.map((project) => (
-                                <b key={project.id}>{project.title}</b>
-                            ))}
+                            <div className="row">
+                                {portfolio.projects && portfolio.projects.map((project) => (
+                                    <div className="col-auto" key={project.id}>
+                                        <div className="card h-100">
+                                            <div className="card-body">
+                                                <h5 className="card-title">{project.title}</h5>
+                                                <p className="card-text">{project.subtitle}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ))}
                 </div>

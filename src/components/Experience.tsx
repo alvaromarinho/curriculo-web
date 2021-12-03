@@ -6,7 +6,7 @@ interface ExperienceProps { informations: Information[] }
 
 export default function Experience({ informations }: ExperienceProps) {
     return (
-        <section className="mb-5" id="experience">
+        <section className="bg-light p-6" id="experience">
             <div className="container px-6">
                 <h2 className="text-center mb-5">Experience</h2>
                 <Timeline>
@@ -51,7 +51,7 @@ const TimelineItem = styled.div`
         content: "";
         width: 4px;
         height: 100%;
-        background: #e9f0f5;
+        background: #d7e4ed;
         left: 50%;
         top: 0;
         position: absolute;
@@ -60,15 +60,13 @@ const TimelineItem = styled.div`
     &:nth-child(even) .timeline-card {
         margin-left: auto;
     }
-
     &:nth-child(even) .timeline-card:before {
         left: 0;
         right: inherit;
         margin-left: -7px;
         border-left: 0;
-        border-right: 7px solid #e9f0f5;
+        border-right: 7px solid white;
     }
-
     &:nth-child(even) .timeline-date {
         right: 50%;
         left: inherit;
@@ -84,10 +82,10 @@ const TimelineItem = styled.div`
     }
 
     .timeline-card {
-        background: #e9f0f5;
         width: 45%;
         transition: all 0.3s ease;
         border: none;
+        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
     }
     .timeline-card:before {
         content: '';
@@ -97,7 +95,7 @@ const TimelineItem = styled.div`
         top: 1.1rem;
         border-top: 7px solid transparent;
         border-bottom: 7px solid transparent;
-        border-left: 7px solid #e9f0f5;
+        border-left: 7px solid white;
     }
     .timeline-card .card-header {
         border-color: white;
