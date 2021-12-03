@@ -5,6 +5,7 @@ export const Menu = styled.div`
     top: 50%;
     padding: 0;
     transform: translateY(-50%);
+    z-index: 1;
 
     a {
         display: flex;
