@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
+import { parseCookies } from 'nookies'
 
-const Dashboard: NextPage = () => {
+export default function Dashboard() {
     return (
         <div className="bg-warning">
             Dashboard
@@ -8,4 +8,14 @@ const Dashboard: NextPage = () => {
     )
 }
 
-export default Dashboard
+export async function getServerSideProps(ctx: any) {
+    const { AKToken } = parseCookies(ctx)
+
+    if (!AKToken) {
+        return {
+            redirect: { destination: '/sign-in', permanent: false }
+        }
+    }
+
+    return { props: { } }
+}

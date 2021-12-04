@@ -1,8 +1,14 @@
-import type { AppProps } from 'next/app'
 import GlobalStyle from '../styles/globals'
 import Head from 'next/head';
+import Dashboard from '../components/Dashboard';
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: any) {
+
+    const LayoutNoAuth = ({ children }: any) => (<>{children}</>);
+    const LayoutAuth = ({ children }: any) => (<Dashboard>{children}</Dashboard>);
+
+    const Layout = Component.noAuth ? LayoutNoAuth : LayoutAuth
+
     return (
         <>
             <Head>
@@ -13,7 +19,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css" />
                 <script async src="https://use.fontawesome.com/ea6d31d4b0.js"></script>
             </Head>
-            <Component {...pageProps} />
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
             <GlobalStyle />
         </>
     )
