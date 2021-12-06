@@ -1,3 +1,5 @@
+import { AuthProvider } from '../contexts/AuthContext';
+import { ToastContainer } from 'react-toastify';
 import GlobalStyle from '../styles/globals'
 import Head from 'next/head';
 import Dashboard from '../components/Dashboard';
@@ -19,9 +21,12 @@ export default function MyApp({ Component, pageProps }: any) {
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css" />
                 <script async src="https://use.fontawesome.com/ea6d31d4b0.js"></script>
             </Head>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <AuthProvider>
+                <Layout>
+                    <Component {...pageProps} />
+                    <ToastContainer />
+                </Layout>
+            </AuthProvider>
             <GlobalStyle />
         </>
     )

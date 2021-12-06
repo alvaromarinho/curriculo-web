@@ -1,3 +1,4 @@
+import { NextPageContext } from 'next'
 import { parseCookies } from 'nookies'
 
 export default function Dashboard() {
@@ -8,10 +9,10 @@ export default function Dashboard() {
     )
 }
 
-export async function getServerSideProps(ctx: any) {
-    const { AKToken } = parseCookies(ctx)
+export async function getServerSideProps(ctx: NextPageContext) {
+    const { akToken } = parseCookies(ctx)
 
-    if (!AKToken) {
+    if (!akToken) {
         return {
             redirect: { destination: '/sign-in', permanent: false }
         }

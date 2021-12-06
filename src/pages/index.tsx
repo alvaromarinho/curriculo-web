@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Curriculo, Information } from '../models/User'
+import { Curriculo } from '../models/User'
 import { getAllUserData } from '../services/UserService'
 import { Menu } from '../styles/menu';
 import Start from '../components/Start';
@@ -10,10 +10,11 @@ import Experience from '../components/Experience';
 import Portfolio from '../components/Portfolio';
 import Contact from '../components/Contact';
 import _ from "lodash";
+import { NextPageContext } from 'next';
 
 interface IndexProps { user: Curriculo }
 
-export default function Home({ user }: IndexProps) {
+const Home = ({ user }: IndexProps) => {
 
     const [info, setInfo] = useState<any>();
 
@@ -21,9 +22,9 @@ export default function Home({ user }: IndexProps) {
         setInfo(_.chain(user.informations).groupBy('type').value())
     }, [])
 
-    useEffect(() => {
-        info && console.log(info)
-    }, [info])
+    // useEffect(() => {
+    //     info && console.log(info)
+    // }, [info])
 
     return (
         <>
@@ -70,9 +71,11 @@ export default function Home({ user }: IndexProps) {
     )
 }
 
+Home.noAuth = true;
 
+export default Home;
 
-export async function getStaticProps(ctx: any) {
+export async function getStaticProps(ctx: NextPageContext) {
     const user = await getAllUserData(ctx, 1);
     return {
         props: { user },

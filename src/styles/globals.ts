@@ -1,11 +1,10 @@
 import { createGlobalStyle } from "styled-components";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.min.css";
 
 export default createGlobalStyle`
 
     html, body, #__next { height: 100% }
-
-    body { background-color: var(--bs-light) }
 
     a { text-decoration: none; color: #45505b !important; }
 
