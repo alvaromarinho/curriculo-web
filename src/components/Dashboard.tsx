@@ -33,7 +33,7 @@ function Sidebar({ className }: any) {
 
 export default function Dashboard({ children }: any) {
     return (
-        <div className="container-fluid h-100">
+        <Div className="container-fluid h-100">
             <div className="row overflow-hidden h-100">
                 <Sidebar className="d-none d-md-flex col-auto md-width" />
                 <Body className="col pt-4 p-md-4 bg-light">
@@ -58,9 +58,13 @@ export default function Dashboard({ children }: any) {
                     <Sidebar className="offcanvas-body" />
                 </div>
             </div>
-        </div>
+        </Div>
     )
 }
+
+const Div = styled.div`
+    font-family: 'Quicksand', 'Roboto', Arial, Helvetica, sans-serif;
+`;
 
 const Body = styled.div`
     height: 100%;
