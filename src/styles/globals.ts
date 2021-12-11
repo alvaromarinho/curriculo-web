@@ -16,6 +16,8 @@ export default createGlobalStyle`
 
     .d-flex-center { display: flex; align-items: center; justify-content: center; }
 
+    .pointer { cursor: pointer }
+
     .rounded-bottom-0 { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     .rounded-top-0 { border-top-left-radius: 0; border-top-right-radius: 0; }
 
@@ -25,6 +27,10 @@ export default createGlobalStyle`
 
     .mb-6 { margin-bottom: 5rem; }
     .mb-7 { margin-bottom: 8rem; }
+
+    .form-floating textarea.form-control {
+        min-height: 10rem;
+    }
 
     @media (max-width: 768px) { }
 `;

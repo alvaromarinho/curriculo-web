@@ -1,28 +1,32 @@
 import { CgLogOff } from "react-icons/cg";
-import { RiBarChart2Line, RiHome2Line, RiLineChartLine, RiPieChartLine } from "react-icons/ri";
-import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { RiHome2Line } from "react-icons/ri";
+import { AiOutlineMenu } from "react-icons/ai";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import Link from 'next/link'
 import styled from "styled-components";
-import { AiOutlineMenu } from "react-icons/ai";
 
 function Sidebar({ className }: any) {
+
+    const router = useRouter()
+    const { signOut } = useContext(AuthContext)
+
     return (
         <Menu className={`list-group list-group-flush ${className}`}>
             <Link href="/dashboard" passHref>
                 <a className="list-group-item ms-3">
-                    <img className="me-3" src="/logo.svg" width="15" /> Data Brain
+                    <img className="me-3" src="/vercel.svg" width="15" /> Data Brain
                 </a>
             </Link>
             <Link href="/dashboard" passHref>
-                <a className="list-group-item list-group-item-action d-flex align-items-center active">
+                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
                     <RiHome2Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Home</span>
                 </a>
             </Link>
-            <Link href="/dashboard" passHref>
-                <a className="list-group-item list-group-item-action d-flex align-items-center">
-                    <CgLogOff className="fa-fw ms-3 me-3" /> <span className="lh-1">Sair</span>
-                </a>
-            </Link>
+            <a className="list-group-item list-group-item-action d-flex align-items-center pointer" onClick={signOut}>
+                <CgLogOff className="fa-fw ms-3 me-3" /> <span className="lh-1">Sair</span>
+            </a>
         </Menu>
     )
 }
@@ -70,7 +74,7 @@ const Menu = styled.div`
     padding: 0;
 
     &.md-width { width: 14%; };
-    & .list-group-item { border-bottom: 0; margin-top: .5rem; margin-bottom: .5rem; padding-top: 1rem; padding-bottom: 1rem;  }
+    & .list-group-item { border-bottom: 0; padding-top: 1rem; padding-bottom: 1rem;  }
     & .list-group-item.list-group-item-action:first-child { margin-bottom: 2rem; text-align: center; }
     & .list-group-item.list-group-item-action:not(:first-child) { border-right: 3px solid transparent!important; border-top: 1px solid transparent!important; color: var(--bs-gray-500) }
     & .list-group-item.list-group-item-action.active { font-weight: 600; background-color: transparent; color: black; }

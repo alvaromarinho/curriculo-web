@@ -1,11 +1,15 @@
 import { NextPageContext } from 'next'
 import { parseCookies } from 'nookies'
+import EditUser from '../../components/dashboard/EditUser'
 
 export default function Dashboard() {
     return (
-        <div className="bg-warning">
-            Dashboard
-        </div>    
+        <>
+            <EditUser />
+            <div className="bg-warning">
+                Dashboard
+            </div>
+        </>
     )
 }
 
@@ -18,5 +22,5 @@ export async function getServerSideProps(ctx: NextPageContext) {
         }
     }
 
-    return { props: { } }
+    return { props: {} }
 }

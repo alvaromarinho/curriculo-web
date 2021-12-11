@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
-import { FaSignInAlt, FaRedoAlt } from "react-icons/fa";
+import { FaSignInAlt } from "react-icons/fa";
+import { CgSpinner } from "react-icons/cg";
 import { parseCookies } from "nookies";
 import { NextPageContext } from "next";
 import { AuthContext, AuthForm } from "../contexts/AuthContext";
 import styled from "styled-components";
 import Router from "next/router";
+import Button from "../components/Button";
 
 const SignIn = () => {
 
@@ -32,12 +34,12 @@ const SignIn = () => {
                 <div className="card-body p-4 p-md-5">
                     <Form onSubmit={handleSubmit}>
                         <img className="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
-                        <h1 className="h3 mb-3 mb-md-4 fw-normal">Please sign in</h1>
+                        <h1 className="h3 mb-3 mb-md-4 fw-normal">Currículo</h1>
 
                         <div className="form-floating">
                             <input type="email" className="form-control rounded-bottom-0" id="email" name="email"
-                                autoComplete="off" placeholder="name@example.com" onChange={handleChange} />
-                            <label htmlFor="email">Email address</label>
+                                autoComplete="off" placeholder="Email" onChange={handleChange} />
+                            <label htmlFor="email">Email</label>
                         </div>
                         <div className="form-floating mb-3 mb-md-4">
                             <input type="password" className="form-control rounded-top-0" id="password" name="password"
@@ -45,9 +47,9 @@ const SignIn = () => {
                             <label htmlFor="password">Password</label>
                         </div>
 
-                        <button className="btn btn-lg btn-primary w-100 d-flex-center" type="submit" disabled={loading}>
-                            {loading ? <FaRedoAlt className="fa-spin me-2" /> : <FaSignInAlt className="me-2" />} Sign in
-                        </button>
+                        <Button color="primary" text="Entrar" type="submit" loading={loading} className="btn-lg w-100">
+                            <FaSignInAlt className="me-2" />
+                        </Button>
                     </Form>
                 </div>
             </div>
