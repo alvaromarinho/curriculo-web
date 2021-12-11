@@ -1,4 +1,4 @@
-import { Information } from '../models/User'
+import { Information } from '../../models/User'
 
 interface SkillsProps { informations: Information[] }
 

@@ -16,7 +16,7 @@ function Sidebar({ className }: any) {
         <Menu className={`list-group list-group-flush ${className}`}>
             <Link href="/dashboard" passHref>
                 <a className="list-group-item ms-3">
-                    <img className="me-3" src="/vercel.svg" width="15" /> Data Brain
+                    <img className="me-3" src="/vercel.svg" width="15" /> Dashboard
                 </a>
             </Link>
             <Link href="/dashboard" passHref>
@@ -36,7 +36,7 @@ export default function Dashboard({ children }: any) {
         <div className="container-fluid h-100">
             <div className="row overflow-hidden h-100">
                 <Sidebar className="d-none d-md-flex col-auto md-width" />
-                <Body className="col pt-4 p-md-4">
+                <Body className="col pt-4 p-md-4 bg-light">
 
                     {/* MOBILE */}
                     <nav className="navbar fixed-top navbar-light bg-gray-light d-md-none">
@@ -68,7 +68,7 @@ const Body = styled.div`
 `;
 
 const Menu = styled.div`
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    border-right: 1px solid rgba(0,0,0,.125);
     background-color: white;
     border-radius: 0;
     padding: 0;

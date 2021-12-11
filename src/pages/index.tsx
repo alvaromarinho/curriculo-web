@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { Curriculo } from '../models/User'
 import { getAllUserData } from '../services/UserService'
 import { Menu } from '../styles/menu';
-import Start from '../components/Start';
-import About from '../components/About';
-import Skills from '../components/Skills';
-import Education from '../components/Education';
-import Experience from '../components/Experience';
-import Portfolio from '../components/Portfolio';
-import Contact from '../components/Contact';
+import Start from '../components/pages/Start';
+import About from '../components/pages/About';
+import Skills from '../components/pages/Skills';
+import Education from '../components/pages/Education';
+import Experience from '../components/pages/Experience';
+import Portfolio from '../components/pages/Portfolio';
+import Contact from '../components/pages/Contact';
 import _ from "lodash";
 import { NextPageContext } from 'next';
 

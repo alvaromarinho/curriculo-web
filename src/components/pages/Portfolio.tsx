@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Curriculo } from '../models/User'
+import { Curriculo } from '../../models/User'
 import styled from "styled-components";
 
 interface PortfolioProps { user: Curriculo }

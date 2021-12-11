@@ -1,4 +1,4 @@
-import { Curriculo } from '../models/User'
+import { Curriculo } from '../../models/User'
 import Typewriter from "typewriter-effect";
 
 interface StartProps { user: Curriculo }

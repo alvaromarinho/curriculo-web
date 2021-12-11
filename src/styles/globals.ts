@@ -28,9 +28,5 @@ export default createGlobalStyle`
     .mb-6 { margin-bottom: 5rem; }
     .mb-7 { margin-bottom: 8rem; }
 
-    .form-floating textarea.form-control {
-        min-height: 10rem;
-    }
-
     @media (max-width: 768px) { }
 `;

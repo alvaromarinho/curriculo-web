@@ -1,15 +1,12 @@
 import { NextPageContext } from 'next'
 import { parseCookies } from 'nookies'
-import EditUser from '../../components/dashboard/EditUser'
+import EditUser from '../../components/pages/dashboard/EditUser'
 
 export default function Dashboard() {
     return (
-        <>
+        <div className="bg-light">
             <EditUser />
-            <div className="bg-warning">
-                Dashboard
-            </div>
-        </>
+        </div>
     )
 }
 

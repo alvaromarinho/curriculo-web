@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Information } from '../models/User'
+import { Information } from '../../models/User'
 import dayjs from "dayjs";
 
 interface ExperienceProps { informations: Information[] }

@@ -1,4 +1,4 @@
-import { Curriculo } from '../models/User'
+import { Curriculo } from '../../models/User'
 
 interface AboutProps { user: Curriculo }
 
