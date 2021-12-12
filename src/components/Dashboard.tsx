@@ -1,5 +1,5 @@
 import { CgLogOff } from "react-icons/cg";
-import { RiFileUserLine, RiGitRepositoryLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
+import { RiEqualizerLine, RiFileUserLine, RiGitRepositoryLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -14,28 +14,26 @@ function Sidebar({ className }: any) {
 
     return (
         <Menu className={`list-group list-group-flush ${className}`}>
+            <div className="list-group-item d-flex align-items-center">
+                <RiEqualizerLine className="fa-fw ms-3 me-3"/> <span>Dashboard</span>
+            </div>
             <Link href="/dashboard" passHref>
-                <a className="list-group-item ms-3">
-                    <img className="me-3" src="/vercel.svg" width="15" /> Dashboard
-                </a>
-            </Link>
-            <Link href="/dashboard" passHref>
-                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard" && "active"}`}>
                     <RiHome2Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Home</span>
                 </a>
             </Link>
             <Link href="/dashboard/profile" passHref>
-                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard/profile" && "active"}`}>
                     <RiUser3Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Perfil</span>
                 </a>
             </Link>
             <Link href="/dashboard/informations" passHref>
-                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard/informations" && "active"}`}>
                     <RiFileUserLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Informações</span>
                 </a>
             </Link>
             <Link href="/dashboard/portfolios" passHref>
-                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard/portfolios" && "active"}`}>
                     <RiGitRepositoryLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Portfólios</span>
                 </a>
             </Link>

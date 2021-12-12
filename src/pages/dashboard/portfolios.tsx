@@ -56,7 +56,7 @@ export default function Portfolios() {
                         </div>
                         {!currentPortfolio &&
                             <div className="col-auto">
-                                <button className="btn btn-sm btn-primary d-flex-center" type="button" onClick={() => setCurrentPortfolio({})}>
+                                <button className="btn btn-primary d-flex-center" type="button" onClick={() => setCurrentPortfolio({})}>
                                     <FaPlus className="me-2" />
                                     <span className="d-none d-md-inline">Novo Portfólio</span>
                                 </button>

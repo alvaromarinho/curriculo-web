@@ -76,15 +76,6 @@ export default function Informations() {
         toast.success(`Dados ${text} com sucesso!`)
     }
 
-    function getColorByType(type: string) {
-        switch (type) {
-            case 'EDUCATION': return 'success';
-            case 'SKILLS': return 'danger';
-            case 'EXPERIENCE': return 'info';
-            default: return 'secondary';
-        }
-    }
-
     return (
         <div className="card card-body px-4">
             {loading ?
@@ -105,7 +96,7 @@ export default function Informations() {
                         </div>
                         {!currentInfo &&
                             <div className="col-auto">
-                                <button className="btn btn-sm btn-primary d-flex-center" type="button" onClick={() => setCurrentInfo({})}>
+                                <button className="btn btn-primary d-flex-center" type="button" onClick={() => setCurrentInfo({})}>
                                     <FaPlus className="me-2" />
                                     <span className="d-none d-md-inline">Nova Informação</span>
                                 </button>
@@ -114,28 +105,45 @@ export default function Informations() {
                     </div>
 
                     {/* LISTA */}
-                    {!currentInfo && types && types.map((type, index) =>
-                        <div key={index}>
-                            {infos[type] && infos[type].sort((a: any, b: any) => a.start > b.start && 1 || -1).map((info: Information) =>
-                                <div className={`card card-body mb-3 callout callout-${getColorByType(type)}`} key={info.id}>
-                                    <div className="d-flex justify-content-between align-items-start">
-                                        <span className={`badge bg-${getColorByType(type)}`}>{type}</span>
-                                        <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => setCurrentInfo(info)}>
-                                            <FaRegEdit className="mb-1 me-1" /> Editar
-                                        </button>
+                    {!currentInfo &&
+                        <>
+                            <div className="overflow-auto mx-n4">
+                                <ul className="nav nav-tabs flex-nowrap px-4" id="myTab" role="tablist">
+                                    {types && types.map((type, index) =>
+                                        <li className="nav-item" role="presentation" key={index}>
+                                            <button className={`nav-link text-nowrap ${index == 0 && 'active'}`} data-bs-toggle="tab" data-bs-target={`#${type}`} type="button" role="tab">
+                                                {type}
+                                            </button>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                            <div className="tab-content" id="myTabContent">
+                                {types && types.map((type, index) =>
+                                    <div className={`tab-pane pt-3 fade ${index == 0 && 'show active'}`} id={type} role="tabpanel" key={index}>
+                                        <input type="text" name="search" id="search" className="form-control mb-3" autoComplete="off" placeholder="Buscar informação..." />
+                                        {infos[type] && infos[type].sort((a: any, b: any) => a.start > b.start && 1 || -1).map((info: Information) =>
+                                            <div className={`card card-body mb-3 callout`} key={info.id}>
+                                                <div className="d-flex justify-content-between align-items-start">
+                                                    <h3 className="fs-5 mb-0">{titleCase(info.title)}</h3>
+                                                    <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => setCurrentInfo(info)}>
+                                                        <FaRegEdit className="mb-1 me-1" /> Editar
+                                                    </button>
+                                                </div>
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <span className="text-muted">{titleCase(info.subtitle)}</span>
+                                                    {info.start &&
+                                                        <span>{dayjs(info.start).format('DD/MM/YYYY')} {info.end ? `até ${dayjs(info.end).format('DD/MM/YYYY')}` : 'até hoje'}</span>
+                                                    }
+                                                </div>
+                                                {info.description && <div className="mt-2" dangerouslySetInnerHTML={{ __html: info.description }} />}
+                                            </div>
+                                        )}
                                     </div>
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <h3 className="fs-5 mb-0">{titleCase(info.title)}</h3>
-                                        {info.start &&
-                                            <span>{dayjs(info.start).format('DD/MM/YYYY')} {info.end ? `até ${dayjs(info.end).format('DD/MM/YYYY')}` : 'até hoje'}</span>
-                                        }
-                                    </div>
-                                    <span className="text-muted">{titleCase(info.subtitle)}</span>
-                                    {info.description && <div className="mt-2" dangerouslySetInnerHTML={{ __html: info.description }} />}
-                                </div>
-                            )}
-                        </div>
-                    )}
+                                )}
+                            </div>
+                        </>
+                    }
 
                     {/* NOVO/EDITAR */}
                     {currentInfo &&

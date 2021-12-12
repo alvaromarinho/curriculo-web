@@ -35,7 +35,7 @@ export default function Profile() {
     function loadUser() {
         setLoading(true)
         getUser().then((user: Curriculo) => {
-            setCurrentImage(`${process.env.API_URL}/assets/img/${user.image}`)
+            setCurrentImage(`${process.env.API_URL}/assets/img${user.image}`)
             setUserForm(user)
         }).finally(() => setLoading(false))
     }
