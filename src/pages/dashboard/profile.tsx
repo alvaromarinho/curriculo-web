@@ -51,7 +51,7 @@ export default function Profile() {
 
     function handleChange(e: any) {
         const { name, value } = e.target
-        setUserForm((form) => ({ ...form, [name]: value }))
+        setUserForm((prev) => ({ ...prev, [name]: value }))
     }
 
     function handleSubmit(e: any) {
@@ -67,17 +67,17 @@ export default function Profile() {
     function handleChangePhone(e: any, index: number) {
         const phones = userForm.phones;
         if (phones) phones[index] = { ...phones[index], number: e.target.value }
-        setUserForm((form) => ({ ...form, phones: phones }))
+        setUserForm((prev) => ({ ...prev, phones: phones }))
     }
 
     function addPhone() {
         const phones = userForm.phones;
         phones?.push({ number: '' })
-        setUserForm((form) => ({ ...form, phones: phones }))
+        setUserForm((prev) => ({ ...prev, phones: phones }))
     }
 
     function removePhone(id?: number) {
-        setUserForm((form) => ({ ...form, phones: form.phones ? form.phones.filter((phone) => phone.id !== id) : [] }))
+        setUserForm((prev) => ({ ...prev, phones: prev.phones ? prev.phones.filter((phone) => phone.id !== id) : [] }))
     }
 
     // SOCIAL NETWORKS
@@ -86,19 +86,19 @@ export default function Profile() {
         const { name, value } = e.target
         const socialNetworks = userForm.socialNetworks;
         if (socialNetworks) socialNetworks[index] = { ...socialNetworks[index], [name]: value }
-        setUserForm((form) => ({ ...form, socialNetworks: socialNetworks }))
+        setUserForm((prev) => ({ ...prev, socialNetworks: socialNetworks }))
     }
 
     function addSocialNetworks() {
         const socialNetworks = userForm.socialNetworks;
         socialNetworks?.push({ name: '', icon: '', url: '' })
-        setUserForm((form) => ({ ...form, socialNetworks: socialNetworks }))
+        setUserForm((prev) => ({ ...prev, socialNetworks: socialNetworks }))
     }
 
     function removeSocialNetworks(id?: number) {
-        setUserForm((form) => ({
-            ...form,
-            socialNetworks: form.socialNetworks ? form.socialNetworks.filter((sn) => sn.id !== id) : []
+        setUserForm((prev) => ({
+            ...prev,
+            socialNetworks: prev.socialNetworks ? prev.socialNetworks.filter((sn) => sn.id !== id) : []
         }))
     }
 

@@ -17,7 +17,7 @@ const SignIn = () => {
 
     function handleChange(e: any) {
         const { name, value } = e.target
-        setAuthForm((form) => ({ ...form, [name]: value }))
+        setAuthForm((prev) => ({ ...prev, [name]: value }))
     }
 
     function handleSubmit(e: any) {
