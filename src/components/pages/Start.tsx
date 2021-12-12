@@ -11,7 +11,7 @@ export default function Start({ user }: StartProps) {
                 <h1 className="display-3 text-capitalize">{user.name}</h1>
 
                 <div className="d-flex display-6 mb-3">
-                    <span className="d-inline-block me-2">I'm </span>
+                    <span className="d-inline-block me-2">I'm a </span>
                     <span className="text-success">
                         <Typewriter options={{ strings: ['Web Developer', 'Graphic Designer', 'Freelancer'], autoStart: true, loop: true }} />
                     </span>

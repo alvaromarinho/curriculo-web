@@ -1,5 +1,5 @@
 import { CgLogOff } from "react-icons/cg";
-import { RiFileUserLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
+import { RiFileUserLine, RiGitRepositoryLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -34,6 +34,11 @@ function Sidebar({ className }: any) {
                     <RiFileUserLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Informações</span>
                 </a>
             </Link>
+            <Link href="/dashboard/portfolios" passHref>
+                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                    <RiGitRepositoryLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Portfólios</span>
+                </a>
+            </Link>
             <a className="list-group-item list-group-item-action d-flex align-items-center pointer" onClick={signOut}>
                 <CgLogOff className="fa-fw ms-3 me-3" /> <span className="lh-1">Sair</span>
             </a>
@@ -49,7 +54,7 @@ export default function Dashboard({ children }: any) {
                 <Body className="col pt-4 p-md-4 bg-light">
 
                     {/* MOBILE */}
-                    <nav className="navbar fixed-top navbar-light bg-gray-light d-md-none">
+                    <nav className="navbar fixed-top navbar-light bg-light d-md-none">
                         <div className="container-fluid">
                             <a className="navbar-brand d-flex align-items-center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                                 <AiOutlineMenu className="me-3" /> Dashboard
@@ -57,7 +62,9 @@ export default function Dashboard({ children }: any) {
                         </div>
                     </nav>
 
-                    {children}
+                    <div className="mt-4 pt-2 mt-md-0 pt-md-0">
+                        {children}
+                    </div>
                 </Body>
 
                 {/* MOBILE */}
@@ -99,6 +106,6 @@ const Menu = styled.div`
 const CloseOffCanvas = styled.button`
     position: absolute;
     z-index: 1;
-    top: 1.5rem;
+    top: 1rem;
     right: 1rem;
 `

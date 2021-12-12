@@ -6,7 +6,7 @@ export default createGlobalStyle`
 
     html, body, #__next { height: 100% }
 
-    a { text-decoration: none; color: #45505b !important; }
+    a { text-decoration: none; }
 
     a:hover { color: var(--bs-primary)!important; }
 
@@ -37,6 +37,8 @@ export default createGlobalStyle`
 
     .rounded-bottom-0 { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     .rounded-top-0 { border-top-left-radius: 0; border-top-right-radius: 0; }
+
+    .mx-n4 { margin-left: -1.5rem; margin-right: -1.5rem; }
 
     .p-6 { padding: 5rem; }
     .px-6 { padding-right: 5rem; padding-left: 5rem; }

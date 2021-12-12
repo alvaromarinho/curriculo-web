@@ -4,7 +4,7 @@ import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
 import { FaAngleLeft, FaPlus, FaRegEdit, FaRegSave, FaRegTrashAlt, FaTimes } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";
-import { createInformations, deleteInformations, getInformations, updateInformations } from "../../services/InformationService";
+import { createInformation, deleteInformation, getInformations, updateInformation } from "../../services/InformationService";
 import { Information } from "../../models/User";
 import { InformationType } from "../../models/InformationType";
 import { titleCase } from "../../utils/StringUtils";
@@ -47,7 +47,7 @@ export default function Informations() {
         setLoadingDelete(true)
         const closeModal = document.getElementById('close-modal');
         if (currentInfo && currentInfo.id)
-            deleteInformations(currentInfo.id).then(() => {
+            deleteInformation(currentInfo.id).then(() => {
                 closeModal?.click()
                 onSuccess('apagados')
             }).finally(() => setLoadingSave(false))
@@ -62,11 +62,11 @@ export default function Informations() {
         e.preventDefault()
         setLoadingSave(true)
         if (currentInfo && currentInfo.id)
-            updateInformations(currentInfo)
+            updateInformation(currentInfo)
                 .then(() => onSuccess('atualizados'))
                 .finally(() => setLoadingSave(false))
         else if (currentInfo)
-            createInformations(currentInfo)
+            createInformation(currentInfo)
                 .then(() => onSuccess('atualizados'))
                 .finally(() => setLoadingSave(false))
     }
@@ -173,7 +173,7 @@ export default function Informations() {
                                     </div>
                                     <div className="col-12">
                                         <label htmlFor="description">Descrição</label>
-                                        <textarea className="form-control" id="description" name="descripnameon" rows={8}
+                                        <textarea className="form-control" id="description" name="description" rows={8}
                                             defaultValue={currentInfo.description || undefined} onChange={handleChange}></textarea>
                                     </div>
                                 </div>
