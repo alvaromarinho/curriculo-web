@@ -10,6 +10,9 @@ export default createGlobalStyle`
 
     a:hover { color: var(--bs-primary)!important; }
 
+    :required { border-left: 3px solid red }
+    :required:valid { border-left-color: limegreen }
+
     /* ==========================================================================
     Callout's
     ========================================================================== */

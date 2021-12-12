@@ -1,10 +1,16 @@
-import styled from 'styled-components'
 import { Information } from '../../models/User'
+import { useEffect } from 'react';
 import dayjs from "dayjs";
+import styled from 'styled-components'
 
 interface ExperienceProps { informations: Information[] }
 
 export default function Experience({ informations }: ExperienceProps) {
+
+    useEffect(() => {
+        informations = informations.sort((a, b) => a.start! > b.start! && 1 || -1)
+    }, [])
+
     return (
         <section className="bg-light p-6" id="experience">
             <div className="container px-6">
@@ -16,7 +22,7 @@ export default function Experience({ informations }: ExperienceProps) {
                                 <i className="fa fa-fw fa-th-list"></i>
                             </TimelineIcon>
                             <div className="timeline-date">
-                                <span>{dayjs(information.start).format('MMM YYYY')} - {dayjs(information.end).format('MMM YYYY')}</span>
+                                <span>{dayjs(information.start).format('MMM YYYY')} - {information.end ? dayjs(information.end).format('MMM YYYY') : 'Present'}</span>
                             </div>
                             <div className="timeline-card card">
                                 <div className="card-body">
