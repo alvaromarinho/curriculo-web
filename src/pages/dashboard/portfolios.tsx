@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Portfolio } from '../../models/User';
 import { createPortfolio, deletePortfolio, getPortfolios, updatePortfolio } from '../../services/PortfolioService';
 import { CgSpinner } from 'react-icons/cg';
-import { FaExclamationTriangle, FaPlus, FaRegSave, FaRegTrashAlt, FaTimes } from 'react-icons/fa';
+import { FaExclamationTriangle, FaPen, FaPlus, FaRegSave, FaRegTrashAlt, FaTimes } from 'react-icons/fa';
 import Projects from '../../components/pages/dashboard/Projects';
 import Button from '../../components/Button';
 import _ from "lodash";
@@ -31,6 +31,7 @@ export default function Portfolios() {
 
     function loadPortfolios() {
         setLoading(true)
+        setNewPortfolio(null)
         getPortfolios().then((portfolios: Portfolio[]) => {
             setPorfolios(portfolios)
             if (portfolios.length) setCurrentPortfolio(portfolios[0])
@@ -56,7 +57,7 @@ export default function Portfolios() {
                 .finally(() => setLoadingSave(false))
         else if (newPortfolio)
             createPortfolio(newPortfolio)
-                .then(() => onSuccess('atualizados'))
+                .then(() => onSuccess('criados'))
                 .finally(() => setLoadingSave(false))
     }
 
@@ -87,12 +88,13 @@ export default function Portfolios() {
                         }
                     </div>
 
+                    {/* ADICIONAR */}
                     {newPortfolio &&
                         <form onSubmit={handleSubmit}>
                             <div className="row g-2 justify-content-between align-items-end mb-4">
                                 <div className="col">
                                     <div className="col-12">
-                                        <label htmlFor="title">Novo Portfólio</label>
+                                        <label htmlFor="title">{newPortfolio.id ? 'Editar' : 'Novo'} Portfólio</label>
                                         <input type="text" className="form-control" id="title" name="title" value={newPortfolio.name} placeholder="Nome"
                                             onChange={(e) => setNewPortfolio((prev) => ({ ...prev, name: e.target.value }))} required />
                                     </div>
@@ -133,6 +135,11 @@ export default function Portfolios() {
                                 {currentPortfolio &&
                                     <div className="row">
                                         <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                                            <button className="btn btn-outline-info border-0 d-flex-center w-100" type="button" onClick={() => setNewPortfolio(currentPortfolio)}>
+                                                <FaPen className="me-2" /> Renomear Portfólio
+                                            </button>
+                                        </div>
+                                        <div className="col-12 col-md-auto order-1 order-md-2">
                                             <button className="btn btn-outline-danger border-0 d-flex-center w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
                                                 <FaRegTrashAlt className="me-2" /> Apagar Portfólio
                                             </button>

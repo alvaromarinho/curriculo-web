@@ -67,7 +67,7 @@ export default function Informations() {
                 .finally(() => setLoadingSave(false))
         else if (currentInfo)
             createInformation(currentInfo)
-                .then(() => onSuccess('atualizados'))
+                .then(() => onSuccess('criados'))
                 .finally(() => setLoadingSave(false))
     }
 
