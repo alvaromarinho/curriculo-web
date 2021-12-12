@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { NextPageContext } from 'next';
 import { Curriculo } from '../models/User'
 import { getAllUserData } from '../services/UserService'
 import { Menu } from '../styles/menu';
@@ -10,7 +11,6 @@ import Experience from '../components/pages/Experience';
 import Portfolio from '../components/pages/Portfolio';
 import Contact from '../components/pages/Contact';
 import _ from "lodash";
-import { NextPageContext } from 'next';
 
 interface IndexProps { user: Curriculo }
 

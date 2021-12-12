@@ -8,10 +8,10 @@ export async function getUser() {
     return (await api.get('/user'))?.data
 }
 
-export async function updateUser(obj: any, file: any) {
+export async function updateUser(obj: any, file?: any) {
     const formData = new FormData();
     buildFormData(formData, obj);
-    formData.append("image", file);
+    file && formData.append("image", file);
     return (await api.put('/user', formData, { headers: { 'Content-Type': 'multipart/form-data' } }))?.data
 }
 

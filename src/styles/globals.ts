@@ -11,6 +11,20 @@ export default createGlobalStyle`
     a:hover { color: var(--bs-primary)!important; }
 
     /* ==========================================================================
+    Callout's
+    ========================================================================== */
+
+    .callout { border: 1px solid #e9ecef; border-left-width: 0.25rem; border-radius: 0.25rem; }
+    .callout-primary { border-left-color: var(--bs-primary) }
+    .callout-secondary { border-left-color: var(--bs-secondary) }
+    .callout-success { border-left-color: var(--bs-success) }
+    .callout-danger { border-left-color: var(--bs-danger) }
+    .callout-warning { border-left-color: var(--bs-warning) }
+    .callout-info { border-left-color: var(--bs-info) }
+    .callout-light { border-left-color: var(--bs-light) }
+    .callout-dark { border-left-color: var(--bs-dark) }
+
+    /* ==========================================================================
     Custom
     ========================================================================== */
 

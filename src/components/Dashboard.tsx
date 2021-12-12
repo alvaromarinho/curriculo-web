@@ -1,5 +1,5 @@
 import { CgLogOff } from "react-icons/cg";
-import { RiHome2Line } from "react-icons/ri";
+import { RiFileUserLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -22,6 +22,16 @@ function Sidebar({ className }: any) {
             <Link href="/dashboard" passHref>
                 <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
                     <RiHome2Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Home</span>
+                </a>
+            </Link>
+            <Link href="/dashboard/profile" passHref>
+                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                    <RiUser3Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Perfil</span>
+                </a>
+            </Link>
+            <Link href="/dashboard/informations" passHref>
+                <a className="list-group-item list-group-item-action d-flex align-items-center pointer">
+                    <RiFileUserLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Informações</span>
                 </a>
             </Link>
             <a className="list-group-item list-group-item-action d-flex align-items-center pointer" onClick={signOut}>

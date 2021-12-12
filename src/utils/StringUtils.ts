@@ -1,3 +1,3 @@
-export function titleCase(str: string) {
-    return str ? str.toLowerCase().replace(/^(\w)|\s(\w)/g, (grp) => grp.toUpperCase()) : str;
+export function titleCase(str: any) {
+    return str ? str.toLowerCase().replace(/^(\w)|\s(\w)/g, (grp: any) => grp.toUpperCase()) : str;
 }

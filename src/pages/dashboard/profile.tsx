@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
-import { FaPlus, FaRegSave, FaRegTrashAlt } from "react-icons/fa";
-import { getUser, updateUser } from "../../../services/UserService";
-import { CgSpinner } from "react-icons/cg";
-import { Curriculo } from "../../../models/User";
+import { NextPageContext } from "next";
+import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
-import Button from "../../Button";
+import { FaPlus, FaRegSave, FaRegTrashAlt } from "react-icons/fa";
+import { getUser, updateUser } from "../../services/UserService";
+import { CgSpinner } from "react-icons/cg";
+import { Curriculo } from "../../models/User";
+import Button from "../../components/Button";
 import styled from "styled-components";
 
-export default function EditUser() {
+export default function Profile() {
 
     const [loading, setLoading] = useState(true);
     const [loadingSave, setLoadingSave] = useState(false);
@@ -101,7 +103,7 @@ export default function EditUser() {
     }
 
     return (
-        <div className="card card-body mb-3">
+        <div className="card card-body px-4">
             {loading ?
                 <div className="text-center py-5">
                     <CgSpinner className="fa-spin me-2 fa-3x" />
@@ -109,7 +111,7 @@ export default function EditUser() {
                 :
                 <form onSubmit={handleSubmit}>
                     <h2 className="mb-2">Informações Pessoais</h2>
-                    <div className="row">
+                    <div className="row mb-4">
                         <EditImage className="col-12 col-md-4">
                             <input className="d-none" id="image" type="file" name="image" onChange={handleChangeFile} />
                             <label htmlFor="image">
@@ -118,29 +120,31 @@ export default function EditUser() {
                             </label>
                         </EditImage>
                         <div className="col-12 col-md-8">
-                            <div className="mb-3">
-                                <label htmlFor="name">Nome</label>
-                                <input type="text" className="form-control" id="name" name="name" value={userForm.name} onChange={handleChange} />
+                            <div className="row">
+                                <div className="col-12 col-md-6 mb-3">
+                                    <label htmlFor="name">Nome</label>
+                                    <input type="text" className="form-control" id="name" name="name" value={userForm.name} onChange={handleChange} />
+                                </div>
+                                <div className="col-12 col-md-6 mb-3">
+                                    <label htmlFor="email">Email</label>
+                                    <input type="email" className="form-control" id="email" name="email" value={userForm.email} readOnly />
+                                </div>
+                                <div className="col-12 col-md-6 mb-3">
+                                    <label htmlFor="city">Cidade</label>
+                                    <input type="text" className="form-control" id="city" name="city" value={userForm.city} onChange={handleChange} />
+                                </div>
+                                <div className="col-12 col-md-6 mb-3">
+                                    <label htmlFor="uf">Estado</label>
+                                    <select id="uf" name="uf" className="form-select" defaultValue={userForm.uf} onChange={handleChange}>
+                                        {ufs.map((uf) => <option key={uf} value={uf}>{uf}</option>)}
+                                    </select>
+                                </div>
+                                <div className="col-12">
+                                    <label htmlFor="description">Descrição</label>
+                                    <textarea className="form-control" id="description" name="descripnameon" rows={8}
+                                        defaultValue={userForm.description} onChange={handleChange}></textarea>
+                                </div>
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="email">Email</label>
-                                <input type="email" className="form-control" id="email" name="email" value={userForm.email} readOnly />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="city">Cidade</label>
-                                <input type="text" className="form-control" id="city" name="city" value={userForm.city} onChange={handleChange} />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="uf">Estado</label>
-                                <select id="uf" name="uf" className="form-select" defaultValue={userForm.uf} onChange={handleChange}>
-                                    {ufs.map((uf) => <option key={uf} value={uf}>{uf}</option>)}
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-12 mb-4">
-                            <label htmlFor="description">Descrição</label>
-                            <textarea className="form-control" id="description" name="descripnameon" rows={8}
-                                defaultValue={userForm.description} onChange={handleChange}></textarea>
                         </div>
                     </div>
 
@@ -210,7 +214,7 @@ export default function EditUser() {
                     )}
 
                     <hr className="text-muted" />
-                    <div className="row">
+                    <div className="row justify-content-end">
                         <div className="col-12 col-md-auto">
                             <Button color="success" text="Salvar" type="submit" loading={loadingSave} className="px-5 w-100">
                                 <FaRegSave className="me-2" />
@@ -228,9 +232,33 @@ const EditImage = styled.div`
     align-items: center;
     justify-content: center;
 
-    &:hover { filter: brightness(70%); transition: all .5s; }
     &:hover span { opacity: 1; }
     label { position: relative; }
-    img { height: 18rem; cursor: pointer; }
-    span { position: absolute; left: 50%; bottom: .5rem; transform: translateX(-50%); color: white; text-decoration: underline; cursor: pointer; opacity: 0; }
+    img { height: 24rem; width: 100%; object-fit: cover; cursor: pointer; }
+    span { 
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        color: white;
+        text-decoration: underline;
+        cursor: pointer;
+        opacity: 0;
+        background-color: rgba(0,0,0,.5);
+        padding: 0.5rem 0;
+        transition: all .5s ease;
+    }
 `
+
+export async function getServerSideProps(ctx: NextPageContext) {
+    const { akToken } = parseCookies(ctx)
+
+    if (!akToken) {
+        return {
+            redirect: { destination: '/sign-in', permanent: false }
+        }
+    }
+
+    return { props: {} }
+}
