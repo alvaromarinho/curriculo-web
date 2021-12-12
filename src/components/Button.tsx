@@ -7,12 +7,13 @@ interface ButtonProps {
     loading: boolean,
     disabled?: boolean,
     className?: string,
-    children?: any
+    children?: any,
+    onClick?: any
 }
 
-export default function Button({ text, color, type = 'button', loading, disabled, className, children }: ButtonProps) {
+export default function Button({ text, color, type = 'button', loading, disabled, className, onClick, children }: ButtonProps) {
     return (
-        <button className={`btn btn-${color} ${className} d-flex-center`} type={type} disabled={loading || disabled}>
+        <button className={`btn btn-${color} ${className} d-flex-center`} type={type} disabled={loading || disabled} onClick={onClick}>
             {loading ? <CgSpinner className="fa-spin me-2" /> : children} {text}
         </button>
     )

@@ -12,3 +12,7 @@ export async function createInformations(info: Information) {
 export async function updateInformations(info: Information) {
     return (await api.put(`/informations/${info.id}`, info))?.data
 }
+
+export async function deleteInformations(id: number) {
+    return (await api.delete(`/informations/${id}`))?.data
+}
