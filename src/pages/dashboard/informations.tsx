@@ -43,7 +43,7 @@ export default function Informations() {
         }).finally(() => setLoading(false))
     }
 
-    function deleteInfo() {
+    function removeInfo() {
         setLoadingDelete(true)
         const closeModal = document.getElementById('close-modal');
         if (currentInfo && currentInfo.id)
@@ -87,11 +87,11 @@ export default function Informations() {
                     <div className="row justify-content-between align-items-center mb-2">
                         <div className="col-auto">
                             {currentInfo && currentInfo.id ?
-                                <h2 className="mb-0 me-2">Editar Informação</h2>
+                                <h2 className="me-2">Editar Informação</h2>
                                 : currentInfo && !currentInfo.id ?
-                                    <h2 className="mb-0 me-2">Nova Informação</h2>
-                                    :
-                                    <h2 className="mb-0 me-2">Informações</h2>
+                                <h2 className="me-2">Nova Informação</h2>
+                                :
+                                <h2 className="me-2">Informações</h2>
                             }
                         </div>
                         {!currentInfo &&
@@ -220,7 +220,7 @@ export default function Informations() {
                                             <span className="text-muted">{titleCase(currentInfo.subtitle)}</span>
                                         </div>
                                         <div className="modal-footer">
-                                            <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={deleteInfo}>
+                                            <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removeInfo}>
                                                 <FaRegTrashAlt className="me-2" />
                                             </Button>
                                         </div>

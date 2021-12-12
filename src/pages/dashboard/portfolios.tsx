@@ -16,6 +16,7 @@ export default function Portfolios() {
     const [loadingSave, setLoadingSave] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
 
+    const [showFormProject, setShowFormProject] = useState<boolean>();
     const [portfolios, setPorfolios] = useState<Portfolio[]>();
     const [currentPortfolio, setCurrentPortfolio] = useState<Portfolio | null>(null);
     const [newPortfolio, setNewPortfolio] = useState<Portfolio | null>(null);
@@ -74,77 +75,91 @@ export default function Portfolios() {
                 </div>
                 :
                 <>
-                    <div className="row justify-content-between align-items-center mb-2">
-                        <div className="col-auto">
-                            <h2 className="me-2">Portfólios</h2>
-                        </div>
-                        {!newPortfolio &&
-                            <div className="col-auto">
-                                <button className="btn btn-primary d-flex-center" type="button" onClick={() => setNewPortfolio({})}>
-                                    <FaPlus className="me-2" />
-                                    <span className="d-none d-md-inline">Novo Portfólio</span>
-                                </button>
-                            </div>
-                        }
-                    </div>
-
-                    {/* ADICIONAR */}
-                    {newPortfolio &&
-                        <form onSubmit={handleSubmit}>
-                            <div className="row g-2 justify-content-between align-items-end mb-4">
-                                <div className="col">
-                                    <div className="col-12">
-                                        <label htmlFor="title">{newPortfolio.id ? 'Editar' : 'Novo'} Portfólio</label>
-                                        <input type="text" className="form-control" id="title" name="title" value={newPortfolio.name} placeholder="Nome"
-                                            onChange={(e) => setNewPortfolio((prev) => ({ ...prev, name: e.target.value }))} required />
+                    {!showFormProject && 
+                        <>
+                            <div className="row justify-content-between align-items-center mb-2">
+                                <div className="col-auto">
+                                    <h2 className="me-2">Portfólios</h2>
+                                </div>
+                                {!newPortfolio &&
+                                    <div className="col-auto">
+                                        <button className="btn btn-primary d-flex-center" type="button" onClick={() => setNewPortfolio({})}>
+                                            <FaPlus className="me-2" />
+                                            <span className="d-none d-md-inline">Novo Portfólio</span>
+                                        </button>
                                     </div>
-                                </div>
-                                <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
-                                    <Button color="success" text="Salvar" type="submit" loading={loadingSave} className="px-4 w-100">
-                                        <FaRegSave className="me-2" />
-                                    </Button>
-                                </div>
-                                <div className="col-12 col-md-auto order-1 order-md-2">
-                                    <button className="btn btn-light d-flex-center w-100" type="button" onClick={() => setNewPortfolio(null)}>
-                                        <FaTimes className="me-1" /> Cancelar
-                                    </button>
-                                </div>
+                                }
                             </div>
-                        </form>
 
+                            {/* ADICIONAR */}
+                            {newPortfolio &&
+                                <form onSubmit={handleSubmit}>
+                                    <div className="row g-2 justify-content-between align-items-end mb-4">
+                                        <div className="col">
+                                            <div className="col-12">
+                                                <label htmlFor="title">{newPortfolio.id ? 'Editar' : 'Novo'} Portfólio</label>
+                                                <input type="text" className="form-control" id="title" name="title" value={newPortfolio.name} placeholder="Nome"
+                                                    onChange={(e) => setNewPortfolio((prev) => ({ ...prev, name: e.target.value }))} required />
+                                            </div>
+                                        </div>
+                                        <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                                            <Button color="success" text="Salvar" type="submit" loading={loadingSave} className="px-4 w-100">
+                                                <FaRegSave className="me-2" />
+                                            </Button>
+                                        </div>
+                                        <div className="col-12 col-md-auto order-1 order-md-2">
+                                            <button className="btn btn-light d-flex-center w-100" type="button" onClick={() => setNewPortfolio(null)}>
+                                                <FaTimes className="me-1" /> Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+
+                            {/* ABAS */}
+                            <div className="overflow-auto mx-n4">
+                                <ul className="nav nav-tabs flex-nowrap px-4" id="myTab" role="tablist">
+                                    {portfolios && portfolios.map((portfolio, index) =>
+                                        <li className="nav-item" role="presentation" key={portfolio.id}>
+                                            <button className={`nav-link text-nowrap ${portfolio.id == currentPortfolio!.id && 'active'}`} type="button" role="tab"
+                                                data-bs-toggle="tab" data-bs-target={`#port_${portfolio.id}`} onClick={() => setCurrentPortfolio(portfolio)}>
+                                                {portfolio.name}
+                                            </button>
+                                        </li>
+                                    )}
+                                </ul>
+                            </div>
+                        </>
                     }
 
                     {/* LISTA */}
-                    <div className="overflow-auto mx-n4">
-                        <ul className="nav nav-tabs flex-nowrap px-4" id="myTab" role="tablist">
-                            {portfolios && portfolios.map((portfolio, index) =>
-                                <li className="nav-item" role="presentation" key={portfolio.id}>
-                                    <button className={`nav-link text-nowrap ${index == 0 && 'active'}`} type="button" role="tab"
-                                        data-bs-toggle="tab" data-bs-target={`#port_${portfolio.id}`} onClick={() => setCurrentPortfolio(portfolio)}>
-                                        {portfolio.name}
-                                    </button>
-                                </li>
-                            )}
-                        </ul>
-                    </div>
                     <div className="tab-content" id="myTabContent">
                         {portfolios && portfolios.map((portfolio, index) =>
-                            <div className={`tab-pane pt-3 fade ${index == 0 && 'show active'}`} id={`port_${portfolio.id}`} role="tabpanel" key={portfolio.id}>
-                                {portfolio.projects && <Projects projects={portfolio.projects} />}
-                                <hr className="text-muted" />
-                                {currentPortfolio &&
-                                    <div className="row">
-                                        <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
-                                            <button className="btn btn-outline-info border-0 d-flex-center w-100" type="button" onClick={() => setNewPortfolio(currentPortfolio)}>
-                                                <FaPen className="me-2" /> Renomear Portfólio
-                                            </button>
+                            <div className={`tab-pane fade ${portfolio.id == currentPortfolio!.id && 'show active'} ${!showFormProject && 'pt-3'}`} id={`port_${portfolio.id}`} role="tabpanel" key={portfolio.id}>
+                                {portfolio.projects &&
+                                    <Projects
+                                        portforioId={portfolio.id!}
+                                        projects={portfolio.projects}
+                                        loadPortfolios={loadPortfolios}
+                                        showForm={(show: boolean) => setShowFormProject(show)}
+                                    />
+                                }
+                                {currentPortfolio && !showFormProject &&
+                                    <>
+                                        <hr className="text-muted" />
+                                        <div className="row">
+                                            <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                                                <button className="btn btn-outline-info border-0 d-flex-center w-100" type="button" onClick={() => setNewPortfolio(currentPortfolio)}>
+                                                    <FaPen className="me-2" /> Renomear Portfólio
+                                                </button>
+                                            </div>
+                                            <div className="col-12 col-md-auto order-1 order-md-2">
+                                                <button className="btn btn-outline-danger border-0 d-flex-center w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
+                                                    <FaRegTrashAlt className="me-2" /> Apagar Portfólio
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="col-12 col-md-auto order-1 order-md-2">
-                                            <button className="btn btn-outline-danger border-0 d-flex-center w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
-                                                <FaRegTrashAlt className="me-2" /> Apagar Portfólio
-                                            </button>
-                                        </div>
-                                    </div>
+                                    </>
                                 }
                             </div>
                         )}
