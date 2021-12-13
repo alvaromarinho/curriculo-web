@@ -35,6 +35,11 @@ export default createGlobalStyle`
 
     .pointer { cursor: pointer }
 
+    .img-cover { object-fit: cover }
+
+    .top-1 { top: 1rem } 
+    .end-1 { right: 1rem }
+
     .rounded-bottom-0 { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     .rounded-top-0 { border-top-left-radius: 0; border-top-right-radius: 0; }
 
@@ -46,6 +51,13 @@ export default createGlobalStyle`
 
     .mb-6 { margin-bottom: 5rem; }
     .mb-7 { margin-bottom: 8rem; }
+
+    /* ==========================================================================
+    Bootstrap Custom
+    ========================================================================== */
+
+    .carousel-control-prev { background-image: linear-gradient(to left, transparent, gray); }
+    .carousel-control-next { background-image: linear-gradient(to right, transparent, gray); }
 
     @media (max-width: 768px) { }
 `;

@@ -40,11 +40,16 @@ export interface Portfolio {
     projects?: Project[];
 }
 
+export interface ProjectImage {
+    id?: number;
+    url?: string;
+}
+
 export interface Project {
     id?: number;
     title?: string;
     subtitle?: string;
     description?: string;
     url?: string;
-    images?: any[];
+    images?: ProjectImage[];
 }
