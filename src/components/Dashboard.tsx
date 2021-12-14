@@ -19,11 +19,6 @@ function Sidebar({ className }: any) {
             </div>
             <Link href="/dashboard" passHref>
                 <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard" && "active"}`}>
-                    <RiHome2Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Home</span>
-                </a>
-            </Link>
-            <Link href="/dashboard/profile" passHref>
-                <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard/profile" && "active"}`}>
                     <RiUser3Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Perfil</span>
                 </a>
             </Link>

@@ -9,7 +9,7 @@ export default function About({ user }: AboutProps) {
                 <h2 className="text-center mb-5">About</h2>
                 <div className="d-flex">
                     <div className="flex-shrink-0">
-                        <img src='vercel.svg' alt="Perfil" />
+                        <img width="400" src={`${process.env.API_URL}/assets/img${user.image}`} alt="Perfil" />
                     </div>
                     <div className="flex-grow-1 ms-5">
                         <p>{user.description}</p>

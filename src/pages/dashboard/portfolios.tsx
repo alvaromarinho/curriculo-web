@@ -30,13 +30,16 @@ export default function Portfolios() {
         loadPortfolios()
     }, [])
 
+    useEffect(() => {
+        portfolios && !currentPortfolio && setCurrentPortfolio(portfolios[0])
+    }, [portfolios])
+
     function loadPortfolios() {
         setLoading(true)
         setNewPortfolio(null)
-        getPortfolios().then((portfolios: Portfolio[]) => {
-            setPorfolios(portfolios)
-            if (portfolios.length) setCurrentPortfolio(portfolios[0])
-        }).finally(() => setLoading(false))
+        getPortfolios()
+            .then((portfolios: Portfolio[]) => setPorfolios(portfolios))
+            .finally(() => setLoading(false))
     }
 
     function removePortfolio() {
@@ -136,7 +139,7 @@ export default function Portfolios() {
                     <div className="tab-content" id="myTabContent">
                         {portfolios && portfolios.map((portfolio, index) =>
                             <div className={`tab-pane fade ${portfolio.id == currentPortfolio!.id && 'show active'} ${!showFormProject && 'pt-3'}`} id={`port_${portfolio.id}`} role="tabpanel" key={portfolio.id}>
-                                {portfolio.projects &&
+                                {portfolio.projects && portfolio.id == currentPortfolio!.id &&
                                     <Projects
                                         portforioId={portfolio.id!}
                                         projects={portfolio.projects}

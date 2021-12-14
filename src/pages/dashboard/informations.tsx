@@ -10,9 +10,9 @@ import { InformationType } from "../../models/InformationType";
 import { titleCase } from "../../utils/StringUtils";
 import Button from "../../components/Button";
 import _ from "lodash";
+
 import dayjs from "dayjs";
 import 'dayjs/locale/pt-br';
-
 dayjs.locale('pt-br');
 
 export default function Informations() {
@@ -23,7 +23,11 @@ export default function Informations() {
 
     const [infos, setInfos] = useState<any>();
     const [currentInfo, setCurrentInfo] = useState<Information | null>(null);
+    const [filteredInfos, setFilteredInfos] = useState<Information[] | null>([]);
+    const [searchTerm, setSearchTerm] = useState<string>('');
+
     const [types, setTypes] = useState<string[]>();
+    const [currentType, setCurrentType] = useState<string>();
 
     useEffect(() => {
         import("bootstrap").then(({ Modal }) => {
@@ -33,6 +37,29 @@ export default function Informations() {
 
         loadInfo()
     }, [])
+
+    useEffect(() => {
+        types && !currentType && setCurrentType(types[0])
+    }, [types])
+
+    useEffect(() => {
+        if (currentType) {
+            setSearchTerm('')
+            setFilteredInfos(infos[currentType].sort((a: any, b: any) => a.start > b.start && 1 || -1))
+        }
+    }, [currentType])
+
+    useEffect(() => {
+        if (searchTerm && currentType) {
+            setFilteredInfos(infos[currentType].filter((info: Information) =>
+                (info.title && info.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (info.subtitle && info.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (info.description && info.description.toLowerCase().includes(searchTerm.toLowerCase()))
+            ))
+        } else if (currentType) {
+            setFilteredInfos(infos[currentType].sort((a: any, b: any) => a.start > b.start && 1 || -1))
+        }
+    }, [searchTerm])
 
     function loadInfo() {
         setLoading(true)
@@ -89,9 +116,9 @@ export default function Informations() {
                             {currentInfo && currentInfo.id ?
                                 <h2 className="me-2">Editar Informação</h2>
                                 : currentInfo && !currentInfo.id ?
-                                <h2 className="me-2">Nova Informação</h2>
-                                :
-                                <h2 className="me-2">Informações</h2>
+                                    <h2 className="me-2">Nova Informação</h2>
+                                    :
+                                    <h2 className="me-2">Informações</h2>
                             }
                         </div>
                         {!currentInfo &&
@@ -111,7 +138,8 @@ export default function Informations() {
                                 <ul className="nav nav-tabs flex-nowrap px-4" id="myTab" role="tablist">
                                     {types && types.map((type, index) =>
                                         <li className="nav-item" role="presentation" key={index}>
-                                            <button className={`nav-link text-nowrap ${index == 0 && 'active'}`} data-bs-toggle="tab" data-bs-target={`#${type}`} type="button" role="tab">
+                                            <button className={`nav-link text-nowrap ${currentType == type && 'active'}`} type="button" role="tab"
+                                                data-bs-toggle="tab" data-bs-target={`#${type}`} onClick={() => setCurrentType(type)}>
                                                 {type}
                                             </button>
                                         </li>
@@ -120,9 +148,13 @@ export default function Informations() {
                             </div>
                             <div className="tab-content" id="myTabContent">
                                 {types && types.map((type, index) =>
-                                    <div className={`tab-pane pt-3 fade ${index == 0 && 'show active'}`} id={type} role="tabpanel" key={index}>
-                                        <input type="text" name="search" id="search" className="form-control mb-3" autoComplete="off" placeholder="Buscar informação..." />
-                                        {infos[type] && infos[type].sort((a: any, b: any) => a.start > b.start && 1 || -1).map((info: Information) =>
+                                    <div className={`tab-pane pt-3 fade ${currentType == type && 'show active'}`} id={type} role="tabpanel" key={index}>
+                                        <input type="text" name="search" className="form-control mb-3" autoComplete="off" placeholder="Buscar informação..."
+                                            value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+
+                                        {!filteredInfos?.length && <div className="card card-body text-center text-muted">Nenhuma informação encontrada</div>}
+
+                                        {filteredInfos && filteredInfos.map((info: Information) =>
                                             <div className={`card card-body mb-3 callout`} key={info.id}>
                                                 <div className="d-flex justify-content-between align-items-start">
                                                     <h3 className="fs-5 mb-0">{titleCase(info.title)}</h3>

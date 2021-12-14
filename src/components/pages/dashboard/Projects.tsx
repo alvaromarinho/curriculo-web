@@ -13,6 +13,9 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
 
     const [loadingSave, setLoadingSave] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
+
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
     const [currentProject, setCurrentProject] = useState<Project | null>(null);
     const [currentImages, setCurrentImages] = useState<ProjectImage[] | null>(null);
 
@@ -20,6 +23,8 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
     const [filesToShow, setFilesToShow] = useState<string[]>();
 
     useEffect(() => showForm(!!currentProject), [currentProject])
+
+    useEffect(() => setSearchTerm(''), [projects])
 
     useEffect(() => {
         if (!files) return
@@ -31,8 +36,19 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
         return () => {
             images.map((img) => URL.revokeObjectURL(img))
         }
-
     }, [files])
+
+    useEffect(() => {
+        if (searchTerm) {
+            setFilteredProjects(projects.filter((project) =>
+                (project.title && project.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (project.subtitle && project.subtitle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (project.description && project.description.toLowerCase().includes(searchTerm.toLowerCase()))
+            ))
+        } else {
+            setFilteredProjects(projects)
+        }
+    }, [searchTerm])
 
     function handleChangeFile(e: any) {
         if (!e.target.files || e.target.files.length === 0) {
@@ -82,7 +98,8 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                 <>
                     <div className="row g-3 justify-content-between align-items-center mb-3">
                         <div className="col">
-                            <input type="text" name="search" id="search" className="form-control" autoComplete="off" placeholder="Digite o nome do projeto..." />
+                            <input type="text" name="search" id="search" className="form-control" autoComplete="off" placeholder="Digite o nome do projeto..."
+                                value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                         </div>
                         <div className="col-auto">
                             <button className="btn btn-primary d-flex-center" type="button" onClick={() => setCurrentProject({})}>
@@ -92,12 +109,12 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                         </div>
                     </div>
 
-                    {!projects.length &&
-                        <div className="card card-body text-center text-muted">Não há projetos cadastrados para esse portfólio</div>
+                    {!filteredProjects.length &&
+                        <div className="card card-body text-center text-muted">Nenhuma projeto encontrado</div>
                     }
 
                     {/* LISTA */}
-                    {!!projects.length && projects.map((project) =>
+                    {!!filteredProjects.length && filteredProjects.map((project) =>
                         <div className="card card-body callout mb-3" key={project.id}>
                             <div className="d-flex justify-content-between align-items-start">
                                 <h3 className="fs-5 mb-0">{titleCase(project.title)}</h3>
