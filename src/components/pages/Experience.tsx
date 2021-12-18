@@ -1,4 +1,4 @@
-import { Information } from '../../models/User'
+import { Information } from '../../models/Information'
 import { useEffect } from 'react';
 import dayjs from "dayjs";
 import styled from 'styled-components'

@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import { FaPlus, FaRegSave, FaRegTrashAlt } from "react-icons/fa";
 import { getUser, updateUser } from "../../services/UserService";
 import { CgSpinner } from "react-icons/cg";
-import { Curriculo } from "../../models/User";
+import { User } from "../../models/User";
+import { removeHTML } from "../../utils/StringUtils";
 import Button from "../../components/Button";
 import styled from "styled-components";
 
@@ -17,7 +18,7 @@ export default function Dashboard() {
     const [currentImage, setCurrentImage] = useState<string>();
     const [file, setFile] = useState()
 
-    const [userForm, setUserForm] = useState<Curriculo>({} as Curriculo);
+    const [userForm, setUserForm] = useState<User>({} as User);
     const ufs = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
 
     useEffect(() => loadUser(), [])
@@ -34,10 +35,12 @@ export default function Dashboard() {
 
     function loadUser() {
         setLoading(true)
-        getUser().then((user: Curriculo) => {
+        getUser().then((user: User) => {
             setCurrentImage(`${process.env.API_URL}/assets/img${user.image}`)
             setUserForm(user)
-        }).finally(() => setLoading(false))
+        })
+        .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+        .finally(() => setLoading(false))
     }
 
     function handleChangeFile(e: any) {
@@ -59,6 +62,7 @@ export default function Dashboard() {
         setLoadingSave(true)
         updateUser(userForm, file)
             .then(() => toast.success('Dados atualizados com sucesso!'))
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
             .finally(() => setLoadingSave(false))
     }
 

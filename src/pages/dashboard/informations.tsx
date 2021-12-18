@@ -5,9 +5,8 @@ import { toast } from "react-toastify";
 import { FaAngleLeft, FaPlus, FaRegEdit, FaRegSave, FaRegTrashAlt, FaTimes } from "react-icons/fa";
 import { CgSpinner } from "react-icons/cg";
 import { createInformation, deleteInformation, getInformations, updateInformation } from "../../services/InformationService";
-import { Information } from "../../models/User";
-import { InformationType } from "../../models/InformationType";
-import { titleCase } from "../../utils/StringUtils";
+import { Information, InformationType } from "../../models/Information";
+import { removeHTML, titleCase } from "../../utils/StringUtils";
 import Button from "../../components/Button";
 import _ from "lodash";
 
@@ -67,7 +66,9 @@ export default function Informations() {
         getInformations().then((info: Information[]) => {
             setTypes(_.chain(info).groupBy('type').map((value, index) => index).value())
             setInfos(_.chain(info).groupBy('type').value())
-        }).finally(() => setLoading(false))
+        })
+        .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+        .finally(() => setLoading(false))
     }
 
     function removeInfo() {
@@ -77,7 +78,9 @@ export default function Informations() {
             deleteInformation(currentInfo.id).then(() => {
                 closeModal?.click()
                 onSuccess('apagados')
-            }).finally(() => setLoadingSave(false))
+            })
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+            .finally(() => setLoadingSave(false))
     }
 
     function handleChange(e: any) {
@@ -91,10 +94,12 @@ export default function Informations() {
         if (currentInfo && currentInfo.id)
             updateInformation(currentInfo)
                 .then(() => onSuccess('atualizados'))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
         else if (currentInfo)
             createInformation(currentInfo)
                 .then(() => onSuccess('criados'))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
     }
 

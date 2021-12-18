@@ -1,4 +1,7 @@
-export interface Curriculo {
+import { Information } from "./Information";
+import { Portfolio } from "./Portfolio";
+
+export interface User {
     id?: number;
     email?: string;
     city?: string;
@@ -10,16 +13,6 @@ export interface Curriculo {
     phones?: Phone[];
     portfolios?: Portfolio[];
     socialNetworks?: SocialNetwork[];
-}
-
-export interface Information {
-    id?: number;
-    title?: string;
-    subtitle?: string;
-    description?: string;
-    type?: string;
-    start?: string;
-    end?: string;
 }
 
 export interface Phone {
@@ -34,22 +27,3 @@ export interface SocialNetwork {
     url?: string;
 }
 
-export interface Portfolio {
-    id?: number;
-    name?: string;
-    projects?: Project[];
-}
-
-export interface ProjectImage {
-    id?: number;
-    url?: string;
-}
-
-export interface Project {
-    id?: number;
-    title?: string;
-    subtitle?: string;
-    description?: string;
-    url?: string;
-    images?: ProjectImage[];
-}

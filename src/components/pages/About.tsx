@@ -1,6 +1,6 @@
-import { Curriculo } from '../../models/User'
+import { User } from '../../models/User'
 
-interface AboutProps { user: Curriculo }
+interface AboutProps { user: User }
 
 export default function About({ user }: AboutProps) {
     return (

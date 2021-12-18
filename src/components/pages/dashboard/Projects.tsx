@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { FaAngleLeft, FaLink, FaPlus, FaRegEdit, FaRegSave, FaRegTrashAlt } from "react-icons/fa";
 import { IoMdImages } from "react-icons/io";
 import { toast } from "react-toastify";
-import { Project, ProjectImage } from "../../../models/User";
+import { Project, ProjectImage } from "../../../models/Portfolio";
 import { createProject, deleteProject, updateProject } from "../../../services/PortfolioService";
-import { titleCase } from "../../../utils/StringUtils";
+import { removeHTML, titleCase } from "../../../utils/StringUtils";
 import Button from "../../Button";
 
 interface ProjectProps { portforioId: number, projects: Project[], loadPortfolios: Function, showForm: Function }
@@ -70,10 +70,12 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
         if (currentProject && currentProject.id)
             updateProject(portforioId, currentProject, files)
                 .then(() => onSuccess('atualizados'))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
         else if (currentProject)
             createProject(portforioId, currentProject, files)
                 .then(() => onSuccess('criados'))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
     }
 
@@ -84,7 +86,9 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
             deleteProject(portforioId, currentProject.id).then(() => {
                 closeModal?.click()
                 onSuccess('apagados')
-            }).finally(() => setLoadingSave(false))
+            })
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+            .finally(() => setLoadingSave(false))
     }
 
     function onSuccess(text: string) {

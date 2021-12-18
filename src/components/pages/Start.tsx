@@ -1,7 +1,7 @@
-import { Curriculo } from '../../models/User'
+import { User } from '../../models/User'
 import Typewriter from "typewriter-effect";
 
-interface StartProps { user: Curriculo }
+interface StartProps { user: User }
 
 export default function Start({ user }: StartProps) {
 

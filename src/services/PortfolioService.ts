@@ -1,4 +1,4 @@
-import { Portfolio, Project } from "../models/User";
+import { Portfolio, Project } from "../models/Portfolio";
 import { buildFormData } from "../utils/FormUtils";
 import { api } from "./API";
 

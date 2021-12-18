@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { Information } from '../../models/User'
+import { Information } from '../../models/Information'
 import { titleCase } from '../../utils/StringUtils'
 
 interface EducationProps { informations: Information[] }

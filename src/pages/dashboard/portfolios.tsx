@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next';
 import { parseCookies } from 'nookies';
 import { useEffect, useState } from 'react';
-import { Portfolio } from '../../models/User';
+import { Portfolio } from '../../models/Portfolio';
 import { createPortfolio, deletePortfolio, getPortfolios, updatePortfolio } from '../../services/PortfolioService';
 import { CgSpinner } from 'react-icons/cg';
 import { FaExclamationTriangle, FaPen, FaPlus, FaRegSave, FaRegTrashAlt, FaTimes } from 'react-icons/fa';
@@ -9,6 +9,7 @@ import Projects from '../../components/pages/dashboard/Projects';
 import Button from '../../components/Button';
 import _ from "lodash";
 import { toast } from 'react-toastify';
+import { removeHTML } from '../../utils/StringUtils';
 
 export default function Portfolios() {
 
@@ -39,6 +40,7 @@ export default function Portfolios() {
         setNewPortfolio(null)
         getPortfolios()
             .then((portfolios: Portfolio[]) => setPorfolios(portfolios))
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
             .finally(() => setLoading(false))
     }
 
@@ -49,7 +51,9 @@ export default function Portfolios() {
             deletePortfolio(currentPortfolio.id).then(() => {
                 closeModal?.click()
                 onSuccess('apagados')
-            }).finally(() => setLoadingSave(false))
+            })
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+            .finally(() => setLoadingSave(false))
     }
 
     function handleSubmit(e: any) {
@@ -58,10 +62,12 @@ export default function Portfolios() {
         if (newPortfolio && newPortfolio.id)
             updatePortfolio(newPortfolio)
                 .then(() => onSuccess('atualizados'))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
         else if (newPortfolio)
             createPortfolio(newPortfolio)
                 .then(() => onSuccess('criados'))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
     }
 

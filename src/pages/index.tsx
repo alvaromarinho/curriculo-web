@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NextPageContext } from 'next';
-import { Curriculo } from '../models/User'
+import { User } from '../models/User'
 import { getAllUserData } from '../services/UserService'
 import { Menu } from '../styles/menu';
 import Start from '../components/pages/Start';
@@ -12,7 +12,7 @@ import Portfolio from '../components/pages/Portfolio';
 import Contact from '../components/pages/Contact';
 import _ from "lodash";
 
-interface IndexProps { user: Curriculo }
+interface IndexProps { user: User }
 
 const Home = ({ user }: IndexProps) => {
 

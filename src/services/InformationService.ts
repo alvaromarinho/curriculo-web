@@ -1,4 +1,4 @@
-import { Information } from "../models/User";
+import { Information } from "../models/Information";
 import { api } from "./API";
 
 export async function getInformations() {

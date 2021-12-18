@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { FaSignInAlt } from "react-icons/fa";
-import { CgSpinner } from "react-icons/cg";
 import { parseCookies } from "nookies";
 import { NextPageContext } from "next";
 import { AuthContext, AuthForm } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
+import { removeHTML } from "../utils/StringUtils";
 import styled from "styled-components";
 import Router from "next/router";
 import Button from "../components/Button";
@@ -25,6 +26,7 @@ const SignIn = () => {
         setLoading(true)
         signIn(authForm)
             .then(() => Router.push('/dashboard'))
+            .catch((error) => toast.error('Wrong email or password'))
             .finally(() => setLoading(false))
     }
 
