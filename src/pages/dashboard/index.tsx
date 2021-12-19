@@ -127,7 +127,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="card card-body px-4">
+        <div className="card card-body px-4 mb-3">
             {loading ?
                 <div className="text-center py-5">
                     <CgSpinner className="fa-spin me-2 fa-3x" />
@@ -136,7 +136,7 @@ export default function Dashboard() {
                 <form onSubmit={handleSubmit}>
                     <h2 className="me-3">Perfil</h2>
                     <div className="row mb-4">
-                        <EditImage className="col-12 col-md-4">
+                        <EditImage className="col-12 col-md-4 mb-3 mb-md-0">
                             <input className="d-none" id="image" type="file" name="image" onChange={handleChangeFile} />
                             <label htmlFor="image">
                                 <img src={currentImage} alt="Profile" />
@@ -147,7 +147,7 @@ export default function Dashboard() {
                             <div className="row">
                                 <div className="col-12 col-md-6 mb-3">
                                     <label htmlFor="name">Nome</label>
-                                    <input type="text" className="form-control" id="name" name="name" value={userForm.name} onChange={handleChange} />
+                                    <input type="text" className="form-control" id="name" name="name" value={userForm.name} onChange={handleChange} required/>
                                 </div>
                                 <div className="col-12 col-md-6 mb-3">
                                     <label htmlFor="email">Email</label>
@@ -155,18 +155,18 @@ export default function Dashboard() {
                                 </div>
                                 <div className="col-12 col-md-6 mb-3">
                                     <label htmlFor="city">Cidade</label>
-                                    <input type="text" className="form-control" id="city" name="city" value={userForm.city} onChange={handleChange} />
+                                    <input type="text" className="form-control" id="city" name="city" value={userForm.city} onChange={handleChange} required/>
                                 </div>
                                 <div className="col-12 col-md-6 mb-3">
                                     <label htmlFor="uf">Estado</label>
-                                    <select id="uf" name="uf" className="form-select" defaultValue={userForm.uf} onChange={handleChange}>
+                                    <select id="uf" name="uf" className="form-select" defaultValue={userForm.uf} onChange={handleChange} required>
                                         {ufs.map((uf) => <option key={uf} value={uf}>{uf}</option>)}
                                     </select>
                                 </div>
                                 <div className="col-12">
                                     <label htmlFor="description">Descrição</label>
-                                    <textarea className="form-control" id="description" name="descripnameon" rows={8}
-                                        defaultValue={userForm.description} onChange={handleChange}></textarea>
+                                    <textarea className="form-control" id="description" name="description" rows={8}
+                                        defaultValue={userForm.description} onChange={handleChange} required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -179,20 +179,20 @@ export default function Dashboard() {
                         </div>
                         <div className="col-auto">
                             <button className="btn btn-sm btn-outline-primary d-flex-center border-0" type="button" onClick={addPhone}>
-                                <FaPlus className="me-2" />
+                                <FaPlus className="me-md-2" />
                                 <span className="d-none d-md-inline">Adicionar</span>
                             </button>
                         </div>
                     </div>
                     {userForm.phones && userForm.phones.map((phone, index) =>
-                        <div className="row mb-4" key={index}>
+                        <div className="row align-items-center mb-4" key={index}>
                             <div className="col">
                                 <input type="text" className="form-control" id={`phone_${phone.id}`} name={`phone_${phone.id}`}
-                                    value={phone.number} onChange={(e) => handleChangePhone(e, index)} />
+                                    value={phone.number} onChange={(e) => handleChangePhone(e, index)} required />
                             </div>
                             <div className="col-auto">
                                 <button className="btn btn-outline-danger d-flex-center border-0" onClick={() => removePhone(phone.id)}>
-                                    <FaRegTrashAlt className="me-2" />
+                                    <FaRegTrashAlt className="me-md-2" />
                                     <span className="d-none d-md-inline">Remover</span>
                                 </button>
                             </div>
@@ -206,34 +206,34 @@ export default function Dashboard() {
                         </div>
                         <div className="col-auto">
                             <button className="btn btn-sm btn-outline-primary d-flex-center border-0" type="button" onClick={addSocialNetworks}>
-                                <FaPlus className="me-2" />
+                                <FaPlus className="me-md-2" /> 
                                 <span className="d-none d-md-inline">Adicionar</span>
                             </button>
                         </div>
                     </div>
                     {userForm.socialNetworks && userForm.socialNetworks.map((sn, index) =>
-                        <div className="row align-items-end mb-4" key={index}>
-                            <div className="col">
+                        <div className="row align-items-end mb-2" key={index}>
+                            <div className="col-12 col-md mb-3">
                                 <label htmlFor={`sn_icon_${sn.id}`}>Icone</label>
                                 <input type="text" className="form-control" id={`sn_icon_${sn.id}`} name="icon"
                                     value={sn.icon} onChange={(e) => handleChangeSocialNetworks(e, index)} />
                             </div>
-                            <div className="col">
+                            <div className="col-12 col-md mb-3">
                                 <label htmlFor={`sn_name_${sn.id}`}>Name</label>
                                 <input type="text" className="form-control" id={`sn_name_${sn.id}`} name="name"
-                                    value={sn.name} onChange={(e) => handleChangeSocialNetworks(e, index)} />
+                                    value={sn.name} onChange={(e) => handleChangeSocialNetworks(e, index)} required />
                             </div>
-                            <div className="col">
+                            <div className="col-12 col-md mb-3">
                                 <label htmlFor={`sn_url_${sn.id}`}>Url</label>
                                 <input type="text" className="form-control" id={`sn_url_${sn.id}`} name="url"
-                                    value={sn.url} onChange={(e) => handleChangeSocialNetworks(e, index)} />
+                                    value={sn.url} onChange={(e) => handleChangeSocialNetworks(e, index)} required />
                             </div>
-                            <div className="col-auto">
-                                <button className="btn btn-outline-danger d-flex-center border-0" onClick={() => removeSocialNetworks(sn.id)}>
-                                    <FaRegTrashAlt className="me-2" />
-                                    <span className="d-none d-md-inline">Remover</span>
+                            <div className="col-12 col-md-auto mb-3">
+                                <button className="btn btn-outline-danger d-flex-center border-0 w-100" onClick={() => removeSocialNetworks(sn.id)}>
+                                    <FaRegTrashAlt className="me-2" /> Remover
                                 </button>
                             </div>
+                            <div className="d-md-none border-bottom mb-3"></div>
                         </div>
                     )}
 

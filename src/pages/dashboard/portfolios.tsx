@@ -93,7 +93,7 @@ export default function Portfolios() {
                                 {!newPortfolio &&
                                     <div className="col-auto">
                                         <button className="btn btn-primary d-flex-center" type="button" onClick={() => setNewPortfolio({})}>
-                                            <FaPlus className="me-2" />
+                                            <FaPlus className="me-md-2" />
                                             <span className="d-none d-md-inline">Novo Portfólio</span>
                                         </button>
                                     </div>
@@ -111,12 +111,12 @@ export default function Portfolios() {
                                                     onChange={(e) => setNewPortfolio((prev) => ({ ...prev, name: e.target.value }))} required />
                                             </div>
                                         </div>
-                                        <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                                        <div className="col-12 col-md-auto ms-auto">
                                             <Button color="success" text="Salvar" type="submit" loading={loadingSave} className="px-4 w-100">
                                                 <FaRegSave className="me-2" />
                                             </Button>
                                         </div>
-                                        <div className="col-12 col-md-auto order-1 order-md-2">
+                                        <div className="col-12 col-md-auto">
                                             <button className="btn btn-light d-flex-center w-100" type="button" onClick={() => setNewPortfolio(null)}>
                                                 <FaTimes className="me-1" /> Cancelar
                                             </button>
@@ -157,12 +157,12 @@ export default function Portfolios() {
                                     <>
                                         <hr className="text-muted" />
                                         <div className="row">
-                                            <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                                            <div className="col-12 col-md-auto ms-auto mb-2 mb-md-0">
                                                 <button className="btn btn-outline-info border-0 d-flex-center w-100" type="button" onClick={() => setNewPortfolio(currentPortfolio)}>
                                                     <FaPen className="me-2" /> Renomear Portfólio
                                                 </button>
                                             </div>
-                                            <div className="col-12 col-md-auto order-1 order-md-2">
+                                            <div className="col-12 col-md-auto">
                                                 <button className="btn btn-outline-danger border-0 d-flex-center w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
                                                     <FaRegTrashAlt className="me-2" /> Apagar Portfólio
                                                 </button>
@@ -189,14 +189,16 @@ export default function Portfolios() {
                                     <FaExclamationTriangle className="text-warning me-2" /> <span className="fw-bold fs-5 lh-1">Atenção</span>
                                 </div>
                                 <p className="m-0">
-                                    Ao excluir o portfólio, todos os projetos vinculados a ele serão excluídos também. 
+                                    Ao excluir o portfólio, todos os projetos vinculados a ele serão excluídos também.
                                 </p>
                                 <p className="text-decoration-underline m-0">Essa ação é irreversível!</p>
                             </div>
                             <div className="modal-footer">
-                                <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removePortfolio}>
-                                    <FaRegTrashAlt className="me-2" />
-                                </Button>
+                                <div className="col-12 col-md-auto">
+                                    <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removePortfolio} className="w-100">
+                                        <FaRegTrashAlt className="me-2" />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     }

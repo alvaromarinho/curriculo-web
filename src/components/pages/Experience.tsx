@@ -19,7 +19,7 @@ export default function Experience({ informations }: ExperienceProps) {
                     {informations.map((information: Information) =>
                         <TimelineItem key={information.id}>
                             <TimelineIcon className="bg-primary">
-                                {information.title == 'GRAPHIC DESIGNER' ?
+                                {information.title == 'Graphic Designer' ?
                                     <i className="fa fa-fw fa-paint-brush"></i>
                                     :
                                     <i className="fa fa-fw fa-code"></i>
@@ -49,7 +49,7 @@ const Timeline = styled.div`
     transition: all 0.4s ease;
 
     @media (max-width: 768px) {
-        & { padding: 30px; }
+        & { padding: 0 }
         &:before { left: 1.8rem; }
     }
 `;
@@ -114,13 +114,15 @@ const TimelineItem = styled.div`
     }
 
     @media (max-width: 768px) {
+        &:not(:last-child):before { top: .5rem; left: -.5rem; }
         .timeline-card { width: 90%; margin-left: auto; }
-        .timeline-card:before {
+        .timeline-card:before { left: 0; right: inherit; margin-left: -7px; border-left: 0; border-right: 7px solid white; }
+        .timeline-date, &:nth-child(even) .timeline-date {
+            top: -2.2rem;
             left: 0;
-            right: inherit;
-            margin-left: -7px;
-            border-left: 0;
-            border-right: 7px solid white;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            width: 100%;
         }
     }
 `;
@@ -144,6 +146,16 @@ const TimelineIcon = styled.div`
     }
 
     @media (max-width: 768px) {
-        .timeline-icon { left: 0; }
+        & {
+            width: 2rem;
+            height: 2rem; 
+            left: 0;
+            top: .5rem;
+        }
+
+        .fa {
+            margin-left: .4rem;
+            margin-top: .4rem;
+        }
     }
 `;

@@ -83,8 +83,8 @@ export default function Informations() {
                 modal.hide()
                 onSuccess('apagados')
             })
-            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
-            .finally(() => setLoadingSave(false))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+                .finally(() => setLoadingSave(false))
     }
 
     function handleChange(e: any) {
@@ -133,7 +133,7 @@ export default function Informations() {
                         {!currentInfo &&
                             <div className="col-auto">
                                 <button className="btn btn-primary d-flex-center" type="button" onClick={() => setCurrentInfo({})}>
-                                    <FaPlus className="me-2" />
+                                    <FaPlus className="me-md-2" />
                                     <span className="d-none d-md-inline">Nova Informação</span>
                                 </button>
                             </div>
@@ -166,15 +166,18 @@ export default function Informations() {
                                         {filteredInfos && filteredInfos.map((info: Information) =>
                                             <div className={`card card-body mb-3 callout`} key={info.id}>
                                                 <div className="d-flex justify-content-between align-items-start">
-                                                    <h3 className="fs-5 mb-0">{info.title}</h3>
+                                                    <h3 className="fs-5 mb-md-0">{info.title}</h3>
                                                     <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => setCurrentInfo(info)}>
-                                                        <FaRegEdit className="mb-1 me-1" /> Editar
+                                                        <FaRegEdit className="mb-md-1 me-md-1" />
+                                                        <span className="d-none d-md-inline">Editar</span>
                                                     </button>
                                                 </div>
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <span className="text-muted">{info.subtitle}</span>
+                                                <div className="row justify-content-between align-items-center">
+                                                    <div className="col-12 col-md-auto text-muted order-2 order-md-1 mb-3 mb-md-0">{info.subtitle}</div>
                                                     {info.start &&
-                                                        <span>{dayjs(info.start).format('DD/MM/YYYY')} {info.end ? `até ${dayjs(info.end).format('DD/MM/YYYY')}` : 'até hoje'}</span>
+                                                        <div className="col-12 col-md-auto order-1 order-md-2 mb-2 mb-md-0">
+                                                            {dayjs(info.start).format('DD/MM/YYYY')} {info.end ? `até ${dayjs(info.end).format('DD/MM/YYYY')}` : 'até hoje'}
+                                                        </div>
                                                     }
                                                 </div>
                                                 {info.description && <div className="mt-2" dangerouslySetInnerHTML={{ __html: info.description }} />}
@@ -229,18 +232,18 @@ export default function Informations() {
                                 <hr className="text-muted" />
                                 <div className="row">
                                     {currentInfo.id &&
-                                        <div className="col-12 col-md-auto order-2 order-md-1">
+                                        <div className="col-12 col-md-auto order-3 order-md-1 mb-2 mb-md-0">
                                             <button className="btn btn-danger d-flex-center px-5 w-100" type="button" data-bs-toggle="modal" data-bs-target="#modal">
                                                 <FaRegTrashAlt className="me-1" /> Apagar
                                             </button>
                                         </div>
                                     }
-                                    <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                                    <div className="col-12 col-md-auto order-2 order-md-2 ms-auto mb-2 mb-md-0">
                                         <button className="btn btn-warning d-flex-center px-5 w-100" type="button" onClick={() => setCurrentInfo(null)}>
                                             <FaAngleLeft className="me-1" /> Voltar
                                         </button>
                                     </div>
-                                    <div className="col-12 col-md-auto order-1 order-md-2">
+                                    <div className="col-12 col-md-auto order-1 order-md-3 mb-2 mb-md-0">
                                         <Button color="success" text="Salvar" type="submit" loading={loadingSave} className="px-5 w-100">
                                             <FaRegSave className="me-2" />
                                         </Button>
@@ -265,9 +268,11 @@ export default function Informations() {
                                 <span className="text-muted">{currentInfo.subtitle}</span>
                             </div>
                             <div className="modal-footer">
-                                <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removeInfo}>
-                                    <FaRegTrashAlt className="me-2" />
-                                </Button>
+                                <div className="col-12 col-md-auto">
+                                    <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removeInfo} className="w-100">
+                                        <FaRegTrashAlt className="me-2" />
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     }

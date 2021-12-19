@@ -33,8 +33,8 @@ export default createGlobalStyle`
     ========================================================================== */
 
     .title-page { position: relative; text-align: center; text-transform: uppercase; font-weight: 600; z-index: 2; padding-bottom: 1rem}
-    .title-page::before { content: attr(data-shadow); position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: #eef0f2; font-size: 3rem; z-index: -1; }
-    .bg-light .title-page::before { color: #e2e6e9 }
+    .title-page::before { content: attr(data-shadow); position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: #f1f2f4; font-size: 3rem; z-index: -1; }
+    .bg-light .title-page::before { color: #e8ebed }
     .title-page::after { content: ""; position: absolute; display: block; width: 4rem; height: 3px; background: #0563bb; bottom: 0; left: 50%; transform: translateX(-50%); }
 
     /* ==========================================================================
@@ -77,7 +77,9 @@ export default createGlobalStyle`
     .carousel-control-prev { background-image: linear-gradient(to left, transparent, gray); }
     .carousel-control-next { background-image: linear-gradient(to right, transparent, gray); }
 
-    .modal-content > .btn-close { position: fixed; top: 1rem; right: 1rem; font-size: 1.5rem; }
+    .modal-content > .btn-close { position: fixed; top: 1rem; right: 1rem; font-size: 1.5rem; z-index: 1060 }
 
-    @media (max-width: 768px) { }
+    @media (max-width: 768px) {
+        .px-6, .p-6 { padding-right: 1rem; padding-left: 1rem; }
+    }
 `;

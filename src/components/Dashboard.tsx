@@ -2,7 +2,7 @@ import { CgLogOff } from "react-icons/cg";
 import { RiEqualizerLine, RiFileUserLine, RiGitRepositoryLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import Link from 'next/link'
 import styled from "styled-components";
@@ -40,6 +40,11 @@ function Sidebar({ className }: any) {
 }
 
 export default function Dashboard({ children }: any) {
+
+    useEffect(() => {
+        import("bootstrap").then(({ Offcanvas }) => [].slice.call(document.querySelectorAll('.offcanvas')).map((el) => new Offcanvas(el)));
+    }, [])
+
     return (
         <div className="container-fluid h-100">
             <div className="row overflow-hidden h-100">
@@ -49,7 +54,7 @@ export default function Dashboard({ children }: any) {
                     {/* MOBILE */}
                     <nav className="navbar fixed-top navbar-light bg-light d-md-none">
                         <div className="container-fluid">
-                            <a className="navbar-brand d-flex align-items-center" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                            <a className="navbar-brand d-flex align-items-center" data-bs-toggle="offcanvas" href="#offcanvas" role="button" aria-controls="offcanvas">
                                 <AiOutlineMenu className="me-3" /> Dashboard
                             </a>
                         </div>
@@ -61,7 +66,7 @@ export default function Dashboard({ children }: any) {
                 </Body>
 
                 {/* MOBILE */}
-                <div className="offcanvas offcanvas-start p-0" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div className="offcanvas offcanvas-start p-0" id="offcanvas" aria-labelledby="offcanvasLabel">
                     <div className="position-relative">
                         <CloseOffCanvas type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></CloseOffCanvas>
                     </div>

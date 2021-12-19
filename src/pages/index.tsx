@@ -25,7 +25,7 @@ const Home = ({ user }: IndexProps) => {
 
     return (
         <>
-            <Menu id="menu">
+            <Menu id="menu" className="d-none d-md-block">
                 <a href="#start">
                     <i className="fa fa-home"></i>
                     <span>Start</span>

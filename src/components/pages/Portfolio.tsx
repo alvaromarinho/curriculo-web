@@ -26,10 +26,10 @@ export default function Portfolio({ user }: PortfolioProps) {
     }
 
     return (
-        <section className="vh-100 d-flex" id="portfolio">
+        <Section className="vh-100 d-flex" id="portfolio">
             <div className="container px-6 pt-6">
                 <h2 className="title-page mb-5" data-shadow="Portfolio">Portfolio</h2>
-                <Nav className="nav nav-tabs justify-content-center" role="tablist">
+                <ul className="nav nav-tabs justify-content-center" role="tablist">
                     {user.portfolios && user.portfolios.map((portfolio, index) => (
                         <li className="nav-item" role="presentation" key={index}>
                             <button type="button" role="tab" onClick={() => setCurrentPortfolio(portfolio.id)}
@@ -38,13 +38,13 @@ export default function Portfolio({ user }: PortfolioProps) {
                             </button>
                         </li>
                     ))}
-                </Nav>
+                </ul>
                 <div className="tab-content mt-3">
                     {user.portfolios && user.portfolios.map((portfolio, index) => (
                         <div className={`tab-pane fade ${((currentPortfolio == undefined && index == 0) || currentPortfolio == portfolio.id) && 'show active'}`} key={index}>
                             <div className="row">
                                 {portfolio.projects && portfolio.projects.map((project) => (
-                                    <div className="col-12 col-md-4" key={project.id}>
+                                    <div className="col-12 col-md-4 mb-3" key={project.id}>
                                         <div className={`card shadow border-0 h-100`}>
                                             {!!(project.images && project.images.length) &&
                                                 <img className="card-img-top img-hover img-cover img-cover-top pointer" height="120"
@@ -83,16 +83,20 @@ export default function Portfolio({ user }: PortfolioProps) {
                     </div>
                 </div>
             </div>
-        </section>
+        </Section>
 
 
     )
 }
 
-export const Nav = styled.ul`
-    margin-bottom: 3rem;
-    &, .nav-link, .nav-link:hover, .nav-link:focus { border: none; }
-    & li + li:before { content: "|"; }
-    .nav-item { display: flex; align-items: center; color: #ccc; }
-    .nav-link.active { text-shadow: 1px 0 0 currentColor; }
-`;
+const Section = styled.section`
+    ul.nav { margin-bottom: 3rem; }
+    ul.nav, .nav-link, .nav-link:hover, .nav-link:focus { border: none; }
+    ul.nav li + li:before { content: "|"; }
+    ul.nav .nav-item { display: flex; align-items: center; color: #ccc; }
+    ul.nav .nav-link.active { text-shadow: 1px 0 0 currentColor; }
+
+    @media (max-width: 768px) {
+        ul.nav li + li:before { content: ""; }
+    }
+`

@@ -1,12 +1,13 @@
 import { User } from '../../models/User'
 import Typewriter from "typewriter-effect";
+import styled from 'styled-components';
 
 interface StartProps { user: User }
 
 export default function Start({ user }: StartProps) {
 
     return (
-        <section className="vh-100 d-flex align-items-center bg-light px-6" id="start">
+        <Section className="vh-100 d-flex align-items-center bg-light px-6" id="start">
             <div className="container px-6">
                 <h1 className="display-3 fw-bold text-capitalize">{user.name}</h1>
 
@@ -27,6 +28,12 @@ export default function Start({ user }: StartProps) {
                     ))}
                 </ul>
             </div>
-        </section>
+        </Section>
     )
 }
+
+const Section = styled.section`
+    @media (max-width: 768px) {
+        .display-6 { font-size: calc(1.375rem + 0.5vw); }
+    }
+`

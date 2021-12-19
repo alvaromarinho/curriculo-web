@@ -109,7 +109,7 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                         </div>
                         <div className="col-auto">
                             <button className="btn btn-primary d-flex-center" type="button" onClick={() => setCurrentProject({})}>
-                                <FaPlus className="me-2" />
+                                <FaPlus className="me-md-2" />
                                 <span className="d-none d-md-inline">Novo Projeto</span>
                             </button>
                         </div>
@@ -123,22 +123,23 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                     {!!filteredProjects.length && filteredProjects.map((project) =>
                         <div className="card card-body callout mb-3" key={project.id}>
                             <div className="d-flex justify-content-between align-items-start">
-                                <h3 className="fs-5 mb-0">{titleCase(project.title)}</h3>
+                                <h3 className="fs-5 mb-md-0">{titleCase(project.title)}</h3>
                                 <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => setCurrentProject(project)}>
-                                    <FaRegEdit className="mb-1 me-1" /> Editar
+                                    <FaRegEdit className="mb-1 me-md-1" /> 
+                                    <span className="d-none d-md-inline">Editar</span>
                                 </button>
                             </div>
-                            <div className="d-flex justify-content-between">
+                            <div className="d-md-flex justify-content-between">
                                 <div>
                                     <p className="text-muted mb-0">{titleCase(project.subtitle)}</p>
                                     {project.url &&
-                                        <a className="d-flex align-items-center" href={project.url} target="_blank">
+                                        <a className="d-flex align-items-center text-truncate" href={project.url} target="_blank">
                                             <FaLink className="me-2" /> {project.url}
                                         </a>
                                     }
                                 </div>
                                 {!!(project.images && project.images.length) &&
-                                    <IoMdImages className="fa-3x text-success me-2 pointer" onClick={() => setCurrentImages(project.images!)}
+                                    <IoMdImages className="fa-3x text-success mt-2 mt-md-0 me-2 pointer" onClick={() => setCurrentImages(project.images!)}
                                         data-bs-toggle="modal" data-bs-target="#modalImage" />
                                 }
                             </div>
@@ -192,18 +193,18 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                         <hr className="text-muted" />
                         <div className="row">
                             {currentProject.id &&
-                                <div className="col-12 col-md-auto order-2 order-md-1">
+                                <div className="col-12 col-md-auto order-3 order-md-1 mb-2 mb-md-0">
                                     <button className="btn btn-danger d-flex-center px-5 w-100" type="button" data-bs-toggle="modal" data-bs-target="#modalDelete">
                                         <FaRegTrashAlt className="me-1" /> Apagar
                                     </button>
                                 </div>
                             }
-                            <div className="col-12 col-md-auto order-2 order-md-1 ms-auto">
+                            <div className="col-12 col-md-auto order-2 order-md-2 ms-auto mb-2 mb-md-0">
                                 <button className="btn btn-warning d-flex-center px-5 w-100" type="button" onClick={() => setCurrentProject(null)}>
                                     <FaAngleLeft className="me-1" /> Voltar
                                 </button>
                             </div>
-                            <div className="col-12 col-md-auto order-1 order-md-2">
+                            <div className="col-12 col-md-auto order-1 order-md-3 mb-2 mb-md-0">
                                 <Button color="success" text="Salvar" type="submit" loading={loadingSave} className="px-5 w-100">
                                     <FaRegSave className="me-2" />
                                 </Button>
