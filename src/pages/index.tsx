@@ -9,6 +9,7 @@ import Education from '../components/pages/Education';
 import Experience from '../components/pages/Experience';
 import Portfolio from '../components/pages/Portfolio';
 import Contact from '../components/pages/Contact';
+import Head from 'next/head';
 import styled from 'styled-components';
 import _ from "lodash";
 
@@ -25,6 +26,9 @@ const Home = ({ user }: IndexProps) => {
 
     return (
         <>
+            <Head>
+                <title>Alvaro Marinho</title>
+            </Head>
             <Menu id="menu" className="d-none d-md-block">
                 <a href="#start">
                     <i className="fa fa-home"></i>

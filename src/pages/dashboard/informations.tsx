@@ -113,7 +113,7 @@ export default function Informations() {
     }
 
     return (
-        <div className="card card-body px-4">
+        <div className="card card-body border-0 shadow px-4">
             {loading ?
                 <div className="text-center py-5">
                     <CgSpinner className="fa-spin me-2 fa-3x" />

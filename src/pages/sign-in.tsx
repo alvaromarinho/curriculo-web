@@ -32,10 +32,10 @@ const SignIn = () => {
 
     return (
         <div className="container-fluid bg-light h-100 d-flex-center">
-            <div className="card">
+            <div className="card border-0 shadow">
                 <div className="card-body p-4 p-md-5">
                     <Form onSubmit={handleSubmit}>
-                        <img className="mb-4" src="https://getbootstrap.com/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57" />
+                        <img className="mb-4" src="/logo.svg"  width="72" />
                         <h1 className="h3 mb-3 mb-md-4 fw-normal">Currículo</h1>
 
                         <div className="form-floating">

@@ -15,25 +15,25 @@ function Sidebar({ className }: any) {
     return (
         <Menu className={`list-group list-group-flush ${className}`}>
             <div className="list-group-item d-flex align-items-center">
-                <RiEqualizerLine className="fa-fw ms-3 me-3"/> <span>Dashboard</span>
+                <img src="/logo.svg" height="20" className="ms-2 me-3" /> <span>Dashboard</span>
             </div>
             <Link href="/dashboard" passHref>
                 <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard" && "active"}`}>
-                    <RiUser3Line className="fa-fw ms-3 me-3" /> <span className="lh-1">Perfil</span>
+                    <RiUser3Line className="fa-fw ms-2 me-3" /> <span className="lh-1">Perfil</span>
                 </a>
             </Link>
             <Link href="/dashboard/informations" passHref>
                 <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard/informations" && "active"}`}>
-                    <RiFileUserLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Informações</span>
+                    <RiFileUserLine className="fa-fw ms-2 me-3" /> <span className="lh-1">Informações</span>
                 </a>
             </Link>
             <Link href="/dashboard/portfolios" passHref>
                 <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard/portfolios" && "active"}`}>
-                    <RiGitRepositoryLine className="fa-fw ms-3 me-3" /> <span className="lh-1">Portfólios</span>
+                    <RiGitRepositoryLine className="fa-fw ms-2 me-3" /> <span className="lh-1">Portfólios</span>
                 </a>
             </Link>
             <a className="list-group-item list-group-item-action d-flex align-items-center pointer" onClick={signOut}>
-                <CgLogOff className="fa-fw ms-3 me-3" /> <span className="lh-1">Sair</span>
+                <CgLogOff className="fa-fw ms-2 me-3" /> <span className="lh-1">Sair</span>
             </a>
         </Menu>
     )
@@ -48,7 +48,7 @@ export default function Dashboard({ children }: any) {
     return (
         <div className="container-fluid h-100">
             <div className="row overflow-hidden h-100">
-                <Sidebar className="d-none d-md-flex col-auto md-width" />
+                <Sidebar className="d-none d-md-flex col-auto md-width shadow" />
                 <Body className="col pt-4 p-md-4 bg-light">
 
                     {/* MOBILE */}
@@ -83,7 +83,7 @@ const Body = styled.div`
 `;
 
 const Menu = styled.div`
-    border-right: 1px solid rgba(0,0,0,.125);
+    z-index: 1;
     background-color: white;
     border-radius: 0;
     padding: 0;
