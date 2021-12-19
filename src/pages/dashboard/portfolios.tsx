@@ -5,17 +5,18 @@ import { Portfolio } from '../../models/Portfolio';
 import { createPortfolio, deletePortfolio, getPortfolios, updatePortfolio } from '../../services/PortfolioService';
 import { CgSpinner } from 'react-icons/cg';
 import { FaExclamationTriangle, FaPen, FaPlus, FaRegSave, FaRegTrashAlt, FaTimes } from 'react-icons/fa';
+import { removeHTML } from '../../utils/StringUtils';
+import { toast } from 'react-toastify';
 import Projects from '../../components/pages/dashboard/Projects';
 import Button from '../../components/Button';
 import _ from "lodash";
-import { toast } from 'react-toastify';
-import { removeHTML } from '../../utils/StringUtils';
 
 export default function Portfolios() {
 
     const [loading, setLoading] = useState(true);
     const [loadingSave, setLoadingSave] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
+    const [modal, setModal] = useState<any>();
 
     const [showFormProject, setShowFormProject] = useState<boolean>();
     const [portfolios, setPorfolios] = useState<Portfolio[]>();
@@ -25,7 +26,7 @@ export default function Portfolios() {
     useEffect(() => {
         import("bootstrap").then(({ Modal }) => {
             const modalHTML = document && document.getElementById('modal');
-            modalHTML && new Modal(modalHTML)
+            modalHTML && setModal(new Modal(modalHTML))
         });
 
         loadPortfolios()
@@ -46,14 +47,13 @@ export default function Portfolios() {
 
     function removePortfolio() {
         setLoadingDelete(true)
-        const closeModal = document.getElementById('close-modal');
         if (currentPortfolio && currentPortfolio.id)
             deletePortfolio(currentPortfolio.id).then(() => {
-                closeModal?.click()
+                modal.hide()
                 onSuccess('apagados')
             })
-            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
-            .finally(() => setLoadingSave(false))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+                .finally(() => setLoadingSave(false))
     }
 
     function handleSubmit(e: any) {
@@ -84,7 +84,7 @@ export default function Portfolios() {
                 </div>
                 :
                 <>
-                    {!showFormProject && 
+                    {!showFormProject &&
                         <>
                             <div className="row justify-content-between align-items-center mb-2">
                                 <div className="col-auto">
@@ -173,35 +173,35 @@ export default function Portfolios() {
                             </div>
                         )}
                     </div>
-
-                    {/* MODAL */}
-                    <div className="modal fade" id="modal" tabIndex={-1} aria-labelledby="modal" aria-hidden="true">
-                        <div className="modal-dialog">
-                            {currentPortfolio &&
-                                <div className="modal-content">
-                                    <div className="modal-header bg-danger text-white">
-                                        <h5 className="modal-title" id="modal">Deseja apagar o portfolio {currentPortfolio.name}?</h5>
-                                        <button type="button" className="btn-close" id="close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div className="modal-body">
-                                        <div className="d-flex align-items-center mb-2">
-                                            <FaExclamationTriangle className="text-warning me-2" /> <span className="fw-bold fs-5 lh-1">Atenção</span>
-                                        </div>
-                                        <p className="m-0">
-                                            Ao excluir o portfólio, todos os projetos vinculados a ele serão excluídos também. <u>Essa ação é irreversível!</u>
-                                        </p>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removePortfolio}>
-                                            <FaRegTrashAlt className="me-2" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
                 </>
             }
+            {/* MODAL */}
+            <div className="modal fade" id="modal" tabIndex={-1} aria-labelledby="modal" aria-hidden="true">
+                <div className="modal-dialog modal-lg">
+                    {currentPortfolio &&
+                        <div className="modal-content">
+                            <div className="modal-header bg-danger text-white">
+                                <h5 className="modal-title" id="modal">Deseja apagar o portfolio {currentPortfolio.name}?</h5>
+                                <button type="button" className="btn-close" id="close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="d-flex align-items-center mb-2">
+                                    <FaExclamationTriangle className="text-warning me-2" /> <span className="fw-bold fs-5 lh-1">Atenção</span>
+                                </div>
+                                <p className="m-0">
+                                    Ao excluir o portfólio, todos os projetos vinculados a ele serão excluídos também. 
+                                </p>
+                                <p className="text-decoration-underline m-0">Essa ação é irreversível!</p>
+                            </div>
+                            <div className="modal-footer">
+                                <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removePortfolio}>
+                                    <FaRegTrashAlt className="me-2" />
+                                </Button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     )
 }

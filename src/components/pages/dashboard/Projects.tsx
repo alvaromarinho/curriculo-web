@@ -84,10 +84,11 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
         setLoadingDelete(true)
         const closeModal = document.getElementById('close-modal');
         if (currentProject && currentProject.id)
-            deleteProject(portforioId, currentProject.id).then(() => {
-                closeModal?.click()
-                onSuccess('apagados')
-            })
+            deleteProject(portforioId, currentProject.id)
+                .then(() => {
+                    closeModal?.click()
+                    onSuccess('apagados')
+                })
                 .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
                 .finally(() => setLoadingSave(false))
     }

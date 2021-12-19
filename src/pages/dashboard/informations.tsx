@@ -19,6 +19,7 @@ export default function Informations() {
     const [loading, setLoading] = useState(true);
     const [loadingSave, setLoadingSave] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
+    const [modal, setModal] = useState<any>();
 
     const [infos, setInfos] = useState<any>();
     const [currentInfo, setCurrentInfo] = useState<Information | null>(null);
@@ -31,7 +32,7 @@ export default function Informations() {
     useEffect(() => {
         import("bootstrap").then(({ Modal }) => {
             const modalHTML = document && document.getElementById('modal');
-            modalHTML && new Modal(modalHTML)
+            modalHTML && setModal(new Modal(modalHTML))
         });
 
         loadInfo()
@@ -71,16 +72,15 @@ export default function Informations() {
             setInfos(_.chain(info).groupBy('type').value())
             currType && setCurrentType(currType)
         })
-        .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
-        .finally(() => setLoading(false))
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+            .finally(() => setLoading(false))
     }
 
     function removeInfo() {
         setLoadingDelete(true)
-        const closeModal = document.getElementById('close-modal');
         if (currentInfo && currentInfo.id)
             deleteInformation(currentInfo.id).then(() => {
-                closeModal?.click()
+                modal.hide()
                 onSuccess('apagados')
             })
             .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
@@ -247,31 +247,32 @@ export default function Informations() {
                                     </div>
                                 </div>
                             </form>
-
-                            {/* MODAL */}
-                            <div className="modal fade" id="modal" tabIndex={-1} aria-labelledby="modal" aria-hidden="true">
-                                <div className="modal-dialog">
-                                    <div className="modal-content">
-                                        <div className="modal-header bg-danger text-white">
-                                            <h5 className="modal-title" id="modal">Deseja apagar essa informação?</h5>
-                                            <button type="button" className="btn-close" id="close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <h3 className="fs-5 mb-0">{currentInfo.title}</h3>
-                                            <span className="text-muted">{currentInfo.subtitle}</span>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removeInfo}>
-                                                <FaRegTrashAlt className="me-2" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </>
                     }
                 </>
             }
+            {/* MODAL */}
+            <div className="modal fade" id="modal" tabIndex={-1} aria-labelledby="modal" aria-hidden="true">
+                <div className="modal-dialog">
+                    {currentInfo &&
+                        <div className="modal-content">
+                            <div className="modal-header bg-danger text-white">
+                                <h5 className="modal-title" id="modal">Deseja apagar essa informação?</h5>
+                                <button type="button" className="btn-close" id="close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <h3 className="fs-5 mb-0">{currentInfo.title}</h3>
+                                <span className="text-muted">{currentInfo.subtitle}</span>
+                            </div>
+                            <div className="modal-footer">
+                                <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removeInfo}>
+                                    <FaRegTrashAlt className="me-2" />
+                                </Button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     )
 }
