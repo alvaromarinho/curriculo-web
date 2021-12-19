@@ -12,7 +12,7 @@ export default function Start({ user }: StartProps) {
 
                 <div className="d-flex display-6 mb-3">
                     <span className="d-inline-block me-2">I'm a </span>
-                    <span className="text-success">
+                    <span className="text-primary">
                         <Typewriter options={{ strings: ['Web Developer', 'Graphic Designer', 'Freelancer'], autoStart: true, loop: true }} />
                     </span>
                 </div>

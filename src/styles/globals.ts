@@ -29,13 +29,17 @@ export default createGlobalStyle`
     .callout-dark { border-left-color: var(--bs-dark) }
 
     /* ==========================================================================
-    Custom
+    Title Page
     ========================================================================== */
 
-    .title-page { position: relative; text-align: center; text-transform: uppercase; font-weight: 600; z-index: 2; }
-    .title-page::before { content: attr(data-shadow); position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); color: #eef0f2; font-size: 3rem; z-index: -1; }
+    .title-page { position: relative; text-align: center; text-transform: uppercase; font-weight: 600; z-index: 2; padding-bottom: 1rem}
+    .title-page::before { content: attr(data-shadow); position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: #eef0f2; font-size: 3rem; z-index: -1; }
     .bg-light .title-page::before { color: #e2e6e9 }
-    
+    .title-page::after { content: ""; position: absolute; display: block; width: 4rem; height: 3px; background: #0563bb; bottom: 0; left: 50%; transform: translateX(-50%); }
+
+    /* ==========================================================================
+    Custom
+    ========================================================================== */
 
     .d-flex-center { display: flex; align-items: center; justify-content: center; }
 
@@ -64,7 +68,7 @@ export default createGlobalStyle`
     .mb-6 { margin-bottom: 5rem; }
     .mb-7 { margin-bottom: 8rem; }
 
-    .fw-600 { font-weight: 600 }
+    .fs-7 { font-size: .9rem }
 
     /* ==========================================================================
     Bootstrap Custom

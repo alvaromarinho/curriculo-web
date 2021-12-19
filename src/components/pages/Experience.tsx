@@ -12,7 +12,7 @@ export default function Experience({ informations }: ExperienceProps) {
     }, [])
 
     return (
-        <section className="bg-light px-6 pt-6 pb-7" id="experience">
+        <section className="bg-light p-6" id="experience">
             <div className="container px-6">
                 <h2 className="title-page mb-5" data-shadow="Experience">Experience</h2>
                 <Timeline>
@@ -30,8 +30,9 @@ export default function Experience({ informations }: ExperienceProps) {
                             </div>
                             <div className="timeline-card card">
                                 <div className="card-body">
-                                    <p className="fw-bold mb-2">{information.title}</p>
-                                    <span>{information.description}</span>
+                                    <p className="fw-bold mb-0">{information.title}</p>
+                                    <p className="text-muted fs-7 mb-2">{information.subtitle}</p>
+                                    {information.description && <div dangerouslySetInnerHTML={{ __html: information.description }} />}
                                 </div>
                             </div>
                         </TimelineItem>

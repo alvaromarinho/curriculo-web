@@ -19,6 +19,7 @@ const Home = ({ user }: IndexProps) => {
     const [info, setInfo] = useState<any>();
 
     useEffect(() => {
+        import("bootstrap").then(({ Tooltip }) => [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((el) => new Tooltip(el)));
         setInfo(_.chain(user.informations).groupBy('type').value())
     }, [])
 
@@ -91,6 +92,7 @@ export const Menu = styled.div`
         align-items: center;
         text-transform: lowercase;
         background-color: var(--bs-gray-300);
+        color: #45505b;
         width: 3.7rem;
         white-space: nowrap;
         margin-bottom: 1rem;
