@@ -6,6 +6,7 @@ import { Project, ProjectImage } from "../../../models/Portfolio";
 import { createProject, deleteProject, updateProject } from "../../../services/PortfolioService";
 import { removeHTML, titleCase } from "../../../utils/StringUtils";
 import Button from "../../Button";
+import Carousel from "../../Carousel";
 
 interface ProjectProps { portforioId: number, projects: Project[], loadPortfolios: Function, showForm: Function }
 
@@ -87,8 +88,8 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                 closeModal?.click()
                 onSuccess('apagados')
             })
-            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
-            .finally(() => setLoadingSave(false))
+                .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+                .finally(() => setLoadingSave(false))
     }
 
     function onSuccess(text: string) {
@@ -129,7 +130,7 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                             <div className="d-flex justify-content-between">
                                 <div>
                                     <p className="text-muted mb-0">{titleCase(project.subtitle)}</p>
-                                    {project.url && 
+                                    {project.url &&
                                         <a className="d-flex align-items-center" href={project.url} target="_blank">
                                             <FaLink className="me-2" /> {project.url}
                                         </a>
@@ -239,31 +240,11 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">
+                            <h5 className="modal-title">Imagens</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div className="modal-body p-0">
-                            {currentImages && currentImages.length == 1 &&
-                                <img className="img-cover w-100" src={`${process.env.API_URL}/assets/img${currentImages[0].url}`} />
-                            }
-                            {currentImages && currentImages.length > 1 &&
-                                <div id="carouselControls" className="carousel slide" data-bs-ride="carousel">
-                                    <div className="carousel-inner">
-                                        {currentImages.map((image, index) =>
-                                            <div className={`carousel-item ${index == 0 && 'active'}`} key={image.id}>
-                                                <img className="d-block w-100" src={`${process.env.API_URL}/assets/img${image.url}`} />
-                                            </div>
-                                        )}
-                                    </div>
-                                    <button className="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
-                                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span className="visually-hidden">Previous</span>
-                                    </button>
-                                    <button className="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
-                                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span className="visually-hidden">Next</span>
-                                    </button>
-                                </div>
-                            }
+                        <div className="modal-body">
+                            {currentImages && <Carousel images={currentImages} />}
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 export default createGlobalStyle`
 
     html, body, #__next { height: 100% }
+    body { font-family: 'Montserrat', sans-serif; }
 
     a { text-decoration: none; }
 
@@ -31,11 +32,19 @@ export default createGlobalStyle`
     Custom
     ========================================================================== */
 
+    .title-page { position: relative; text-align: center; text-transform: uppercase; font-weight: 600; z-index: 2; }
+    .title-page::before { content: attr(data-shadow); position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); color: #eef0f2; font-size: 3rem; z-index: -1; }
+    .bg-light .title-page::before { color: #e2e6e9 }
+    
+
     .d-flex-center { display: flex; align-items: center; justify-content: center; }
 
     .pointer { cursor: pointer }
 
     .img-cover { object-fit: cover }
+    .img-cover-top { object-position: top }
+    .img-hover { filter: grayscale(100%); transition: .3s ease-in-out; }
+    .img-hover:hover { filter: grayscale(0); }
 
     .top-1 { top: 1rem } 
     .end-1 { right: 1rem }
@@ -47,10 +56,15 @@ export default createGlobalStyle`
 
     .p-6 { padding: 5rem; }
     .px-6 { padding-right: 5rem; padding-left: 5rem; }
+    .pt-6 { padding-top: 5rem; }
     .pb-7 { padding-bottom: 8rem; }
+    .py-7 { padding-top: 8rem; padding-bottom: 8rem; }
+    .px-7 { padding-right: 8rem; padding-left: 8rem; }
 
     .mb-6 { margin-bottom: 5rem; }
     .mb-7 { margin-bottom: 8rem; }
+
+    .fw-600 { font-weight: 600 }
 
     /* ==========================================================================
     Bootstrap Custom
@@ -58,6 +72,8 @@ export default createGlobalStyle`
 
     .carousel-control-prev { background-image: linear-gradient(to left, transparent, gray); }
     .carousel-control-next { background-image: linear-gradient(to right, transparent, gray); }
+
+    .modal-content > .btn-close { position: fixed; top: 1rem; right: 1rem; font-size: 1.5rem; }
 
     @media (max-width: 768px) { }
 `;

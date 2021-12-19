@@ -6,7 +6,7 @@ import { FaAngleLeft, FaPlus, FaRegEdit, FaRegSave, FaRegTrashAlt, FaTimes } fro
 import { CgSpinner } from "react-icons/cg";
 import { createInformation, deleteInformation, getInformations, updateInformation } from "../../services/InformationService";
 import { Information, InformationType } from "../../models/Information";
-import { removeHTML, titleCase } from "../../utils/StringUtils";
+import { removeHTML } from "../../utils/StringUtils";
 import Button from "../../components/Button";
 import _ from "lodash";
 
@@ -166,13 +166,13 @@ export default function Informations() {
                                         {filteredInfos && filteredInfos.map((info: Information) =>
                                             <div className={`card card-body mb-3 callout`} key={info.id}>
                                                 <div className="d-flex justify-content-between align-items-start">
-                                                    <h3 className="fs-5 mb-0">{titleCase(info.title)}</h3>
+                                                    <h3 className="fs-5 mb-0">{info.title}</h3>
                                                     <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => setCurrentInfo(info)}>
                                                         <FaRegEdit className="mb-1 me-1" /> Editar
                                                     </button>
                                                 </div>
                                                 <div className="d-flex justify-content-between align-items-center">
-                                                    <span className="text-muted">{titleCase(info.subtitle)}</span>
+                                                    <span className="text-muted">{info.subtitle}</span>
                                                     {info.start &&
                                                         <span>{dayjs(info.start).format('DD/MM/YYYY')} {info.end ? `até ${dayjs(info.end).format('DD/MM/YYYY')}` : 'até hoje'}</span>
                                                     }
@@ -257,8 +257,8 @@ export default function Informations() {
                                             <button type="button" className="btn-close" id="close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div className="modal-body">
-                                            <h3 className="fs-5 mb-0">{titleCase(currentInfo.title)}</h3>
-                                            <span className="text-muted">{titleCase(currentInfo.subtitle)}</span>
+                                            <h3 className="fs-5 mb-0">{currentInfo.title}</h3>
+                                            <span className="text-muted">{currentInfo.subtitle}</span>
                                         </div>
                                         <div className="modal-footer">
                                             <Button color="danger" text="Apagar" loading={loadingDelete} type="button" onClick={removeInfo}>

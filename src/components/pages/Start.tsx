@@ -6,9 +6,9 @@ interface StartProps { user: User }
 export default function Start({ user }: StartProps) {
 
     return (
-        <section className="vh-100 d-flex align-items-center bg-light" id="start">
+        <section className="vh-100 d-flex align-items-center bg-light px-6" id="start">
             <div className="container px-6">
-                <h1 className="display-3 text-capitalize">{user.name}</h1>
+                <h1 className="display-3 fw-bold text-capitalize">{user.name}</h1>
 
                 <div className="d-flex display-6 mb-3">
                     <span className="d-inline-block me-2">I'm a </span>

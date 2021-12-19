@@ -4,9 +4,9 @@ interface AboutProps { user: User }
 
 export default function About({ user }: AboutProps) {
     return (
-        <section className="p-6" id="about">
+        <section className="px-6 pt-6 pb-7" id="about">
             <div className="container px-6">
-                <h2 className="text-center mb-5">About</h2>
+                <h2 className="title-page mb-5" data-shadow="About">About</h2>
                 <div className="d-flex">
                     <div className="flex-shrink-0">
                         <img width="400" src={`${process.env.API_URL}/assets/img${user.image}`} alt="Perfil" />

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { NextPageContext } from 'next';
 import { User } from '../models/User'
 import { getAllUserData } from '../services/UserService'
-import { Menu } from '../styles/menu';
 import Start from '../components/pages/Start';
 import About from '../components/pages/About';
 import Skills from '../components/pages/Skills';
@@ -10,6 +9,7 @@ import Education from '../components/pages/Education';
 import Experience from '../components/pages/Experience';
 import Portfolio from '../components/pages/Portfolio';
 import Contact from '../components/pages/Contact';
+import styled from 'styled-components';
 import _ from "lodash";
 
 interface IndexProps { user: User }
@@ -21,10 +21,6 @@ const Home = ({ user }: IndexProps) => {
     useEffect(() => {
         setInfo(_.chain(user.informations).groupBy('type').value())
     }, [])
-
-    // useEffect(() => {
-    //     info && console.log(info)
-    // }, [info])
 
     return (
         <>
@@ -82,3 +78,59 @@ export async function getStaticProps(ctx: NextPageContext) {
         revalidate: 60 * 60 * 1 // 1 hour
     }
 }
+
+export const Menu = styled.div`
+    position: fixed;
+    top: 50%;
+    padding: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+
+    a {
+        display: flex;
+        align-items: center;
+        text-transform: lowercase;
+        background-color: var(--bs-gray-300);
+        width: 3.7rem;
+        white-space: nowrap;
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        border-top-right-radius: 50rem;
+        border-bottom-right-radius: 50rem;
+        transition: .3s ease .1s;
+    }
+    
+    a:hover {
+        background-color: var(--bs-primary);
+        color: white !important;
+        transition: .1s;
+    }
+
+    a i {
+        font-size: 1.2rem;
+        margin-right: 1rem;
+        z-index: 1;
+    }
+
+    a span {
+        background-color: var(--bs-primary);
+        color: var(--bs-primary);
+        padding: .7rem 1rem .8rem 2rem;
+        border-top-right-radius: 50rem;
+        border-bottom-right-radius: 50rem;
+        margin-left: -2.5rem;
+        transform: translateX(-150%);
+        transition: transform .2s;
+    }
+    
+    a:hover span {
+        transform: translateX(0%);
+        color: white !important;
+        transition: color .5s ease .3s, transform .3s;
+    }
+
+    a span:first-letter {
+        text-transform: capitalize;
+    }
+
+`;

@@ -12,21 +12,25 @@ export default function Experience({ informations }: ExperienceProps) {
     }, [])
 
     return (
-        <section className="bg-light p-6" id="experience">
+        <section className="bg-light px-6 pt-6 pb-7" id="experience">
             <div className="container px-6">
-                <h2 className="text-center mb-5">Experience</h2>
+                <h2 className="title-page mb-5" data-shadow="Experience">Experience</h2>
                 <Timeline>
                     {informations.map((information: Information) =>
                         <TimelineItem key={information.id}>
                             <TimelineIcon className="bg-primary">
-                                <i className="fa fa-fw fa-th-list"></i>
+                                {information.title == 'GRAPHIC DESIGNER' ?
+                                    <i className="fa fa-fw fa-paint-brush"></i>
+                                    :
+                                    <i className="fa fa-fw fa-code"></i>
+                                }
                             </TimelineIcon>
                             <div className="timeline-date">
-                                <span>{dayjs(information.start).format('MMM YYYY')} - {information.end ? dayjs(information.end).format('MMM YYYY') : 'Present'}</span>
+                                <span>{dayjs(information.start).format('MMMM YYYY')} - {information.end ? dayjs(information.end).format('MMMM YYYY') : 'Present'}</span>
                             </div>
                             <div className="timeline-card card">
                                 <div className="card-body">
-                                    <h3>{information.title}</h3>
+                                    <p className="fw-bold mb-2">{information.title}</p>
                                     <span>{information.description}</span>
                                 </div>
                             </div>
@@ -91,7 +95,7 @@ const TimelineItem = styled.div`
         width: 45%;
         transition: all 0.3s ease;
         border: none;
-        box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 3px 1rem rgb(0 0 0 / 5%);
     }
     .timeline-card:before {
         content: '';
@@ -106,9 +110,6 @@ const TimelineItem = styled.div`
     .timeline-card .card-header {
         border-color: white;
         background-color: white;
-    }
-    .timeline-card h3 {
-        font-size: 1.3rem;
     }
 
     @media (max-width: 768px) {
@@ -133,7 +134,7 @@ const TimelineIcon = styled.div`
     overflow: hidden;
     margin-left: -1.4rem;
     border-radius: 50%;
-    box-shadow: 0 0 0 4px #ffffff, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0 4px #ffffff, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 1rem 4px rgba(0, 0, 0, 0.1);
 
     .fa {
         margin-left: .9rem;
