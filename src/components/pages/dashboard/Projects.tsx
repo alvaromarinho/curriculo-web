@@ -129,9 +129,11 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                             <div className="d-flex justify-content-between">
                                 <div>
                                     <p className="text-muted mb-0">{titleCase(project.subtitle)}</p>
-                                    <a className="d-flex align-items-center" href={project.url} target="_blank">
-                                        <FaLink className="me-2" /> {project.url}
-                                    </a>
+                                    {project.url && 
+                                        <a className="d-flex align-items-center" href={project.url} target="_blank">
+                                            <FaLink className="me-2" /> {project.url}
+                                        </a>
+                                    }
                                 </div>
                                 {!!(project.images && project.images.length) &&
                                     <IoMdImages className="fa-3x text-success me-2 pointer" onClick={() => setCurrentImages(project.images!)}

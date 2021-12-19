@@ -1,24 +1,27 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { NextPageContext } from "next";
 import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
 import { FaPlus, FaRegSave, FaRegTrashAlt } from "react-icons/fa";
-import { getUser, updateUser } from "../../services/UserService";
+import { authenticate, getUser, updateUser } from "../../services/UserService";
 import { CgSpinner } from "react-icons/cg";
 import { User } from "../../models/User";
 import { removeHTML } from "../../utils/StringUtils";
+import { AuthContext } from "../../contexts/AuthContext";
 import Button from "../../components/Button";
 import styled from "styled-components";
 
 export default function Dashboard() {
 
+    const { signOut } = useContext(AuthContext)
+
     const [loading, setLoading] = useState(true);
     const [loadingSave, setLoadingSave] = useState(false);
-
     const [currentImage, setCurrentImage] = useState<string>();
     const [file, setFile] = useState()
-
     const [userForm, setUserForm] = useState<User>({} as User);
+    const [currentPassword, setCurrentPassword] = useState<string>('');
+
     const ufs = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO']
 
     useEffect(() => loadUser(), [])
@@ -35,12 +38,13 @@ export default function Dashboard() {
 
     function loadUser() {
         setLoading(true)
-        getUser().then((user: User) => {
-            setCurrentImage(`${process.env.API_URL}/assets/img${user.image}`)
-            setUserForm(user)
-        })
-        .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
-        .finally(() => setLoading(false))
+        getUser()
+            .then((user: User) => {
+                setCurrentImage(`${process.env.API_URL}/assets/img${user.image}`)
+                setUserForm(user)
+            })
+            .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
+            .finally(() => setLoading(false))
     }
 
     function handleChangeFile(e: any) {
@@ -57,11 +61,27 @@ export default function Dashboard() {
         setUserForm((prev) => ({ ...prev, [name]: value }))
     }
 
-    function handleSubmit(e: any) {
+    async function handleSubmit(e: any) {
         e.preventDefault()
+        if ((userForm.password && !currentPassword) || (!userForm.password && currentPassword)) {
+            toast.warning('Caso deseje trocar sua senha, preencha todos os campos')
+            return
+        } else if (userForm.password && currentPassword) {
+            try {
+                await authenticate({ email: userForm.email!, password: currentPassword })
+            } catch (error) {
+                toast.error('Senha incorreta')
+                return
+            }
+        }
+
         setLoadingSave(true)
         updateUser(userForm, file)
-            .then(() => toast.success('Dados atualizados com sucesso!'))
+            .then(() => {
+                toast.success('Dados atualizados com sucesso!')
+                if (userForm.password && currentPassword)
+                    setTimeout(signOut, 5000);
+            })
             .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
             .finally(() => setLoadingSave(false))
     }
@@ -216,6 +236,21 @@ export default function Dashboard() {
                             </div>
                         </div>
                     )}
+
+                    {/* PASSWORD */}
+                    <h2 className="mb-2 me-2">Trocar Senha</h2>
+                    <div className="row">
+                        <div className="col-12 col-md-6 mb-3">
+                            <label htmlFor="currentPassword">Senha atual</label>
+                            <input type="password" className="form-control" id="currentPassword" name="currentPassword"
+                                onChange={(e) => setCurrentPassword(e.target.value)} />
+                        </div>
+                        <div className="col-12 col-md-6 mb-3">
+                            <label htmlFor="password">Nova senha</label>
+                            <input type="password" className="form-control" id="password" name="password"
+                                value={userForm.password} onChange={handleChange} />
+                        </div>
+                    </div>
 
                     <hr className="text-muted" />
                     <div className="row justify-content-end">

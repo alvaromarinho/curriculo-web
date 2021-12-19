@@ -61,11 +61,15 @@ export default function Informations() {
     }, [searchTerm])
 
     function loadInfo() {
+        const currType = currentType;
+        currentType && setCurrentType(undefined)
+
         setLoading(true)
         setCurrentInfo(null)
         getInformations().then((info: Information[]) => {
             setTypes(_.chain(info).groupBy('type').map((value, index) => index).value())
             setInfos(_.chain(info).groupBy('type').value())
+            currType && setCurrentType(currType)
         })
         .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
         .finally(() => setLoading(false))

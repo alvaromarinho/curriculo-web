@@ -6,6 +6,7 @@ export interface User {
     email?: string;
     city?: string;
     uf?: string;
+    password?: string;
     description?: string;
     image?: string;
     informations?: Information[];

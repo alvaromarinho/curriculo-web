@@ -26,7 +26,7 @@ const SignIn = () => {
         setLoading(true)
         signIn(authForm)
             .then(() => Router.push('/dashboard'))
-            .catch((error) => toast.error('Wrong email or password'))
+            .catch((error) => toast.error('Email ou senha invalidos'))
             .finally(() => setLoading(false))
     }
 
