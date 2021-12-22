@@ -67,6 +67,7 @@ const Home = ({ user }: IndexProps) => {
                 {info && info.EXPERIENCE && <Experience informations={info.EXPERIENCE} />}
                 <Portfolio user={user} />
                 <Contact />
+                <footer className="text-center py-4">Design and Development by Alvaro Marinho</footer>
             </main>
         </>
     )
