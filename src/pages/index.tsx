@@ -67,7 +67,7 @@ const Home = ({ user }: IndexProps) => {
                 {info && info.EXPERIENCE && <Experience informations={info.EXPERIENCE} />}
                 <Portfolio user={user} />
                 <Contact />
-                <footer className="text-center py-4">Design and Development by Alvaro Marinho</footer>
+                <footer className="text-center fs-7 py-4">Design and Development by Alvaro Marinho</footer>
             </main>
         </>
     )
@@ -97,7 +97,7 @@ export const Menu = styled.div`
         align-items: center;
         text-transform: lowercase;
         background-color: var(--bs-gray-300);
-        color: #45505b;
+        color: var(--bs-primary);
         width: 3.7rem;
         white-space: nowrap;
         margin-bottom: 1rem;

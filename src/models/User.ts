@@ -13,7 +13,7 @@ export interface User {
     name?: string;
     phones?: Phone[];
     portfolios?: Portfolio[];
-    socialNetworks?: SocialNetwork[];
+    links?: Link[];
 }
 
 export interface Phone {
@@ -21,10 +21,9 @@ export interface Phone {
     number?: string;
 }
 
-export interface SocialNetwork {
+export interface Link {
     id?: number;
     name?: string;
-    icon?: string;
     url?: string;
 }
 

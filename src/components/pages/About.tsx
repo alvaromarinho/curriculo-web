@@ -15,16 +15,16 @@ export default function About({ user }: AboutProps) {
                     <div className="col-12 col-md-7">
                         {user.description && <div className="mb-3" dangerouslySetInnerHTML={{ __html: user.description }} />}
                         <div className="row justify-content-between">
-                            <div className="col-12 col-md-auto">
-                                <i className="fa fa-map-marker"></i> {user.city} - {user.uf}
+                            <div className="col-12 col-md-auto fw-bold">
+                                <i className="fa fa-map-marker text-primary"></i> {user.city} - {user.uf}
                             </div>
-                            <div className="col-12 col-md-auto">
-                                <i className="fa fa-envelope-o"></i> {user.email}
+                            <div className="col-12 col-md-auto fw-bold">
+                                <i className="fa fa-envelope-o text-primary"></i> {user.email}
                             </div>
-                            <div className="col-12 col-md-auto">
+                            <div className="col-12 col-md-auto fw-bold">
                                 {user.phones && user.phones.map((phone, index) => (
                                     <span key={index}>
-                                        <i className="fa fa-whatsapp"></i> {phone.number}
+                                        <i className="fa fa-whatsapp text-primary"></i> {phone.number}
                                     </span>
                                 ))}
                             </div>

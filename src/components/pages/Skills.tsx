@@ -4,7 +4,7 @@ interface SkillsProps { informations: Information[] }
 
 export default function Skills({ informations }: SkillsProps) {
     return (
-        <section className="bg-light p-6" id="skills">
+        <section className="p-6 paralax" id="skills">
             <div className="container px-6">
                 <h2 className="title-page mb-5" data-shadow="Skills">Skills</h2>
                 {informations.map((information: Information) =>

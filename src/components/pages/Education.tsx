@@ -17,7 +17,7 @@ export default function Education({ informations }: EducationProps) {
                 <h2 className="title-page mb-5" data-shadow="Education">Education</h2>
                 {informations.map((information: Information) =>
                     <div className="mb-md-5" key={information.id}>
-                        <div className="row align-items-center">
+                        <div className="row gx-2 align-items-center">
                             <div className="col-12 col-md-auto">
                                 <span className="fw-bold text-uppercase">{information.title}</span>
                             </div>

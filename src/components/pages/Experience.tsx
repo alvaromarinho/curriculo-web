@@ -12,7 +12,7 @@ export default function Experience({ informations }: ExperienceProps) {
     }, [])
 
     return (
-        <section className="bg-light p-6" id="experience">
+        <section className="p-6 paralax" id="experience">
             <div className="container px-6">
                 <h2 className="title-page mb-5" data-shadow="Experience">Experience</h2>
                 <Timeline>
@@ -62,7 +62,7 @@ const TimelineItem = styled.div`
         content: "";
         width: 4px;
         height: 100%;
-        background: #d7e4ed;
+        background: white;
         left: 50%;
         top: 0;
         position: absolute;
@@ -89,7 +89,6 @@ const TimelineItem = styled.div`
         padding: .8rem 0;
         left: 50%;
         margin-left: 3rem;
-        opacity: .4;
     }
 
     .timeline-card {

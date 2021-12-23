@@ -34,12 +34,25 @@ export default createGlobalStyle`
 
     .title-page { position: relative; text-align: center; text-transform: uppercase; font-weight: 600; z-index: 2; padding-bottom: 1rem}
     .title-page::before { content: attr(data-shadow); position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: #f1f2f4; font-size: 3rem; z-index: -1; }
-    .bg-light .title-page::before { color: #e8ebed }
     .title-page::after { content: ""; position: absolute; display: block; width: 4rem; height: 3px; background: #0563bb; bottom: 0; left: 50%; transform: translateX(-50%); }
 
     /* ==========================================================================
     Custom
     ========================================================================== */
+
+    .paralax {
+        /* The image used */
+        background-image: url("/bg.png");
+
+        /* Full height */
+        height: 100%;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
 
     .d-flex-center { display: flex; align-items: center; justify-content: center; }
 

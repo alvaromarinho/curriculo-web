@@ -106,23 +106,23 @@ export default function Dashboard() {
 
     // SOCIAL NETWORKS
 
-    function handleChangeSocialNetworks(e: any, index: number) {
+    function handleChangeLinks(e: any, index: number) {
         const { name, value } = e.target
-        const socialNetworks = userForm.socialNetworks;
-        if (socialNetworks) socialNetworks[index] = { ...socialNetworks[index], [name]: value }
-        setUserForm((prev) => ({ ...prev, socialNetworks: socialNetworks }))
+        const links = userForm.links;
+        if (links) links[index] = { ...links[index], [name]: value }
+        setUserForm((prev) => ({ ...prev, links: links }))
     }
 
-    function addSocialNetworks() {
-        const socialNetworks = userForm.socialNetworks;
-        socialNetworks?.push({ name: '', icon: '', url: '' })
-        setUserForm((prev) => ({ ...prev, socialNetworks: socialNetworks }))
+    function addLinks() {
+        const links = userForm.links;
+        links?.push({ name: '', url: '' })
+        setUserForm((prev) => ({ ...prev, links: links }))
     }
 
-    function removeSocialNetworks(id?: number) {
+    function removeLinks(id?: number) {
         setUserForm((prev) => ({
             ...prev,
-            socialNetworks: prev.socialNetworks ? prev.socialNetworks.filter((sn) => sn.id !== id) : []
+            links: prev.links ? prev.links.filter((link) => link.id !== id) : []
         }))
     }
 
@@ -199,37 +199,32 @@ export default function Dashboard() {
                         </div>
                     )}
 
-                    {/* SOCIAL NETWORK */}
+                    {/* LINKS */}
                     <div className="row g-0 align-items-center mb-2">
                         <div className="col-auto">
-                            <h2 className="mb-0 me-2">Rede Social</h2>
+                            <h2 className="mb-0 me-2">Links</h2>
                         </div>
                         <div className="col-auto">
-                            <button className="btn btn-sm btn-outline-primary d-flex-center border-0" type="button" onClick={addSocialNetworks}>
+                            <button className="btn btn-sm btn-outline-primary d-flex-center border-0" type="button" onClick={addLinks}>
                                 <FaPlus className="me-md-2" /> 
                                 <span className="d-none d-md-inline">Adicionar</span>
                             </button>
                         </div>
                     </div>
-                    {userForm.socialNetworks && userForm.socialNetworks.map((sn, index) =>
+                    {userForm.links && userForm.links.map((link, index) =>
                         <div className="row align-items-end mb-2" key={index}>
                             <div className="col-12 col-md mb-3">
-                                <label htmlFor={`sn_icon_${sn.id}`}>Icone</label>
-                                <input type="text" className="form-control" id={`sn_icon_${sn.id}`} name="icon"
-                                    value={sn.icon} onChange={(e) => handleChangeSocialNetworks(e, index)} />
+                                <label htmlFor={`link_name_${link.id}`}>Name</label>
+                                <input type="text" className="form-control" id={`link_name_${link.id}`} name="name"
+                                    value={link.name} onChange={(e) => handleChangeLinks(e, index)} required />
                             </div>
                             <div className="col-12 col-md mb-3">
-                                <label htmlFor={`sn_name_${sn.id}`}>Name</label>
-                                <input type="text" className="form-control" id={`sn_name_${sn.id}`} name="name"
-                                    value={sn.name} onChange={(e) => handleChangeSocialNetworks(e, index)} required />
-                            </div>
-                            <div className="col-12 col-md mb-3">
-                                <label htmlFor={`sn_url_${sn.id}`}>Url</label>
-                                <input type="text" className="form-control" id={`sn_url_${sn.id}`} name="url"
-                                    value={sn.url} onChange={(e) => handleChangeSocialNetworks(e, index)} required />
+                                <label htmlFor={`link_url_${link.id}`}>Url</label>
+                                <input type="text" className="form-control" id={`link_url_${link.id}`} name="url"
+                                    value={link.url} onChange={(e) => handleChangeLinks(e, index)} required />
                             </div>
                             <div className="col-12 col-md-auto mb-3">
-                                <button className="btn btn-outline-danger d-flex-center border-0 w-100" onClick={() => removeSocialNetworks(sn.id)}>
+                                <button className="btn btn-outline-danger d-flex-center border-0 w-100" onClick={() => removeLinks(link.id)}>
                                     <FaRegTrashAlt className="me-2" /> Remover
                                 </button>
                             </div>
