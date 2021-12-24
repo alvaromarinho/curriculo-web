@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NextPageContext } from 'next';
 import { User } from '../models/User'
-import { getAllUserData } from '../services/UserService'
+import { getAllUserDataSSR } from '../services/UserService'
 import Start from '../components/pages/Start';
 import About from '../components/pages/About';
 import Skills from '../components/pages/Skills';
@@ -29,7 +29,7 @@ const Home = ({ user }: IndexProps) => {
             <Head>
                 <title>Alvaro Marinho</title>
             </Head>
-            <Menu id="menu" className="d-none d-md-block">
+            <Menu className="d-none d-md-block">
                 <a href="#start">
                     <i className="fa fa-home"></i>
                     <span>Start</span>
@@ -78,7 +78,7 @@ Home.noAuth = true;
 export default Home;
 
 export async function getStaticProps(ctx: NextPageContext) {
-    const user = await getAllUserData(ctx, 1);
+    const user = await getAllUserDataSSR(ctx, 1);
     return {
         props: { user },
         revalidate: 60 * 60 * 1 // 1 hour

@@ -97,6 +97,7 @@ const Section = styled.section`
     ul.nav .nav-link.active { text-shadow: 1px 0 0 currentColor; }
 
     @media (max-width: 768px) {
+        &.vh-100 { height: auto!important; padding-bottom: 5rem }
         ul.nav li + li:before { content: ""; }
     }
 `

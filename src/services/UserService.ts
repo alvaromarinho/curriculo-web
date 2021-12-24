@@ -16,6 +16,10 @@ export async function updateUser(obj: any, file?: any) {
     return (await api.put('/user', formData, { headers: { 'Content-Type': 'multipart/form-data' } }))?.data
 }
 
-export async function getAllUserData(ctx: any, id: number) {
+export async function getAllUserData(id: any) {
+    return (await api.get(`/user/${id}`))?.data
+}
+
+export async function getAllUserDataSSR(ctx: any, id: any) {
     return (await apiCtx(ctx).get(`/user/${id}`))?.data
 }
