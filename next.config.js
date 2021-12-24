@@ -5,4 +5,7 @@ module.exports = {
     env: {
         API_URL: 'https://api.alvaromarinho.com.br/curriculo',
     },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 }
