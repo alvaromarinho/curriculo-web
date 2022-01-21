@@ -18,6 +18,12 @@ export default function Portfolio({ user }: PortfolioProps) {
             const modalHTML = document && document.getElementById('modal');
             modalHTML && setModal(new Modal(modalHTML))
         });
+
+        user && user.portfolios && user.portfolios.map((port) => {
+            port.projects && port.projects.sort((a, b) => {
+                return a.subtitle!.localeCompare(b.subtitle!) || a.title!.localeCompare(b.title!);
+            });
+        })
     }, [])
 
     function openModal(images: ProjectImage[]) {
