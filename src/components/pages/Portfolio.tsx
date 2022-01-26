@@ -102,8 +102,9 @@ const Section = styled.section`
     ul.nav .nav-item { display: flex; align-items: center; color: #ccc; }
     ul.nav .nav-link.active { text-shadow: 1px 0 0 currentColor; }
 
+    &.vh-100 { min-height: 100vh; height: auto!important; padding-bottom: 5rem }
+
     @media (max-width: 768px) {
-        &.vh-100 { height: auto!important; padding-bottom: 5rem }
         ul.nav li + li:before { content: ""; }
     }
 `

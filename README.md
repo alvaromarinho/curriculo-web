@@ -12,12 +12,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deploy
 
+```bash
+npm run build
+# or
+yarn build
+```
+
 Compress all folders (including hidden ones) except:
 
 - .git
 - .gitignore
 - node_modules
-- cpanel.zip
+- *.zip
 
 ## Deploy on Vercel
 
