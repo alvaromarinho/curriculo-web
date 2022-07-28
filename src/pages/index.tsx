@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react'
 import { NextPageContext } from 'next';
 import { User } from '../models/User'
 import { getAllUserDataSSR } from '../services/UserService'
-import Start from '../components/pages/Start';
-import About from '../components/pages/About';
-import Skills from '../components/pages/Skills';
-import Education from '../components/pages/Education';
-import Experience from '../components/pages/Experience';
-import Portfolio from '../components/pages/Portfolio';
-import Contact from '../components/pages/Contact';
-import Head from 'next/head';
 import styled from 'styled-components';
+import Head from 'next/head';
+import Start from '../components/pages/Start';
+import Portfolio from '../components/pages/Portfolio';
+import Career from '../components/pages/Career';
+import Skills from '../components/pages/Skills';
+import Contact from '../components/pages/Contact';
 import _ from "lodash";
 
 interface IndexProps { user: User }
@@ -29,49 +27,31 @@ const Home = ({ user }: IndexProps) => {
             <Head>
                 <title>Alvaro Marinho</title>
             </Head>
-            <Menu className="d-none d-md-block">
-                <a href="#start">
-                    <i className="fa fa-home"></i>
-                    <span>Start</span>
-                </a>
-                <a href="#about">
-                    <i className="fa fa-user"></i>
-                    <span>About</span>
-                </a>
-                <a href="#skills">
-                    <i className="fa fa-check-square-o"></i>
-                    <span>Skills</span>
-                </a>
-                <a href="#education">
-                    <i className="fa fa-book"></i>
-                    <span>Education</span>
-                </a>
-                <a href="#experience">
-                    <i className="fa fa-briefcase"></i>
-                    <span>Experience</span>
-                </a>
-                <a href="#portfolio">
-                    <i className="fa fa-th-large"></i>
-                    <span>Portfolio</span>
-                </a>
-                <a href="#contact">
-                    <i className="fa fa-envelope"></i>
-                    <span>Contact</span>
-                </a>
-            </Menu>
+            
             <main>
+                <nav className="navbar navbar-light fixed-top">
+                    <div className="container-fluid py-3 px-5">
+                        <a className="navbar-brand" href="#">
+                            <img src="/symbol.svg" alt="Brand" height="40" />
+                        </a>
+                    </div>
+                </nav>
                 <Start user={user} />
-                <About user={user} />
-                {info && info.SKILLS && <Skills informations={info.SKILLS} />}
-                {info && info.EDUCATION && <Education informations={info.EDUCATION} />}
-                {info && info.EXPERIENCE && <Experience informations={info.EXPERIENCE} />}
                 <Portfolio user={user} />
+                {info && info.EXPERIENCE && <Career informations={info.EXPERIENCE} />} 
+                {info && info.SKILLS && <Skills informations={info.SKILLS} />}
                 <Contact />
                 <footer className="text-center fs-7 py-4">Design and Development by Alvaro Marinho</footer>
             </main>
         </>
     )
 }
+
+const Section = styled.section`
+    @media (max-width: 768px) {
+        .display-6 { font-size: calc(1.375rem + 0.5vw); }
+    }
+`
 
 Home.noAuth = true;
 
@@ -85,59 +65,3 @@ export async function getStaticProps(ctx: NextPageContext) {
     }
 }
 
-export const Menu = styled.div`
-    position: fixed;
-    top: 50%;
-    padding: 0;
-    transform: translateY(-50%);
-    z-index: 1;
-
-    a {
-        display: flex;
-        align-items: center;
-        text-transform: lowercase;
-        background-color: var(--bs-gray-300);
-        color: var(--bs-primary);
-        width: 3.7rem;
-        white-space: nowrap;
-        margin-bottom: 1rem;
-        padding-left: 1.5rem;
-        border-top-right-radius: 50rem;
-        border-bottom-right-radius: 50rem;
-        transition: .3s ease .1s;
-    }
-    
-    a:hover {
-        background-color: var(--bs-primary);
-        color: white !important;
-        transition: .1s;
-    }
-
-    a i {
-        font-size: 1.2rem;
-        margin-right: 1rem;
-        z-index: 1;
-    }
-
-    a span {
-        background-color: var(--bs-primary);
-        color: var(--bs-primary);
-        padding: .7rem 1rem .8rem 2rem;
-        border-top-right-radius: 50rem;
-        border-bottom-right-radius: 50rem;
-        margin-left: -2.5rem;
-        transform: translateX(-150%);
-        transition: transform .2s;
-    }
-    
-    a:hover span {
-        transform: translateX(0%);
-        color: white !important;
-        transition: color .5s ease .3s, transform .3s;
-    }
-
-    a span:first-letter {
-        text-transform: capitalize;
-    }
-
-`;

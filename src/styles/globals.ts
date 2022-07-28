@@ -32,9 +32,8 @@ export default createGlobalStyle`
     Title Page
     ========================================================================== */
 
-    .title-page { position: relative; text-align: center; text-transform: uppercase; font-weight: 600; z-index: 2; padding-bottom: 1rem}
-    .title-page::before { content: attr(data-shadow); position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); color: #f1f2f4; font-size: 3rem; z-index: -1; }
-    .title-page::after { content: ""; position: absolute; display: block; width: 4rem; height: 3px; background: #0563bb; bottom: 0; left: 50%; transform: translateX(-50%); }
+    .title-page { position: relative; text-transform: uppercase; font-weight: 500; padding-bottom: 1rem}
+    .title-page::after { content: ""; position: absolute; display: block; width: 4rem; height: 3px; background: #0563bb; bottom: 0; }
 
     /* ==========================================================================
     Custom
@@ -75,11 +74,20 @@ export default createGlobalStyle`
     .px-6 { padding-right: 5rem; padding-left: 5rem; }
     .pt-6 { padding-top: 5rem; }
     .pb-7 { padding-bottom: 8rem; }
+    .ps-6 { padding-left: 5rem; }
+    .pe-7 { padding-right: 8rem; }
     .py-7 { padding-top: 8rem; padding-bottom: 8rem; }
     .px-7 { padding-right: 8rem; padding-left: 8rem; }
 
+    .mt-6 { margin-top: 5rem; }
     .mb-6 { margin-bottom: 5rem; }
+    .ms-6 { margin-left: 5rem; }
+    .me-6 { margin-right: 5rem; }
+
+    .mt-7 { margin-top: 8rem; }
     .mb-7 { margin-bottom: 8rem; }
+    .ms-7 { margin-left: 8rem; }
+    .me-7 { margin-right: 8rem; }
 
     .fs-7 { font-size: .9rem }
 

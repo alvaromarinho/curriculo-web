@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { RiMailSendLine } from "react-icons/ri";
 import { sendMessage } from "../../services/HomeService";
 import { toast } from "react-toastify";
@@ -18,9 +18,9 @@ export default function Contact() {
     }
 
     return (
-        <section className="px-6 py-7 paralax" id="contact">
+        <section className="px-6 py-7">
             <div className="container px-6">
-                <h2 className="title-page mb-5" data-shadow="Contact">Contact</h2>
+                <h2 className="title-page mb-5">Contact</h2>
                 <form onSubmit={handleSubmit}>
                     <input type="email" className="form-control p-3 mb-3" id="email" name="email" placeholder="Email" required />
                     <textarea className="form-control p-3 mb-4" id="message" name="message" placeholder="Message" rows={8} required></textarea>

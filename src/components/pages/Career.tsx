@@ -3,18 +3,21 @@ import { useEffect } from 'react';
 import dayjs from "dayjs";
 import styled from 'styled-components'
 
-interface ExperienceProps { informations: Information[] }
+interface CareerProps { informations: Information[] }
 
-export default function Experience({ informations }: ExperienceProps) {
+export default function Career({ informations }: CareerProps) {
 
     useEffect(() => {
         informations = informations.sort((a, b) => a.start! > b.start! && 1 || -1)
     }, [])
 
     return (
-        <section className="p-6 paralax" id="experience">
+        <section className="p-6 paralax">
             <div className="container px-6">
-                <h2 className="title-page mb-5" data-shadow="Experience">Experience</h2>
+                <div className="d-flex justify-content-between">
+                    <h2 className="title-page mb-5">Career</h2>
+                    <a href="#">Get CV <i className="fa fa-fw fa-file-text-o"></i></a>
+                </div>
                 <Timeline>
                     {informations.map((information: Information) =>
                         <TimelineItem key={information.id}>

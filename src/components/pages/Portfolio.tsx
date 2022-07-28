@@ -32,9 +32,9 @@ export default function Portfolio({ user }: PortfolioProps) {
     }
 
     return (
-        <Section className="vh-100 d-flex" id="portfolio">
-            <div className="container px-6 pt-6">
-                <h2 className="title-page mb-5" data-shadow="Portfolio">Portfolio</h2>
+        <Section className="d-flex">
+            <div className="container p-6">
+                <h2 className="title-page mb-5">Recent Projects</h2>
                 <ul className="nav nav-tabs justify-content-center" role="tablist">
                     {user.portfolios && user.portfolios.map((portfolio, index) => (
                         <li className="nav-item" role="presentation" key={index}>
@@ -90,8 +90,6 @@ export default function Portfolio({ user }: PortfolioProps) {
                 </div>
             </div>
         </Section>
-
-
     )
 }
 
