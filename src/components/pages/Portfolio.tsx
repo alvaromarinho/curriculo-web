@@ -32,9 +32,9 @@ export default function Portfolio({ user }: PortfolioProps) {
     }
 
     return (
-        <Section className="d-flex">
-            <div className="container p-6">
-                <h2 className="title-page mb-5">Recent Projects</h2>
+        <Section>
+            <div>
+                <h2 className="title-page mb-4 mb-md-5">Recent Projects</h2>
                 <ul className="nav nav-tabs justify-content-center" role="tablist">
                     {user.portfolios && user.portfolios.map((portfolio, index) => (
                         <li className="nav-item" role="presentation" key={index}>
@@ -94,6 +94,10 @@ export default function Portfolio({ user }: PortfolioProps) {
 }
 
 const Section = styled.section`
+    padding-left: 4rem;
+    padding-right: 4rem;
+    margin-top: 8rem;
+
     ul.nav { margin-bottom: 3rem; }
     ul.nav, .nav-link, .nav-link:hover, .nav-link:focus { border: none; }
     ul.nav li + li:before { content: "|"; }
@@ -103,6 +107,10 @@ const Section = styled.section`
     &.vh-100 { min-height: 100vh; height: auto!important; padding-bottom: 5rem }
 
     @media (max-width: 768px) {
+        padding-left: .5rem;
+        padding-right: .5rem;
+        margin-top: 6rem;
+
         ul.nav li + li:before { content: ""; }
     }
 `

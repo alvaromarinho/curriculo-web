@@ -7,7 +7,6 @@ import Head from 'next/head';
 import Start from '../components/pages/Start';
 import Portfolio from '../components/pages/Portfolio';
 import Career from '../components/pages/Career';
-import Skills from '../components/pages/Skills';
 import Contact from '../components/pages/Contact';
 import _ from "lodash";
 
@@ -27,29 +26,45 @@ const Home = ({ user }: IndexProps) => {
             <Head>
                 <title>Alvaro Marinho</title>
             </Head>
-            
+
             <main>
-                <nav className="navbar navbar-light fixed-top">
-                    <div className="container-fluid py-3 px-5">
+                <Navbar className="navbar navbar-light fixed-top">
+                    <div className="container-fluid py-3 px-md-5">
                         <a className="navbar-brand" href="#">
-                            <img src="/symbol.svg" alt="Brand" height="40" />
+                            <img src="/symbol_b.svg" alt="Brand" height="40" />
                         </a>
                     </div>
-                </nav>
-                <Start user={user} />
-                <Portfolio user={user} />
-                {info && info.EXPERIENCE && <Career informations={info.EXPERIENCE} />} 
-                {info && info.SKILLS && <Skills informations={info.SKILLS} />}
-                <Contact />
-                <footer className="text-center fs-7 py-4">Design and Development by Alvaro Marinho</footer>
+                </Navbar>
+                <div className="container">
+                    <Start user={user} />
+                    <Portfolio user={user} />
+                    {info && info.EXPERIENCE && <Career informations={info} />}
+                    <Contact />
+                    <Footer>
+                        <div className="d-flex align-items-end justify-content-between">
+                            <span className='fs-7 opacity-50'>DESIGNED AND DEVELOPED BY ME!</span>
+                            <img className="d-none d-md-inline" src="/logo_b.svg" alt="Álvaro Marinho" height="30" />
+                            <img className="d-md-none" src="/symbol_b.svg" alt="Álvaro Marinho" height="30" />
+                        </div>
+                    </Footer>
+                </div>
             </main>
         </>
     )
 }
 
-const Section = styled.section`
+const Navbar = styled.nav`
     @media (max-width: 768px) {
-        .display-6 { font-size: calc(1.375rem + 0.5vw); }
+        &.fixed-top { position: relative!important; padding: .5rem }
+    }
+`
+
+const Footer = styled.footer`
+    padding: 1.5rem 4rem;
+
+    @media (max-width: 768px) {
+        padding: 1.5rem .5rem;
+        span { text-transform: lowercase;  }
     }
 `
 

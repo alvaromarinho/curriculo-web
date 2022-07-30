@@ -5,7 +5,10 @@ import "react-toastify/dist/ReactToastify.min.css";
 export default createGlobalStyle`
 
     html, body, #__next { height: 100% }
-    body { font-family: 'Montserrat', sans-serif; }
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background: linear-gradient(270deg, #eef8ff, #FFF, #eef8ff);
+    }
 
     a { text-decoration: none; }
 
@@ -32,26 +35,12 @@ export default createGlobalStyle`
     Title Page
     ========================================================================== */
 
-    .title-page { position: relative; text-transform: uppercase; font-weight: 500; padding-bottom: 1rem}
+    .title-page { position: relative; font-weight: 500; padding-bottom: .5rem}
     .title-page::after { content: ""; position: absolute; display: block; width: 4rem; height: 3px; background: #0563bb; bottom: 0; }
 
     /* ==========================================================================
     Custom
     ========================================================================== */
-
-    .paralax {
-        /* The image used */
-        background-image: url("/bg.png");
-
-        /* Full height */
-        height: 100%;
-
-        /* Create the parallax scrolling effect */
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
 
     .d-flex-center { display: flex; align-items: center; justify-content: center; }
 
@@ -70,25 +59,6 @@ export default createGlobalStyle`
 
     .mx-n4 { margin-left: -1.5rem; margin-right: -1.5rem; }
 
-    .p-6 { padding: 5rem; }
-    .px-6 { padding-right: 5rem; padding-left: 5rem; }
-    .pt-6 { padding-top: 5rem; }
-    .pb-7 { padding-bottom: 8rem; }
-    .ps-6 { padding-left: 5rem; }
-    .pe-7 { padding-right: 8rem; }
-    .py-7 { padding-top: 8rem; padding-bottom: 8rem; }
-    .px-7 { padding-right: 8rem; padding-left: 8rem; }
-
-    .mt-6 { margin-top: 5rem; }
-    .mb-6 { margin-bottom: 5rem; }
-    .ms-6 { margin-left: 5rem; }
-    .me-6 { margin-right: 5rem; }
-
-    .mt-7 { margin-top: 8rem; }
-    .mb-7 { margin-bottom: 8rem; }
-    .ms-7 { margin-left: 8rem; }
-    .me-7 { margin-right: 8rem; }
-
     .fs-7 { font-size: .9rem }
 
     /* ==========================================================================
@@ -100,7 +70,9 @@ export default createGlobalStyle`
 
     .modal-content > .btn-close { position: fixed; top: 1rem; right: 1rem; font-size: 1.5rem; z-index: 1060 }
 
-    @media (max-width: 768px) {
-        .px-6, .p-6 { padding-right: 1rem; padding-left: 1rem; }
-    }
+    /* ==========================================================================
+    Mobile
+    ========================================================================== */
+
+    @media (max-width: 768px) { }
 `;

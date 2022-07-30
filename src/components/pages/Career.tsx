@@ -1,163 +1,135 @@
-import { Information } from '../../models/Information'
-import { useEffect } from 'react';
-import dayjs from "dayjs";
-import styled from 'styled-components'
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-interface CareerProps { informations: Information[] }
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
+
+interface CareerProps { informations: any }
 
 export default function Career({ informations }: CareerProps) {
 
+    const [years, setYears] = useState<any>();
+    const [timeLine, setTimeLine] = useState<any>();
+
     useEffect(() => {
-        informations = informations.sort((a, b) => a.start! > b.start! && 1 || -1)
+        import("bootstrap").then(({ Tooltip }) => [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((el) => new Tooltip(el)));
+
+        let informationsAll = [
+            ...informations.EDUCATION.sort((a: any, b: any) => a.start! > b.start! && 1 || -1),
+            ...informations.EXPERIENCE.sort((a: any, b: any) => a.start! > b.start! && 1 || -1)
+        ]
+        setYears(Array.from({ length: dayjs().diff(dayjs(informationsAll[0].start), 'year') }, (_, i) => +dayjs(informationsAll[0].start).format('YYYY') + i))
+
+        let education: any = {}
+        years && informations.EDUCATION.map((info: any) => infoToTimeLine(info, education))
+
+        const devXP: any = {}
+        years && informations.EXPERIENCE.map((info: any) => infoToTimeLine(info, devXP))
+
+        const gdXP: any = {}
+        years && informations.EXPERIENCE.filter((info: any) => info.title[0] == '_').map((info: any) => infoToTimeLine(info, gdXP))
+
+        setTimeLine([Object.values(education), Object.values(devXP), Object.values(gdXP)])
     }, [])
 
+    function infoToTimeLine(info: any, obj: any) {
+        for (let i = 0; i < years.length; i++) {
+            const year = years[i];
+            if (obj[year] === undefined || obj[year] === true) {
+                const start = +dayjs(info.start).format('YYYY')
+                const end = info.end ? +dayjs(info.end) : +dayjs()
+                const diff = dayjs(end).diff(dayjs(info.start), 'year', true)
+
+                if (year == start) {
+                    obj[year] = {
+                        title: info.title,
+                        subtitle: info.subtitle,
+                        start: +dayjs(info.start).format('YYYY'),
+                        size: Math.round(diff)
+                    }
+                }
+                else if (dayjs(`${year}-01-01`).isBetween(`${start}-01-01`, `${+dayjs(end).format('YYYY')}-01-01`, 'year')) {
+                    obj[year] = null
+                } else {
+                    obj[year] = true
+                }
+            }
+        }
+    }
+
     return (
-        <section className="p-6 paralax">
-            <div className="container px-6">
-                <div className="d-flex justify-content-between">
-                    <h2 className="title-page mb-5">Career</h2>
-                    <a href="#">Get CV <i className="fa fa-fw fa-file-text-o"></i></a>
-                </div>
-                <Timeline>
-                    {informations.map((information: Information) =>
-                        <TimelineItem key={information.id}>
-                            <TimelineIcon className="bg-primary">
-                                {information.title == 'Graphic Designer' ?
-                                    <i className="fa fa-fw fa-paint-brush"></i>
-                                    :
-                                    <i className="fa fa-fw fa-code"></i>
-                                }
-                            </TimelineIcon>
-                            <div className="timeline-date">
-                                <span>{dayjs(information.start).format('MMMM YYYY')} - {information.end ? dayjs(information.end).format('MMMM YYYY') : 'Present'}</span>
-                            </div>
-                            <div className="timeline-card card">
-                                <div className="card-body">
-                                    <p className="fw-bold mb-0">{information.title}</p>
-                                    <p className="text-muted fs-7 mb-2">{information.subtitle}</p>
-                                    {information.description && <div dangerouslySetInnerHTML={{ __html: information.description }} />}
-                                </div>
-                            </div>
-                        </TimelineItem>
-                    )}
-                </Timeline>
+        <Section>
+            <div className="d-flex justify-content-between mb-4 mb-md-5">
+                <h2 className="title-page mb-0">Career</h2>
+                <a className="my-2" href="#">Get CV <i className="fa fa-fw fa-file-text-o"></i></a>
             </div>
-        </section>
+            {timeLine &&
+                <Timeline>
+                    <table>
+                        <tbody>
+                            {timeLine.map((events: any, indexT: number) =>
+                                <tr className="event" key={indexT}>
+                                    {events.map((event: any, indexE: number) =>
+                                        event && event.size ?
+                                            <td colSpan={event.size} key={indexE}>
+                                                <div data-bs-toggle="tooltip" data-bs-html="true" 
+                                                    title={`${event.title.replace('_', '')}<br><small class='lh-1'>${event.subtitle}</small>`}
+                                                    className={indexT == 0 ? 'bg-success' : indexT == 1 ? 'bg-primary' : 'bg-warning'}></div>
+                                            </td>
+                                        : event ? 
+                                            <td key={indexE}></td> 
+                                        : <></>
+                                    )}
+                                </tr>
+                            )}
+                            <tr className="dates">
+                                {years && years.map((year: any, index: number) => <td key={index}>{year}</td>)}
+                            </tr>
+                        </tbody>
+                    </table>
+                </Timeline>
+            }
+            <div className="row justify-content-center mt-4">
+                <div className="col-12 col-md-auto">
+                    <i className="fa fa-square text-success me-1"></i> Education
+                </div>
+                <div className="col-12 col-md-auto">
+                    <i className="fa fa-square text-primary me-1"></i> Web Developer
+                </div>
+                <div className="col-12 col-md-auto">
+                    <i className="fa fa-square text-warning me-1"></i> Graphic Designer
+                </div>
+            </div>
+        </Section>
     )
 }
 
+const Section = styled.section`
+    padding-left: 4rem;
+    padding-right: 4rem;
+    margin-top: 8rem;
+
+    @media (max-width: 768px) {
+        padding-left: .5rem;
+        padding-right: .5rem;
+        margin-top: 4rem;
+    }
+`
 const Timeline = styled.div`
-    padding: 1rem;
-    position: relative;
-    transition: all 0.4s ease;
+    overflow: auto;
 
-    @media (max-width: 768px) {
-        & { padding: 0 }
-        &:before { left: 1.8rem; }
-    }
-`;
+    table { width: 100%; }
 
-const TimelineItem = styled.div`
-    padding-bottom: 50px;
-    position: relative;
+    td { padding-left: 1rem; padding-right: 1rem; position: relative; }
 
-    &:not(:last-child):before {
-        content: "";
-        width: 4px;
-        height: 100%;
-        background: white;
-        left: 50%;
-        top: 0;
-        position: absolute;
-    }
+    tr.dates td { padding-top: .75rem; text-align: center; }
+    tr.dates td::before { content:""; position: absolute; height: 4rem; width: 1px; background-color: #ddd; top: -3.2rem; left: 0; }
     
-    &:nth-child(even) .timeline-card {
-        margin-left: auto;
-    }
-    &:nth-child(even) .timeline-card:before {
-        left: 0;
-        right: inherit;
-        margin-left: -7px;
-        border-left: 0;
-        border-right: 7px solid white;
-    }
-    &:nth-child(even) .timeline-date {
-        right: 50%;
-        left: inherit;
-        margin-right: 3rem;
-    }
+    tr.event td { position: relative; padding-top: .5rem; padding-bottom: .5rem; }
+    tr.event td:last-child div.bg-success { background: linear-gradient(to left, #F3FAFF 20px, var(--bs-success) 100px); }
+    tr.event td:last-child div.bg-primary { background: linear-gradient(to left, #F3FAFF 20px, var(--bs-primary) 100px); }
+    tr.event td:last-child div.bg-warning { background: linear-gradient(to left, #F3FAFF 20px, var(--bs-warning) 100px); }
+    tr.event td div { position: absolute; left: 3px; width: calc(100% - 5px); height: 10px; border-radius: 2rem; }
 
-    .timeline-date {
-        position: absolute;
-        padding: .8rem 0;
-        left: 50%;
-        margin-left: 3rem;
-    }
-
-    .timeline-card {
-        width: 45%;
-        transition: all 0.3s ease;
-        border: none;
-        box-shadow: 0 3px 1rem rgb(0 0 0 / 5%);
-    }
-    .timeline-card:before {
-        content: '';
-        position: absolute;
-        right: 0;
-        margin-right: -7px;
-        top: 1.1rem;
-        border-top: 7px solid transparent;
-        border-bottom: 7px solid transparent;
-        border-left: 7px solid white;
-    }
-    .timeline-card .card-header {
-        border-color: white;
-        background-color: white;
-    }
-
-    @media (max-width: 768px) {
-        &:not(:last-child):before { top: .5rem; left: -.5rem; }
-        .timeline-card { width: 90%; margin-left: auto; }
-        .timeline-card:before { left: 0; right: inherit; margin-left: -7px; border-left: 0; border-right: 7px solid white; }
-        .timeline-date, &:nth-child(even) .timeline-date {
-            top: -2.2rem;
-            left: 0;
-            margin-left: 2rem;
-            font-size: 0.9rem;
-            width: 100%;
-        }
-    }
-`;
-
-const TimelineIcon = styled.div`
-    background: var(--secondary);
-    width: 3rem;
-    height: 3rem;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    overflow: hidden;
-    margin-left: -1.4rem;
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px #ffffff, inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 1rem 4px rgba(0, 0, 0, 0.1);
-
-    .fa {
-        margin-left: .9rem;
-        margin-top: .9rem;
-        color: white;
-    }
-
-    @media (max-width: 768px) {
-        & {
-            width: 2rem;
-            height: 2rem; 
-            left: 0;
-            top: .5rem;
-        }
-
-        .fa {
-            margin-left: .4rem;
-            margin-top: .4rem;
-        }
-    }
 `;
