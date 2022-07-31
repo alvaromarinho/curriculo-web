@@ -60,9 +60,9 @@ export default function Career({ informations }: CareerProps) {
 
     return (
         <Section>
-            <div className="d-flex justify-content-between mb-4 mb-md-5">
+            <div className="d-flex align-items-end justify-content-between mb-4">
                 <h2 className="title-page mb-0">Career</h2>
-                <a className="my-2" href="#">Get CV <i className="fa fa-fw fa-file-text-o"></i></a>
+                <a className="mb-2" href="#">Get CV <i className="fa fa-fw fa-file-text-o"></i></a>
             </div>
             {timeLine &&
                 <Timeline>

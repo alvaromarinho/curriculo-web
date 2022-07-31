@@ -1,29 +1,32 @@
 import { useEffect, useState } from 'react';
-import { User } from '../../models/User'
 import { ProjectImage } from '../../models/Portfolio';
-import { FiExternalLink } from 'react-icons/fi';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import Carousel from '../Carousel';
 import styled from "styled-components";
 
-interface PortfolioProps { user: User }
+interface PortfolioProps { portfolios: any }
 
-export default function Portfolio({ user }: PortfolioProps) {
+export default function Portfolio({ portfolios }: PortfolioProps) {
 
     const [modal, setModal] = useState<any>();
-    const [currentPortfolio, setCurrentPortfolio] = useState<number>();
+    const [projects, setProjects] = useState<any[]>();
     const [currentImages, setCurrentImages] = useState<ProjectImage[]>();
-
+ 
     useEffect(() => {
         import("bootstrap").then(({ Modal }) => {
             const modalHTML = document && document.getElementById('modal');
             modalHTML && setModal(new Modal(modalHTML))
         });
 
-        user && user.portfolios && user.portfolios.map((port) => {
-            port.projects && port.projects.sort((a, b) => {
-                return a.subtitle!.localeCompare(b.subtitle!) || a.title!.localeCompare(b.title!);
-            });
+        const port: any[] = []
+        portfolios.map((portfolio: any) => {
+            portfolio.projects.map((project: any) => {
+                project.type = portfolio.name
+                port.push(project)
+            })
         })
+
+        setProjects(port)
     }, [])
 
     function openModal(images: ProjectImage[]) {
@@ -31,55 +34,54 @@ export default function Portfolio({ user }: PortfolioProps) {
         modal.show()
     }
 
+    function scroll(direction: 'left' | 'right') {
+        const galery = document.getElementById("galery");
+        let scrollAmount = 0;
+
+        const step = 10;
+        const distance = 400;
+        const speed = 10;
+
+        const slideTimer = setInterval(() => {
+            if(galery && direction == 'left')
+                galery.scrollLeft -= step;
+            if(galery && direction == 'right')
+                galery.scrollLeft += step;
+
+            scrollAmount += step;
+            if(scrollAmount >= distance)
+                window.clearInterval(slideTimer);
+        }, speed);
+    }
+
     return (
         <Section>
-            <div>
-                <h2 className="title-page mb-4 mb-md-5">Recent Projects</h2>
-                <ul className="nav nav-tabs justify-content-center" role="tablist">
-                    {user.portfolios && user.portfolios.map((portfolio, index) => (
-                        <li className="nav-item" role="presentation" key={index}>
-                            <button type="button" role="tab" onClick={() => setCurrentPortfolio(portfolio.id)}
-                                className={`nav-link text-uppercase ${((currentPortfolio == undefined && index == 0) || currentPortfolio == portfolio.id) && 'active'}`}>
-                                {portfolio.name}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-                <div className="tab-content mt-3">
-                    {user.portfolios && user.portfolios.map((portfolio, index) => (
-                        <div className={`tab-pane fade ${((currentPortfolio == undefined && index == 0) || currentPortfolio == portfolio.id) && 'show active'}`} key={index}>
-                            <div className="row">
-                                {portfolio.projects && portfolio.projects.map((project) => (
-                                    <div className="col-12 col-md-4 mb-3" key={project.id}>
-                                        <div className={`card shadow border-0 h-100`}>
-                                            {!!(project.images && project.images.length) &&
-                                                <img className="card-img-top img-hover img-cover img-cover-top pointer" height="120"
-                                                    src={`${process.env.API_URL}/assets/img${project.images[0].url}`} onClick={() => openModal(project.images!)} />
-                                            }
-                                            <div className="card-body">
-                                                <div className="fw-bold text-uppercase mb-0">
-                                                    {project.url ?
-                                                        <a className="d-flex align-items-center" href={project.url} target="_blank">
-                                                            {project.title}
-                                                            <FiExternalLink className="mb-1 ms-2" />
-                                                        </a>
-                                                        : project.title}
-                                                </div>
-                                                <p className="text-muted">{project.subtitle}</p>
-                                                {project.description && <div dangerouslySetInnerHTML={{ __html: project.description }} />}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+            <h2 className="title-page mb-4">Recent Projects</h2>
+
+            <div className="d-flex align-items-center position-relative">
+                <div className="d-none d-md-inline galery-control start-n2" onClick={() => scroll('left')}>
+                    <FaAngleLeft className="fa-2x" />
+                </div>
+                <Galery id="galery">
+                    {projects?.map((project: any, index: number) =>
+                        <li key={index} onClick={() => openModal(project.images!)}>
+                            <img src={`${process.env.API_URL}/assets/img${project.images[0].url}`} alt={project.title} />
+                            <div className="caption">
+                                <h3 className="fs-5 mb-0">{project.type}</h3>
+                                <span>{project.subtitle}</span>
                             </div>
-                        </div>
-                    ))}
+                            <div className="bg"></div>
+                        </li>
+                    )}
+                </Galery>
+                <div className="d-none d-md-inline galery-control end-n2" onClick={() => scroll('right')}>
+                    <FaAngleRight className="fa-2x" />
                 </div>
             </div>
 
             {/* MODAL */}
             <div className="modal fade" id="modal" tabIndex={-1} aria-labelledby="modal" aria-hidden="true">
-                <div className="modal-dialog modal-xl">
+                <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content">
                         <button type="button" className="btn-close" id="close-modal"
                             data-bs-dismiss="modal" aria-label="Close"></button>
@@ -98,19 +100,65 @@ const Section = styled.section`
     padding-right: 4rem;
     margin-top: 8rem;
 
-    ul.nav { margin-bottom: 3rem; }
-    ul.nav, .nav-link, .nav-link:hover, .nav-link:focus { border: none; }
-    ul.nav li + li:before { content: "|"; }
-    ul.nav .nav-item { display: flex; align-items: center; color: #ccc; }
-    ul.nav .nav-link.active { text-shadow: 1px 0 0 currentColor; }
-
-    &.vh-100 { min-height: 100vh; height: auto!important; padding-bottom: 5rem }
+    .galery-control { position: absolute; color: var(--bs-light); background-color: black; border-radius: 50%; padding: .5rem; cursor: pointer; z-index: 1; transition: all 0.3s ease-out; opacity: .25; }
+    .galery-control:hover { opacity: .75; }
 
     @media (max-width: 768px) {
         padding-left: .5rem;
         padding-right: .5rem;
         margin-top: 6rem;
+    }
+`
+const Galery = styled.ul`
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
 
-        ul.nav li + li:before { content: ""; }
+    li {
+        position: relative;
+        cursor: pointer;
+    }
+
+    li:not(:first-child) {
+        margin-left: 2rem;
+    }
+
+    img {
+        width: 200px;
+        height: 300px;
+        border-radius: 0.3rem;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .caption, .bg {
+        position: absolute;
+        width: 100%;
+        bottom: -100%;
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+        transition: bottom 0.3s ease-out;
+        opacity: 0;
+    }
+
+    .caption {
+        padding: .5rem 0;
+        color: white;
+        text-align: center;
+        z-index: 1;
+    }
+    
+    .bg {
+        top: 50%;
+        background: linear-gradient(0deg, #333 0%, transparent 100%);
+        z-index: 0;
+    }
+
+    li:hover .caption, li:hover .bg {
+        bottom: 0;
+        opacity: 1;
     }
 `

@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 export default createGlobalStyle`
 
+    html { scroll-behaviour: smooth; }
     html, body, #__next { height: 100% }
     body { 
         font-family: 'Montserrat', sans-serif; 
@@ -51,12 +52,14 @@ export default createGlobalStyle`
     .img-hover { filter: grayscale(100%); transition: .3s ease-in-out; }
     .img-hover:hover { filter: grayscale(0); }
 
-    .top-1 { top: 1rem } 
-    .end-1 { right: 1rem }
+    .start-n2 { left: -2rem } 
+    .end-n2 { right: -2rem }
 
     .rounded-bottom-0 { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
     .rounded-top-0 { border-top-left-radius: 0; border-top-right-radius: 0; }
 
+    .ms-n4 { margin-left: -1.5rem; }
+    .me-n4 { margin-right: -1.5rem; }
     .mx-n4 { margin-left: -1.5rem; margin-right: -1.5rem; }
 
     .fs-7 { font-size: .9rem }

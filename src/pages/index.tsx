@@ -37,7 +37,7 @@ const Home = ({ user }: IndexProps) => {
                 </Navbar>
                 <div className="container">
                     <Start user={user} />
-                    <Portfolio user={user} />
+                    <Portfolio portfolios={user.portfolios} />
                     {info && info.EXPERIENCE && <Career informations={info} />}
                     <Contact />
                     <Footer>
