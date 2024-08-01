@@ -137,7 +137,7 @@ export default function Dashboard() {
                 </div>
                 :
                 <form onSubmit={handleSubmit}>
-                    <h2 className="me-3">Perfil</h2>
+                    <h2 className="border-bottom pb-2 mb-3 me-3">Perfil</h2>
                     <div className="row mb-4">
                         <EditImage className="col-12 col-md-4 mb-3 mb-md-0">
                             <input className="d-none" id="image" type="file" name="image" onChange={handleChangeFile} />
@@ -176,7 +176,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* PHONE */}
-                    <div className="row g-0 align-items-center mb-2">
+                    <div className="row g-0 align-items-center border-bottom pb-1 mb-3">
                         <div className="col-auto">
                             <h2 className="mb-0 me-2">Telefone</h2>
                         </div>
@@ -203,7 +203,7 @@ export default function Dashboard() {
                     )}
 
                     {/* LINKS */}
-                    <div className="row g-0 align-items-center mb-2">
+                    <div className="row g-0 align-items-center border-bottom pb-1 mb-2">
                         <div className="col-auto">
                             <h2 className="mb-0 me-2">Links</h2>
                         </div>
@@ -236,7 +236,7 @@ export default function Dashboard() {
                     )}
 
                     {/* PASSWORD */}
-                    <h2 className="mb-2 me-2">Trocar Senha</h2>
+                    <h2 className="border-bottom pb-1 mb-2">Trocar Senha</h2>
                     <div className="row">
                         <div className="col-12 col-md-6 mb-3">
                             <label htmlFor="currentPassword">Senha atual</label>

@@ -152,7 +152,7 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
             {/* NOVO - EDITAR */}
             {currentProject &&
                 <>
-                    <h2 className="me-2">{currentProject.id ? 'Editar' : 'Adicionar'} Projeto</h2>
+                    <h2 className="border-bottom pb-2 mb-3 me-2">{currentProject.id ? 'Editar' : 'Adicionar'} Projeto</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-12 col-md-6 mb-3">
