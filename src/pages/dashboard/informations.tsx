@@ -76,6 +76,12 @@ export default function Informations() {
             .finally(() => setLoading(false))
     }
 
+    function formatInfo(info: Information) {
+        info.start = info.start ? dayjs(info.start).format('YYYY-MM-DD') : undefined
+        info.end = info.end ? dayjs(info.end).format('YYYY-MM-DD') : undefined
+        setCurrentInfo(info)
+    }
+
     function removeInfo() {
         setLoadingDelete(true)
         if (currentInfo && currentInfo.id)
@@ -167,7 +173,7 @@ export default function Informations() {
                                             <div className={`card card-body mb-3 callout`} key={info.id}>
                                                 <div className="d-flex justify-content-between align-items-start">
                                                     <h3 className="fs-5 mb-md-0">{info.title}</h3>
-                                                    <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => setCurrentInfo(info)}>
+                                                    <button className="btn btn-sm btn-outline-primary border-0 d-flex-center" onClick={() => formatInfo(info)}>
                                                         <FaRegEdit className="mb-md-1 me-md-1" />
                                                         <span className="d-none d-md-inline">Editar</span>
                                                     </button>

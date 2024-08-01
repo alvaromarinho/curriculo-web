@@ -1,5 +1,5 @@
 import { CgLogOff } from "react-icons/cg";
-import { RiEqualizerLine, RiFileUserLine, RiGitRepositoryLine, RiHome2Line, RiUser3Line } from "react-icons/ri";
+import { RiFileUserLine, RiGitRepositoryLine, RiUser3Line } from "react-icons/ri";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
@@ -15,7 +15,7 @@ function Sidebar({ className }: any) {
     return (
         <Menu className={`list-group list-group-flush ${className}`}>
             <div className="list-group-item d-flex align-items-center">
-                <img src="/logo.svg" height="20" className="ms-2 me-3" /> <span>Dashboard</span>
+                <img src="/logo_b.svg" height="30" className="mx-auto" />
             </div>
             <Link href="/dashboard" passHref>
                 <a className={`list-group-item list-group-item-action d-flex align-items-center ${router.pathname == "/dashboard" && "active"}`}>

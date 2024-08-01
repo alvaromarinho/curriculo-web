@@ -15,47 +15,58 @@ export default function Career({ informations }: CareerProps) {
     useEffect(() => {
         import("bootstrap").then(({ Tooltip }) => [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((el) => new Tooltip(el)));
 
-        let informationsAll = [
-            ...informations.EDUCATION.sort((a: any, b: any) => a.start! > b.start! && 1 || -1),
-            ...informations.EXPERIENCE.sort((a: any, b: any) => a.start! > b.start! && 1 || -1)
-        ]
-        setYears(Array.from({ length: dayjs().diff(dayjs(informationsAll[0].start), 'year') }, (_, i) => +dayjs(informationsAll[0].start).format('YYYY') + i))
+        const oldestInfo = Object.values(informations)
+            .map((info: any) => (info.sort((a: any, b: any) => a.start! > b.start! && 1 || -1)[0]))
+            .sort((a: any, b: any) => a.start! > b.start! && 1 || -1)[0];
 
-        let education: any = {}
-        years && informations.EDUCATION.map((info: any) => infoToTimeLine(info, education))
-
-        const devXP: any = {}
-        years && informations.EXPERIENCE.map((info: any) => infoToTimeLine(info, devXP))
-
-        const gdXP: any = {}
-        years && informations.EXPERIENCE.filter((info: any) => info.title[0] == '_').map((info: any) => infoToTimeLine(info, gdXP))
-
-        setTimeLine([Object.values(education), Object.values(devXP), Object.values(gdXP)])
+        const yearsToNow = dayjs().diff(dayjs(oldestInfo.start), 'year');
+        const oldestYear = +dayjs(oldestInfo.start).format('YYYY');
+        setYears(Array.from({ length: yearsToNow + 1 }, (_, i) => oldestYear + i));
     }, [])
 
-    function infoToTimeLine(info: any, obj: any) {
-        for (let i = 0; i < years.length; i++) {
-            const year = years[i];
-            if (obj[year] === undefined || obj[year] === true) {
-                const start = +dayjs(info.start).format('YYYY')
-                const end = info.end ? +dayjs(info.end) : +dayjs()
-                const diff = dayjs(end).diff(dayjs(info.start), 'year', true)
+    useEffect(() => {
+        if (years) {
+            const education: any = informations.EDUCATION ? infoToTimeLine(informations.EDUCATION.flat()) : {}
 
-                if (year == start) {
-                    obj[year] = {
-                        title: info.title,
-                        subtitle: info.subtitle,
-                        start: +dayjs(info.start).format('YYYY'),
-                        size: Math.round(diff)
+            const devArrayXP = informations.EXPERIENCE.filter((info: any) => info.title[0] != '_');
+            const devXP: any = devArrayXP ? infoToTimeLine(devArrayXP.flat()) : {}
+
+            const gdArrayXP = informations.EXPERIENCE.filter((info: any) => info.title[0] == '_');
+            const gdXP: any = gdArrayXP ? infoToTimeLine(gdArrayXP.flat()) : {}
+
+            setTimeLine([education, devXP, gdXP])
+        }
+    }, [years])
+
+    function infoToTimeLine(informations: any) {
+        let obj: any = {};
+        for (let i = 0; i < years.length; i++) {
+            for (let j = 0; j < informations.length; j++) {
+                const info = informations[j];
+                const year = years[i];
+                if (obj[year] === undefined || obj[year] === true) {
+                    const start = +dayjs(info.start).format('YYYY')
+                    const end = info.end ? +dayjs(info.end) : +dayjs()
+                    const diff = dayjs(end).diff(dayjs(info.start), 'year', true)
+    
+                    if (year == start) {
+                        obj[year] = {
+                            title: info.title,
+                            subtitle: info.subtitle,
+                            start: +dayjs(info.start).format('YYYY'),
+                            size: Math.round(diff)
+                        }
                     }
-                }
-                else if (dayjs(`${year}-01-01`).isBetween(`${start}-01-01`, `${+dayjs(end).format('YYYY')}-01-01`, 'year')) {
-                    obj[year] = null
-                } else {
-                    obj[year] = true
+                    else if (dayjs(`${year}-01-01`).isBetween(`${start}-01-01`, `${+dayjs(end).format('YYYY')}-01-01`, 'year')) {
+                        obj[year] = null
+                    } else {
+                        obj[year] = true
+                    }
                 }
             }
         }
+
+        return Object.values(obj)
     }
 
     return (
@@ -64,21 +75,20 @@ export default function Career({ informations }: CareerProps) {
                 <h2 className="title-page mb-0">Career</h2>
                 <a className="mb-2" href="#">Get CV <i className="fa fa-fw fa-file-text-o"></i></a>
             </div>
-            {timeLine &&
+            {timeLine && timeLine.length &&
                 <Timeline>
                     <table>
                         <tbody>
-                            {timeLine.map((events: any, indexT: number) =>
-                                <tr className="event" key={indexT}>
-                                    {events.map((event: any, indexE: number) =>
-                                        event && event.size ?
-                                            <td colSpan={event.size} key={indexE}>
-                                                <div data-bs-toggle="tooltip" data-bs-html="true" 
-                                                    title={`${event.title.replace('_', '')}<br><small class='lh-1'>${event.subtitle}</small>`}
-                                                    className={indexT == 0 ? 'bg-success' : indexT == 1 ? 'bg-primary' : 'bg-warning'}></div>
+                            {timeLine.map((tlEvents: any, iT: number) =>
+                                <tr className="event" key={iT}>
+                                    {tlEvents.map((tle: any, iE: number) => 
+                                        tle && tle.size ?
+                                            <td colSpan={tle.size} key={`${iT}-${iE}`}>
+                                                <div data-bs-toggle="tooltip" data-bs-html="true"
+                                                    title={`${tle.title.replace('_', '')}<br><small class='lh-1'>${tle.subtitle}</small>`}
+                                                    className={iT == 0 ? 'bg-success' : iT == 1 ? 'bg-primary' : 'bg-warning'}></div>
                                             </td>
-                                        : event ? 
-                                            <td key={indexE}></td> 
+                                        : tle ? <td key={`${iT}-${iE}`}></td>
                                         : <></>
                                     )}
                                 </tr>

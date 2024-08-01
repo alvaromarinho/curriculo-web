@@ -29,7 +29,7 @@ export default function Dashboard() {
     useEffect(() => {
         if (!file) return
 
-        const objectUrl = URL.createObjectURL(file)
+        const objectUrl = URL.createObjectURL(file);
         setCurrentImage(objectUrl)
 
         // free memory when ever this component is unmounted
@@ -40,7 +40,10 @@ export default function Dashboard() {
         setLoading(true)
         getUser()
             .then((user: User) => {
-                setCurrentImage(`${process.env.API_URL}/assets/img${user.image}`)
+                console.log(user.image);
+                if (user.image && user.image !== null) {
+                    setCurrentImage(user.image)
+                }
                 setUserForm(user)
             })
             .catch((error) => toast.error(removeHTML(error.response.data) || 'Error'))
@@ -139,7 +142,7 @@ export default function Dashboard() {
                         <EditImage className="col-12 col-md-4 mb-3 mb-md-0">
                             <input className="d-none" id="image" type="file" name="image" onChange={handleChangeFile} />
                             <label htmlFor="image">
-                                <img src={currentImage} alt="Profile" />
+                                <img src={currentImage || '/default_user.jpeg'} alt="Profile" />
                                 <span>Trocar imagem</span>
                             </label>
                         </EditImage>

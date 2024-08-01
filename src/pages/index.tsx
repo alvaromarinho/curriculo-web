@@ -37,8 +37,8 @@ const Home = ({ user }: IndexProps) => {
                 </Navbar>
                 <div className="container">
                     <Start user={user} />
-                    <Portfolio portfolios={user.portfolios} />
-                    {info && info.EXPERIENCE && <Career informations={info} />}
+                    {user.portfolios && user.portfolios.length ? <Portfolio portfolios={user.portfolios} /> : <></>}
+                    {info && info.EXPERIENCE ? <Career informations={info} /> : <></>}
                     <Contact />
                     <Footer>
                         <div className="d-flex align-items-end justify-content-between">
