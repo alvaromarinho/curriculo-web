@@ -3,8 +3,7 @@
 module.exports = {
     reactStrictMode: true,
     env: {
-        // API_URL: 'https://api.alvaromarinho.com.br/curriculo',
-        API_URL: 'http://localhost:3001/curriculo',
+        API_URL: 'https://api.alvaromarinho.com.br/curriculo',
     },
     eslint: {
         ignoreDuringBuilds: true,
