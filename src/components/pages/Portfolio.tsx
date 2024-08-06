@@ -65,7 +65,7 @@ export default function Portfolio({ portfolios }: PortfolioProps) {
                 <Galery id="galery">
                     {projects?.map((project: any, index: number) =>
                         <li key={index} onClick={() => openModal(project.images!)}>
-                            <img src={`${process.env.API_URL}/assets/img${project.images[0].url}`} alt={project.title} />
+                            <img src={`${process.env.API_URL}/image?path=${project.images[0].url}`} alt={project.title} />
                             <div className="caption">
                                 <h3 className="fs-5 mb-0">{project.type}</h3>
                                 <span>{project.subtitle}</span>

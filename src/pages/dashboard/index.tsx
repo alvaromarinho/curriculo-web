@@ -40,9 +40,8 @@ export default function Dashboard() {
         setLoading(true)
         getUser()
             .then((user: User) => {
-                console.log(user.image);
                 if (user.image && user.image !== null) {
-                    setCurrentImage(user.image)
+                    setCurrentImage(`${process.env.API_URL}/image?path=${user.image}`)
                 }
                 setUserForm(user)
             })

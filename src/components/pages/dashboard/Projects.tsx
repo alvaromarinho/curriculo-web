@@ -186,7 +186,7 @@ export default function Projects({ portforioId, projects, loadPortfolios, showFo
                                     <img className="img-cover me-2" height="100" width="100" src={image} key={index} />
                                 )}
                                 {!filesToShow && currentProject.images && currentProject.images.map((image) =>
-                                    <img className="img-cover me-2" height="100" width="100" src={`${process.env.API_URL}/assets/img${image.url}`} key={image.id} />
+                                    <img className="img-cover me-2" height="100" width="100" src={`${process.env.API_URL}/image?path=${image.url}`} key={image.id} />
                                 )}
                             </div>
                         </div>

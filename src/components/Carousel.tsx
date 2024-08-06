@@ -7,14 +7,14 @@ export default function Carousel({ images }: CarouselProps) {
     return (
         <>
             {images && images.length == 1 &&
-                <img className="img-cover w-100" src={`${process.env.API_URL}/assets/img${images[0].url}`} />
+                <img className="img-cover w-100" src={`${process.env.API_URL}/image?path=${images[0].url}`} />
             }
             {images && images.length > 1 &&
                 <div id="carouselControls" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-inner">
                         {images.map((image, index) =>
                             <div className={`carousel-item ${index == 0 && 'active'}`} key={image.id}>
-                                <img className="d-block w-100" src={`${process.env.API_URL}/assets/img${image.url}`} />
+                                <img className="d-block w-100" src={`${process.env.API_URL}/image?path=${image.url}`} />
                             </div>
                         )}
                     </div>

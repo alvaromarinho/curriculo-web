@@ -12,7 +12,7 @@ function Sidebar({ imageUrl }: any) {
             {imageUrl &&
                 <li className="nav-item pb-4 px-5">
                     <img className="img-cover rounded-circle" height="150" width="150"
-                        src={`${process.env.API_URL}/assets/img${imageUrl}`} alt="Profile" />
+                        src={`${process.env.API_URL}/image?path=${imageUrl}`} alt="Profile" />
                 </li>
             }
             <li className="nav-item py-1">
