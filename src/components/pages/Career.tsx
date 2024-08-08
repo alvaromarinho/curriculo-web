@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import { orderBy } from 'lodash';
 dayjs.extend(isBetween);
 
 interface CareerProps { informations: any }
@@ -15,17 +16,17 @@ export default function Career({ informations }: CareerProps) {
     useEffect(() => {
         import("bootstrap").then(({ Tooltip }) => [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map((el) => new Tooltip(el)));
 
-        const oldestInfo = Object.values(informations)
-            .map((info: any) => (info.sort((a: any, b: any) => a.start! > b.start! && 1 || -1)[0]))
-            .sort((a: any, b: any) => a.start! > b.start! && 1 || -1)[0];
+        const oldestInfoArray = Object.values(informations).map((info: any) => orderBy(info, 'start')).flat();
+        const oldestInfo = orderBy(oldestInfoArray, 'start')[0];
 
         const yearsToNow = dayjs().diff(dayjs(oldestInfo.start), 'year');
         const oldestYear = +dayjs(oldestInfo.start).format('YYYY');
+
         setYears(Array.from({ length: yearsToNow + 1 }, (_, i) => oldestYear + i));
     }, [])
 
     useEffect(() => {
-        if (years) {
+        if (years && years.length) {
             const education: any = informations.EDUCATION ? infoToTimeLine(informations.EDUCATION.flat()) : {}
 
             const devArrayXP = informations.EXPERIENCE.filter((info: any) => info.title[0] != '_');
@@ -45,15 +46,15 @@ export default function Career({ informations }: CareerProps) {
                 const info = informations[j];
                 const year = years[i];
                 if (obj[year] === undefined || obj[year] === true) {
-                    const start = +dayjs(info.start).format('YYYY')
-                    const end = info.end ? +dayjs(info.end) : +dayjs()
+                    const start = dayjs(info.start).format('YYYY')
+                    const end = info.end ? dayjs(info.end) : dayjs().add(1, 'year')
                     const diff = dayjs(end).diff(dayjs(info.start), 'year', true)
-    
+
                     if (year == start) {
                         obj[year] = {
                             title: info.title,
                             subtitle: info.subtitle,
-                            start: +dayjs(info.start).format('YYYY'),
+                            start: dayjs(info.start).format('YYYY'),
                             size: Math.round(diff)
                         }
                     }
